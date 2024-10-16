@@ -1,18 +1,4 @@
 <?php
- // Get All Pages.
-//  function maika_api_get_pages($data) {
-//     // Sample data to return
-//     $response = array(
-//         'status' => 'success',
-//         'message' => '',
-//         'data' => array(
-//             'pages' => get_all_pages(),
-//         )
-//     );
-    
-//     return rest_ensure_response($response);
-//  }
-
  // Update secret key and cid
  function maika_chatbox_update_setting($data) {
     // Get Body Params...
@@ -24,7 +10,7 @@
     if($cid == null || $ssid == null || $secret_key == null){
         return new WP_Error(
             'missing',
-            __('Missing param...'),
+            'Missing param...',
             array('status' => 400)
         );
     }
@@ -45,7 +31,7 @@
 
     return new WP_Error(
         'invalid',
-        __('Session_ID invalid'),
+        'Session_ID invalid',
         array('status' => 400)
     );
  }
