@@ -28,7 +28,6 @@
      
      return $links;
  }
-
  
  //  <!-- ADD tailwindcss page admin -->
  function add_tailwindcss() {
@@ -306,8 +305,12 @@
   <div class="maika-tab-content" id="home"
     <?php echo $currentTab == "home" || $currentTab == "" ? "" : "style='display: none'"; ?>>
     <?php
-      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: Safe output, rendering trusted HTML.
-      echo render_html('https://raw.githubusercontent.com/hstech-dev/maika_public/refs/heads/master/wp_plugin/content_home.html', $domain_web);
+      if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_home.html')){
+        ob_start();
+        require_once plugin_dir_path(__FILE__).'assets/html/content_home.html';
+        $htmlContent = ob_get_clean();
+        echo maika_processing_content_file($htmlContent, esc_url($domain_web));
+      }
     ?>
   </div>
 
@@ -465,8 +468,13 @@
         wp_enqueue_script('admin-maika-iframe-resizer');
       }
       else{
-        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: Safe output, rendering trusted HTML.
-        echo render_html('https://raw.githubusercontent.com/hstech-dev/maika_public/refs/heads/master/wp_plugin/content_prod_descriptor.html', $domain_web);
+        
+        if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_prod_descriptor.html')){
+          ob_start();
+          require_once plugin_dir_path(__FILE__).'assets/html/content_prod_descriptor.html';
+          $htmlContent = ob_get_clean();
+          echo maika_processing_content_file($htmlContent, esc_url($domain_web));
+        }
       }
     ?>
   </div>
@@ -509,10 +517,8 @@
       //   echo "[iframe]";
       // }
       // else{
-      //// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: Safe output, rendering trusted HTML.
-      //   echo render_html('https://raw.githubusercontent.com/hstech-dev/maika_public/refs/heads/master/wp_plugin/content_livechat.html', $domain_web);
+      //// render HTML content_livechat
       // }
-      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: Safe output, rendering trusted HTML.
       echo render_html('https://raw.githubusercontent.com/hstech-dev/maika_public/refs/heads/master/wp_plugin/content_livechat.html', $domain_web);
     ?>
   </div>
@@ -820,6 +826,19 @@
        return 'error_get_html';
    }
  }
+
+ function maika_processing_content_file($htmlContent, $domain_web) {
+  // Check if the content is not empty
+  if ($htmlContent !== '') {
+      $search = ['PLUGIN__DOMAIN'];
+      $replace = [$domain_web];
+
+      $updatedHtmlContent = str_replace($search, $replace, $htmlContent);
+      return $updatedHtmlContent;
+  } else {
+      return 'error_get_html';
+  }
+}
 
  // ==========================================================
  // Hook add link script in page
