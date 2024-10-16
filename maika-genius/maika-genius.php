@@ -468,7 +468,6 @@
         wp_enqueue_script('admin-maika-iframe-resizer');
       }
       else{
-        
         if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_prod_descriptor.html')){
           ob_start();
           require_once plugin_dir_path(__FILE__).'assets/html/content_prod_descriptor.html';
@@ -486,12 +485,15 @@
       //   echo "[iframe]";
       // }
       // else{
-      //// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: Safe output, rendering trusted HTML.
-      //   echo render_html('https://raw.githubusercontent.com/hstech-dev/maika_public/refs/heads/master/wp_plugin/content_prod_cat_builder.html', $domain_web);
+      //  render HTML content_prod_cat_builder
       // }
 
-      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: Safe output, rendering trusted HTML.
-      echo render_html('https://raw.githubusercontent.com/hstech-dev/maika_public/refs/heads/master/wp_plugin/content_prod_cat_builder.html', $domain_web);
+      if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html')){
+        ob_start();
+        require_once plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html';
+        $htmlContent = ob_get_clean();
+        echo maika_processing_content_file($htmlContent, esc_url($domain_web));
+      }
     ?>
   </div>
 
@@ -502,11 +504,15 @@
       //   echo "[iframe]";
       // }
       // else{
-      //// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: Safe output, rendering trusted HTML.
-      //   echo render_html('https://raw.githubusercontent.com/hstech-dev/maika_public/refs/heads/master/wp_plugin/content_seo_opt.html', $domain_web);
+      //   render HTML content_seo_opt
       // }
-      // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: Safe output, rendering trusted HTML.
-      echo render_html('https://raw.githubusercontent.com/hstech-dev/maika_public/refs/heads/master/wp_plugin/content_seo_opt.html', $domain_web);
+
+      if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_seo_opt.html')){
+        ob_start();
+        require_once plugin_dir_path(__FILE__).'assets/html/content_seo_opt.html';
+        $htmlContent = ob_get_clean();
+        echo maika_processing_content_file($htmlContent, esc_url($domain_web));
+      }
     ?>
   </div>
 
@@ -519,7 +525,13 @@
       // else{
       //// render HTML content_livechat
       // }
-      echo render_html('https://raw.githubusercontent.com/hstech-dev/maika_public/refs/heads/master/wp_plugin/content_livechat.html', $domain_web);
+
+      if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_livechat.html')){
+        ob_start();
+        require_once plugin_dir_path(__FILE__).'assets/html/content_livechat.html';
+        $htmlContent = ob_get_clean();
+        echo maika_processing_content_file($htmlContent, esc_url($domain_web));
+      }
     ?>
   </div>
 </div>
@@ -790,41 +802,6 @@
    $responseData = json_decode(wp_remote_retrieve_body($response), true);
  
    return $responseData; // Return the parsed data
- }
-
-//  function render_html($url, $domain_web){  
-//   if (ini_get('allow_url_fopen')) {
-//       $htmlContent = file_get_contents($url);
-//       if ($htmlContent !== false) {
-//           $updatedHtmlContent = str_replace('PLUGIN__DOMAIN', $domain_web, $htmlContent);
-//           return $updatedHtmlContent;
-//       } else {
-//           return 'error_get_html';
-//       }
-//   } else {
-//     return 'error_get_html';
-//   }
-//  }
-
- function render_html($url, $domain_web) {  
-   // Use wp_remote_get() to fetch the content from the remote URL
-   $response = wp_remote_get($url);
- 
-   // Check if the response is an error
-   if (is_wp_error($response)) {
-       return 'error_get_html';
-   }
- 
-   // Get the response body
-   $htmlContent = wp_remote_retrieve_body($response);
- 
-   // Check if the content is not empty
-   if ($htmlContent !== '') {
-       $updatedHtmlContent = str_replace('PLUGIN__DOMAIN', $domain_web, $htmlContent);
-       return $updatedHtmlContent;
-   } else {
-       return 'error_get_html';
-   }
  }
 
  function maika_processing_content_file($htmlContent, $domain_web) {
