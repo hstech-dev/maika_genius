@@ -92,14 +92,14 @@ Maika Genius leverages the power of cutting-edge Al technology to supercharge yo
 	- Livechat: Limit 100 sessions
 	- Support: Community support
 
-- **Maika Sell ($7/month or $50/year):**
+- **Maika Sell ($50/year or $7/month):**
 	- Product Descriptor: Limit 1,000 products, unlimited descriptions, access to all templates
 	- Product Catalog Builder: Limit 5,000 sessions
 	- SEO Optimizer: Full access
 	- Livechat: Limit 100 sessions
 	- Support: Email support
 
-- **Maika Genius ($40/month or $320/year):**
+- **Maika Genius ($320/year or $40/month):**
 	- Product Descriptor: Limit 1,000 products, unlimited descriptions, access to all templates
 	- Product Catalog Builder: Unlimited sessions
 	- SEO Optimizer: Full access
