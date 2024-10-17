@@ -4,8 +4,8 @@
     exit;
  }
  
- class Constants {
-    const ALLOWED_TAGS_HTML = array(
+ class Maika_Constants {
+    const MAIKA_ALLOWED_TAGS_HTML = array(
     'a' => array(
         'href' => true,
         'title' => true,
@@ -57,8 +57,12 @@
     ),
     'button' => array(
         'type' => true,
+        'id' => true,
         'class' => true,
+        'name' => true,
         'style' => true,
+        'value' => true,
+        'onclick' => true,
     ),
     'canvas' => array(
         'class' => true,
@@ -77,9 +81,12 @@
         'style' => true,
     ),
     'div' => array(
+        'id' => true,
         'class' => true,
         'style' => true,
-        'id' => true,
+        'data-mautic-form-page' => true,
+        'data-validate' => true,
+        'data-validation-type' => true,
     ),
     'dl' => array(
         'class' => true,
@@ -98,11 +105,17 @@
         'style' => true,
     ),
     'form' => array(
+        'autocomplete' => true,
         'action' => true,
         'method' => true,
         'enctype' => true,
         'class' => true,
         'style' => true,
+        'role' => true,
+        'id' => true,
+        'data-mautic-form' => true,
+        
+
     ),
     'h1' => array(
         'class' => true,
@@ -150,12 +163,29 @@
         'style' => true,
     ),
     'input' => array(
+        'id' => true,
         'type' => true,
         'name' => true,
         'value' => true,
         'placeholder' => true,
         'class' => true,
         'style' => true,
+        'required' => true,
+    ),
+    'select' => array(
+        'id' => true,
+        'class' => true,
+        'style' => true,
+        'name' => true,
+        'value' => true,
+        'placeholder' => true,
+        'required' => true,
+    ),
+    'option' => array(
+        'id' => true,
+        'class' => true,
+        'style' => true,
+        'value' => true,
     ),
     'label' => array(
         'for' => true,
@@ -184,10 +214,12 @@
         'style' => true,
     ),
     'section' => array(
+        'id' => true,
         'class' => true,
         'style' => true,
     ),
     'span' => array(
+        'id' => true,
         'class' => true,
         'style' => true,
     ),
@@ -272,12 +304,6 @@
             'stroke-linecap' => true,
             'stroke-linejoin' => true,
             'd' => true,
-    ),
-    'script' => array(
-            'async' => true,
-            'type' => true,
-            'src' => true,
-    ),
-    );
+    ));
 }
 ?>

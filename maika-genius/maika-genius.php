@@ -96,7 +96,7 @@
       $del_WooAPI = maika_delete_woocommerce_api_keys();
       
       //redirect link
-      $rd = $domain_web."/wp-admin/admin.php?page=maika-genius";
+      $rd = esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius";
 
       wp_localize_script('admin-maika-disconnect', 'adminMaikaEngineData', array(
         'slugMaikaGenius' => esc_url($rd),
@@ -134,7 +134,7 @@
       update_option("maika_ssid", $maika_ssid);
     }
 
-    $linkConnectService = "https://hub.askmaika.ai/app/auth/?domain=".$domain_web."&ssid=".$maika_ssid."&email=".$current_email."&username=".$current_username;
+    $linkConnectService = "https://hub.askmaika.ai/app/auth/?domain=".esc_url($domain_web)."&ssid=".$maika_ssid."&email=".$current_email."&username=".$current_username;
     
     ?>
 
@@ -248,11 +248,6 @@
         </ul>
       </div>
       ";
-      //  echo "
-      //  <div class='mt-4 flex items-center'>
-      //    <h4 class='font-medium text-base'>🎉 Congratulations! You've successfully unlocked the AI Genius. Enjoy the full power of your experience with everything at your fingertips! 🚀</h4>
-      //  </div>
-     //";
      }
    ?>
 
@@ -298,7 +293,7 @@
         require_once plugin_dir_path(__FILE__).'assets/html/content_home.html';
         $htmlContent = ob_get_clean();
       
-        echo wp_kses($htmlContent, Constants::ALLOWED_TAGS_HTML);
+        echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
@@ -326,15 +321,6 @@
         if($maikaWooAPIKey != false){
           $maikaRequired += 1;
         }
-        // Pass all
-        // if($maikaRequired == 2){
-        //   //$maika_user_domain = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
-        //   $linkConnectService = "https://hub.askmaika.ai/app/auth/?domain=".$domain_web."&ssid=".$maika_ssid."&email=".$current_email."&username=".$current_username;
-        //   echo "
-        //     <a href='$linkConnectService'><button class='service-button pulse mt-4'>Connect your WordPress with
-        //       Maika</button></a>
-        //   ";
-        // }
       ?>
     </div>
 
@@ -462,7 +448,7 @@
           require_once plugin_dir_path(__FILE__).'assets/html/content_prod_descriptor.html';
           $htmlContent = ob_get_clean();
 
-          echo wp_kses($htmlContent, Constants::ALLOWED_TAGS_HTML);
+          echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
         }
       }
     ?>
@@ -483,7 +469,7 @@
         require_once plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html';
         $htmlContent = ob_get_clean();
 
-        echo wp_kses($htmlContent, Constants::ALLOWED_TAGS_HTML);
+        echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
@@ -503,7 +489,7 @@
         require_once plugin_dir_path(__FILE__).'assets/html/content_seo_opt.html';
         $htmlContent = ob_get_clean();
 
-        echo wp_kses($htmlContent, Constants::ALLOWED_TAGS_HTML);
+        echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
@@ -523,7 +509,7 @@
         require_once plugin_dir_path(__FILE__).'assets/html/content_livechat.html';
         $htmlContent = ob_get_clean();
 
-        echo wp_kses($htmlContent, Constants::ALLOWED_TAGS_HTML);
+        echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
@@ -532,13 +518,14 @@
 <?php
     // Enqueue style
     wp_enqueue_style('admin-maika-css');
+    wp_enqueue_style('admin-maika-mautic');
     // Load JavaScript file
     wp_enqueue_script('admin-maika-tabs');
  }
 
  // ****************************************************
  // === REGISTER JavaScript, CSS,... ADMIN page: maika-genius ===
- // JS
+ // JavaScript
  function maika_enqueue_admin_scripts($hook) {
   // Check plug
   if ($hook != 'toplevel_page_maika-genius') {
@@ -604,6 +591,14 @@
   wp_register_style(
     'admin-maika-css', // Handle cho style
     plugin_dir_url(__FILE__) . 'assets/css/admin-maika.css',
+    array(), // Dependencies... if any
+    '1.0', // Version
+    'all' // Media cho style
+  );
+
+  wp_register_style(
+    'admin-maika-mautic', // Handle cho style
+    plugin_dir_url(__FILE__) . 'assets/css/admin-maika-mautic.css',
     array(), // Dependencies... if any
     '1.0', // Version
     'all' // Media cho style
@@ -773,7 +768,7 @@
  }
 
  // === REGISTER JavaScript wordpress page ===
- function enqueue_maika_engine_script() {
+ function maika_enqueue_maika_engine_script() {
   // Register the script
   wp_register_script(
       'maika-engine',
@@ -783,7 +778,7 @@
       true // Load in the footer
   );
  }
- add_action('wp_enqueue_scripts', 'enqueue_maika_engine_script');
+ add_action('wp_enqueue_scripts', 'maika_enqueue_maika_engine_script');
 
  // ===============================================================
  //ADD API
