@@ -64,11 +64,11 @@ Maika Genius leverages the power of cutting-edge Al technology to supercharge yo
 
 ## Explanation of External Service Usage for Maika Genius Plugin
 
-This plugin relies on an external service, Maika AI platform (https://www.askmaika.ai/hub), to enhance your WooCommerce store with powerful AI features. Here's how it works and what data is shared:
+This plugin relies on an external service, Maika AI platform - [Maika Hub](https://hub.askmaika.ai) and [Maika CRM](https://crm.askmaika.ai), to enhance your WooCommerce store with powerful AI features. Here's how it works and what data is shared:
 
 ### 1. Connection and Data Transfer:
 
-To utilize Maika Genius, you'll need to create a free account on the Maika platform. This plugin will then connect your website to your Maika account, sending your product catalog information (categories, attributes, product details) to Maika's servers. This data transfer is necessary for Maika to learn about your products and provide personalized recommendations and content.
+To utilize Maika Genius, you'll need to create a free account on the Maika platform. This plugin will then connect your website to your Maika account, sending your product catalog information (categories, attributes, product details) to Maika's servers. This data transfer is necessary for Maika to learn about your products and provide personalized recommendations and content. It also sends your name and contact email if you decide to subscribe to our Beta program and/or Marketing campaign.
 
 ### 2. AI Learning and Content Generation:
 
@@ -82,7 +82,7 @@ If you choose to enable the live chat feature, the plugin will install a live ch
 
 The plugin transmits your product catalog data (categories, attributes, product details) to Maika's servers. This data is used to personalize the AI-powered features for your website.
 If you enable the live chat feature, the plugin also transmits chat interactions between visitors and your AI-powered chat assistant to Maika. This data helps Maika learn and improve its responses.
-Maika handles the data transmission and processing in accordance with its terms of service and privacy policy, which can be found at [Insert ToU and Privacy links here].
+Maika handles the data transmission and processing in accordance with its terms of service and privacy policy, which can be found at [Terms of Use](https://www.askmaika.ai/terms/) and [Privacy Policy](https://www.askmaika.ai/privacy-policy/).
 
 ## Why This is Important:
 
