@@ -302,6 +302,11 @@
       <button class="maika-tab <?php echo $currentTab == "livechat" ? "maika-active" : ""; ?>"
       data-tab="livechat">Livechat</button>
   </div>
+  <?php
+    if(file_exists(plugin_dir_path(__FILE__).'includes/config/constants.php')){
+      require_once plugin_dir_path(__FILE__).'includes/config/constants.php';
+    }
+  ?>
   <div class="maika-tab-content" id="home"
     <?php echo $currentTab == "home" || $currentTab == "" ? "" : "style='display: none'"; ?>>
     <?php
@@ -309,75 +314,8 @@
         ob_start();
         require_once plugin_dir_path(__FILE__).'assets/html/content_home.html';
         $htmlContent = ob_get_clean();
-
-        $allowed_tags = array(
-          'div' => array(
-              'class' => true,
-              'id' => true,
-              'style' => true,
-          ),
-          'section' => array(
-              'class' => true,
-              'style' => true,
-          ),
-          'h1' => array(
-              'class' => true,
-          ),
-          'strong' => array(
-              'class' => true,
-          ),
-          'p' => array(
-              'class' => true,
-          ),
-          'span' => array(
-              'class' => true,
-          ),
-          'a' => array(
-              'href' => true,
-              'class' => true,
-          ),
-          'article' => array(
-              'class' => true,
-          ),
-          'hr' => array(
-            'class' => true,
-          ),
-          'br' => array(
-            'class' => true,
-          ),
-          'h2' => array(
-              'class' => true,
-          ),
-          'h3' => array(
-              'class' => true,
-          ),
-          'ul' => array(
-              'class' => true,
-          ),
-          'li' => array(
-              'class' => true,
-          ),
-          'svg' => array(
-              'xmlns' => true,
-              'fill' => true,
-              'viewBox' => true,
-              'stroke-width' => true,
-              'stroke' => true,
-              'class' => true,
-              'path' => array(
-                  'stroke-linecap' => true,
-                  'stroke-linejoin' => true,
-                  'd' => true,
-              ),
-          ),
-          'path' => array(
-              'stroke-linecap' => true,
-              'stroke-linejoin' => true,
-              'd' => true,
-          ),
-        );
       
-        echo wp_kses(maika_processing_content_file($htmlContent, esc_url($domain_web)), $allowed_tags);
+        echo wp_kses(maika_processing_content_file($htmlContent, esc_url($domain_web)), Constants::ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
@@ -540,7 +478,8 @@
           ob_start();
           require_once plugin_dir_path(__FILE__).'assets/html/content_prod_descriptor.html';
           $htmlContent = ob_get_clean();
-          echo maika_processing_content_file($htmlContent, esc_url($domain_web));
+
+          echo wp_kses(maika_processing_content_file($htmlContent, esc_url($domain_web)), Constants::ALLOWED_TAGS_HTML);
         }
       }
     ?>
@@ -560,7 +499,8 @@
         ob_start();
         require_once plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html';
         $htmlContent = ob_get_clean();
-        echo maika_processing_content_file($htmlContent, esc_url($domain_web));
+
+        echo wp_kses(maika_processing_content_file($htmlContent, esc_url($domain_web)), Constants::ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
@@ -579,7 +519,8 @@
         ob_start();
         require_once plugin_dir_path(__FILE__).'assets/html/content_seo_opt.html';
         $htmlContent = ob_get_clean();
-        echo maika_processing_content_file($htmlContent, esc_url($domain_web));
+
+        echo wp_kses(maika_processing_content_file($htmlContent, esc_url($domain_web)), Constants::ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
@@ -598,7 +539,8 @@
         ob_start();
         require_once plugin_dir_path(__FILE__).'assets/html/content_livechat.html';
         $htmlContent = ob_get_clean();
-        echo maika_processing_content_file($htmlContent, esc_url($domain_web));
+
+        echo wp_kses(maika_processing_content_file($htmlContent, esc_url($domain_web)), Constants::ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
