@@ -60,6 +60,36 @@ Maika Genius leverages the power of cutting-edge Al technology to supercharge yo
 
 #### Get started with Maika Genius today and unlock the full potential of your WooCommerce shop!
 
+== External services ==
+
+## Explanation of External Service Usage for Maika Genius Plugin
+
+This plugin relies on an external service, Maika AI platform (https://www.askmaika.ai/hub), to enhance your WooCommerce store with powerful AI features. Here's how it works and what data is shared:
+
+### 1. Connection and Data Transfer:
+
+To utilize Maika Genius, you'll need to create a free account on the Maika platform. This plugin will then connect your website to your Maika account, sending your product catalog information (categories, attributes, product details) to Maika's servers. This data transfer is necessary for Maika to learn about your products and provide personalized recommendations and content.
+
+### 2. AI Learning and Content Generation:
+
+Maika utilizes this data to understand your product catalog and generate relevant content. This content is then updated back to your website via the WooCommerce REST API. Maika continuously learns from your products and your website's visitor interactions to optimize communication and recommendations.
+
+### 3. Live Chat Integration (Optional):
+
+If you choose to enable the live chat feature, the plugin will install a live chat box on your website. This box connects directly to the Maika platform, allowing your visitors to interact with your site using AI-powered chat. You can manage all conversations through the Maika platform admin UI.
+
+## Data Transmission and Privacy:
+
+The plugin transmits your product catalog data (categories, attributes, product details) to Maika's servers. This data is used to personalize the AI-powered features for your website.
+If you enable the live chat feature, the plugin also transmits chat interactions between visitors and your AI-powered chat assistant to Maika. This data helps Maika learn and improve its responses.
+Maika handles the data transmission and processing in accordance with its terms of service and privacy policy, which can be found at [Insert ToU and Privacy links here].
+
+## Why This is Important:
+
+By using Maika's AI services, you benefit from advanced features that enhance your online store's functionality and customer experience.
+This transparency ensures users are informed about how their data is used and provides a clear understanding of the plugin's reliance on third-party services.
+This information should be included in your plugin's readme.txt file for clear documentation.
+
 == Installation ==
 
 ### Installation

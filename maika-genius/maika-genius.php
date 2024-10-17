@@ -30,18 +30,7 @@
  }
  
  //  <!-- ADD tailwindcss page admin -->
- function add_tailwindcss() {
-  $screen = get_current_screen();
-  if ($screen->id === 'toplevel_page_maika-genius') {
-    // Enqueue Tailwind CSS CDN
-    wp_enqueue_script('tailwind-css', 'https://cdn.tailwindcss.com', array(), time(), false);
-    
-    // Add inline script for Tailwind configuration
-    wp_add_inline_script('tailwind-css', 'tailwind.config = { theme: { extend: { colors: {} } } };');
-  }
-   
- }
- add_action('admin_enqueue_scripts', 'add_tailwindcss');
+ wp_enqueue_script('admin-maika-tailwindcss');
  //<!-- /ADD tailwindcss -->
  
  add_action("admin_menu", "maika_show_setting_page");
@@ -83,10 +72,10 @@
     $maika_rfa = isset($_GET['rfa']) ? sanitize_text_field(wp_unslash($_GET['rfa'])) : "";
 
     //check application password exists and get value
-    $maikaApplicationPassword = check_application_password_exists("maika") ? get_application_password_value("maika") : null;
+    $maikaApplicationPassword = maika_check_application_password_exists("maika") ? maika_get_application_password_value("maika") : null;
 
     //Check rest api woocomerce
-    $maikaWooAPIKey = check_woocommerce_api_keys(); // WooConsumerSecret
+    $maikaWooAPIKey = maika_check_woocommerce_api_keys(); // WooConsumerSecret
 
     $pass_guide_step = 0;
     
@@ -103,8 +92,8 @@
       delete_option("maika_ai_title");
       delete_option("maika_ai_cid");
       delete_option("maika_ssid");
-      $del_AP = delete_application_password_exists("maika");
-      $del_WooAPI = del_woocommerce_api_keys();
+      $del_AP = maika_delete_application_password_exists("maika");
+      $del_WooAPI = maika_delete_woocommerce_api_keys();
       
       //redirect link
       $rd = $domain_web."/wp-admin/admin.php?page=maika-genius";
@@ -120,19 +109,13 @@
     // Check connect Maika Hub
     if($maika_secretKey && $maika_cid){
       $url_api_check_connect_maika_hub = 'https://hub.askmaika.ai/app/api/woo/connect_status/';
-      $check_connect_maika_hub = call_get_api($url_api_check_connect_maika_hub.$maika_cid, $maika_secretKey);
+      $check_connect_maika_hub = maika_call_get_api($url_api_check_connect_maika_hub.$maika_cid, $maika_secretKey);
       // print_r($check_connect_maika_hub['data']);
       //  && $check_connect_maika_hub['data']['wordpressAPI'] == 'connected' && $check_connect_maika_hub['data']['wooAPI'] == 'connected'
       if($check_connect_maika_hub['data']['cidBinding'] == 'connected'){
         $pass_guide_step = 2;
       }
       else{
-        // if(check_maika_application_password_exists_regardless_of_user() && check_woo_api_key_maika_exists_regardless_of_user()){
-        //   $pass_guide_step = 1;
-        // }
-        // else{
-        //   $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
-        // }
         $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
       }
     }
@@ -315,7 +298,7 @@
         require_once plugin_dir_path(__FILE__).'assets/html/content_home.html';
         $htmlContent = ob_get_clean();
       
-        echo wp_kses(maika_processing_content_file($htmlContent, esc_url($domain_web)), Constants::ALLOWED_TAGS_HTML);
+        echo wp_kses($htmlContent, Constants::ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
@@ -479,7 +462,7 @@
           require_once plugin_dir_path(__FILE__).'assets/html/content_prod_descriptor.html';
           $htmlContent = ob_get_clean();
 
-          echo wp_kses(maika_processing_content_file($htmlContent, esc_url($domain_web)), Constants::ALLOWED_TAGS_HTML);
+          echo wp_kses($htmlContent, Constants::ALLOWED_TAGS_HTML);
         }
       }
     ?>
@@ -500,7 +483,7 @@
         require_once plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html';
         $htmlContent = ob_get_clean();
 
-        echo wp_kses(maika_processing_content_file($htmlContent, esc_url($domain_web)), Constants::ALLOWED_TAGS_HTML);
+        echo wp_kses($htmlContent, Constants::ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
@@ -520,7 +503,7 @@
         require_once plugin_dir_path(__FILE__).'assets/html/content_seo_opt.html';
         $htmlContent = ob_get_clean();
 
-        echo wp_kses(maika_processing_content_file($htmlContent, esc_url($domain_web)), Constants::ALLOWED_TAGS_HTML);
+        echo wp_kses($htmlContent, Constants::ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
@@ -540,7 +523,7 @@
         require_once plugin_dir_path(__FILE__).'assets/html/content_livechat.html';
         $htmlContent = ob_get_clean();
 
-        echo wp_kses(maika_processing_content_file($htmlContent, esc_url($domain_web)), Constants::ALLOWED_TAGS_HTML);
+        echo wp_kses($htmlContent, Constants::ALLOWED_TAGS_HTML);
       }
     ?>
   </div>
@@ -563,11 +546,19 @@
   }
 
   wp_register_script(
-      'admin-maika-tabs', 
-      plugin_dir_url( __FILE__ ) . 'assets/js/admin-maika-tabs.js', 
+      'admin-maika-tailwindcss', 
+      plugin_dir_url( __FILE__ ) . 'assets/js/admin-maika-tailwindcss.js', 
       array(), // Dependencies... if any
-      '1.0',   // Version
-      true     // Load into footer
+      '3.4.5',   // Version
+      false     // Load into footer
+  );
+
+  wp_register_script(
+    'admin-maika-tabs', 
+    plugin_dir_url( __FILE__ ) . 'assets/js/admin-maika-tabs.js', 
+    array(), // Dependencies... if any
+    '1.0',   // Version
+    false     // Load into footer
   );
 
   wp_register_script(
@@ -603,7 +594,7 @@
   );
  }
 
-// CSS
+ // CSS
  function maika_enqueue_admin_css($hook) {
   // Check plug
   if ($hook != 'toplevel_page_maika-genius') {
@@ -623,7 +614,7 @@
  add_action('admin_enqueue_scripts', 'maika_enqueue_admin_css');
  // == END SCOPE == REGISTER JavaScript ADMIN page: maika-genius
 
- function check_application_password_exists($application_name) {
+ function maika_check_application_password_exists($application_name) {
     // get list Application Passwords
     $app_passwords = get_user_meta(get_current_user_id(), '_application_passwords', true);
 
@@ -642,7 +633,7 @@
     return false;
  }
 
- function get_application_password_value($application_name) {
+ function maika_get_application_password_value($application_name) {
     // get list Application Passwords
     $app_passwords = get_user_meta(get_current_user_id(), '_application_passwords', true);
 
@@ -661,7 +652,7 @@
     return false;
  }
 
- function delete_application_password_exists($application_name){
+ function maika_delete_application_password_exists($application_name){
   // Get the current user ID
   $user_id = get_current_user_id();
 
@@ -683,8 +674,8 @@
   }
  }
 
- function check_woocommerce_api_keys(){
-    $maikaWooAPIKey = get_list_woocommerce_api_keys();
+ function maika_check_woocommerce_api_keys(){
+    $maikaWooAPIKey = maika_get_list_woocommerce_api_keys();
     foreach ($maikaWooAPIKey as $key) {
         if($key->user_id == get_current_user_id() && $key->description == "maika"){
             return $key->consumer_secret;
@@ -693,7 +684,7 @@
     return false;
  }
  
- function get_list_woocommerce_api_keys() {
+ function maika_get_list_woocommerce_api_keys() {
     global $wpdb;
 
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
@@ -701,7 +692,7 @@
     return $keys;
  }
 
- function del_woocommerce_api_keys(){
+ function maika_delete_woocommerce_api_keys(){
     global $wpdb;
     // Get the current user ID
     $user_id = get_current_user_id();
@@ -728,69 +719,7 @@
     }
  }
 
- // FUNCTION: Check maika application password regardless of user created
- function check_maika_application_password_exists_regardless_of_user() {
-  $users = get_users();
-  
-  foreach ( $users as $user ) {
-      $application_passwords = get_user_meta( $user->ID, '_application_passwords', true );
-      
-      if ( ! empty( $application_passwords ) ) {
-          foreach ( $application_passwords as $app_password ) {
-              // check name
-              if ( isset( $app_password['name'] ) && strtolower( $app_password['name'] ) === 'maika' ) {
-                  // if exists
-                  return true;
-              }
-          }
-      }
-  }
-  
-  // Trả về false nếu không tìm thấy
-  return false;
- }
-
- // FUNCTION: Check maika woo api key regardless of user created
- function check_woo_api_key_maika_exists_regardless_of_user() {
-  global $wpdb;
-  
-  // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-  $result = $wpdb->get_results(
-      "SELECT * FROM {$wpdb->prefix}woocommerce_api_keys 
-      WHERE description = 'maika' 
-      AND permissions = 'read_write'"
-  );
-  if (!empty($result) ) {
-      return true;
-  }
-  return false;
- }
-
-//  function call_get_api($url, $api_key){
-//   // Set up the cURL resource
-//   $ch = curl_init($url);
-
-//   // Set the options
-//   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
-//   curl_setopt($ch, CURLOPT_HTTPHEADER, [
-//       'Content-Type: application/json', // Set the content type to JSON if necessary
-//       $api_key, // If the API requires authorization
-//   ]);
-
-//   // Execute the request and get the response
-//   $response = curl_exec($ch);
-
-//   // Check for cURL errors
-//   if (curl_errno($ch)) { //If error
-//     return curl_error($ch);
-//   } else {
-//     // Parse the JSON response
-//     $responseData = json_decode($response, true);
-//     return $responseData;
-//   }
-//  }
-
- function call_get_api($url, $api_key) {
+ function maika_call_get_api($url, $api_key) {
    // Set up the arguments for the request
    $args = [
        'headers' => [
@@ -814,31 +743,18 @@
    return $responseData; // Return the parsed data
  }
 
- function maika_processing_content_file($htmlContent, $domain_web) {
-  // Check if the content is not empty
-  if ($htmlContent !== '') {
-      $search = ['PLUGIN__DOMAIN'];
-      $replace = [$domain_web];
-
-      $updatedHtmlContent = str_replace($search, $replace, $htmlContent);
-      return $updatedHtmlContent;
-  } else {
-      return 'error_get_html';
-  }
-}
-
  // ==========================================================
  // Hook add link script in page
- //add_action('wp_enqueue_scripts', 'add_maika_script');
- function add_maika_script() {
+ add_action('wp_enqueue_scripts', 'maika_chatbox_add_script');
+ function maika_chatbox_add_script() {
     // add file JavaScript (maika.js) in footer
-    wp_enqueue_script('maika-js', 'https://hub.askmaika.ai/app/static/maika.js', array(), time(), true);
+    wp_enqueue_script('maika-chatbox-js', 'https://hub.askmaika.ai/app/static/maika.js', array(), time(), true);
  }
 
  // ADD SCRIPT Maika Genius CHAT BOX
  // add custom script
- //add_action('wp_footer', 'maika_chatbox');
- function maika_chatbox(){
+ add_action('wp_footer', 'maika_chatbox_config');
+ function maika_chatbox_config(){
     $maika_ai_secretKey = get_option("maika_ai_secretKey");
     $maika_ai_favcolor = get_option("maika_ai_favcolor") ? get_option("maika_ai_favcolor") : "#800080";
     $maika_ai_title = get_option("maika_ai_title") ? get_option("maika_ai_title") : "Maika";
@@ -872,7 +788,7 @@
  // ===============================================================
  //ADD API
  // Hook to register the custom REST API route
- add_action('rest_api_init', 'register_maika_api_routes');
+ add_action('rest_api_init', 'maika_register_api_routes');
  
  // Auth
  if(file_exists(plugin_dir_path(__FILE__).'auth_api.php')){
@@ -880,7 +796,7 @@
  }
 
  //Register api
- function register_maika_api_routes() {
+ function maika_register_api_routes() {
     if(file_exists(plugin_dir_path(__FILE__).'includes/api/wp/register_api.php')){
         require_once plugin_dir_path(__FILE__).'includes/api/wp/register_api.php';
     }

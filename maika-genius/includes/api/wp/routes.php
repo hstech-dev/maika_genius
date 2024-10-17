@@ -1,4 +1,8 @@
 <?php
+ // Protect the file from direct access
+ if (!defined('ABSPATH')) {
+    exit;
+ }
  // Update secret key and cid
  function maika_chatbox_update_setting($data) {
     // Get Body Params...

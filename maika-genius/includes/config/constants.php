@@ -1,5 +1,10 @@
 <?php
-class Constants {
+ // Protect the file from direct access
+ if (!defined('ABSPATH')) {
+    exit;
+ }
+ 
+ class Constants {
     const ALLOWED_TAGS_HTML = array(
     'a' => array(
         'href' => true,
