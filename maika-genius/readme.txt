@@ -1,6 +1,6 @@
 === Maika Genius ===
-Contributors: tungphamthanh
-Requires at least: 4.7
+Contributors: tomaskmaika
+Requires at least: 5.6
 Tested up to: 6.6
 Stable tag: 1.0.1
 Requires PHP: 7.4
@@ -187,6 +187,9 @@ This information should be included in your plugin's readme.txt file for clear d
 2. Mobile view
 
 == Changelog ==
+
+= [v1.0.1] =
+- Fixed minor bugs and improved performance.
 
 = [v1.0.0] =
 - Official release of Maika Genius.
