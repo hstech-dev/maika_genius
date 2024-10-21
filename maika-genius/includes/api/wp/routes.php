@@ -19,10 +19,10 @@
         );
     }
 
-    $check_maika_ssid = get_option("maika_ssid");
+    $check_maika_ssid = esc_html(get_option("maika_ssid"));
     if($ssid == $check_maika_ssid){
-        update_option("maika_ai_secretKey", $secret_key);
-        update_option("maika_ai_cid", $cid);
+        update_option("maika_ai_secretKey", esc_html($secret_key));
+        update_option("maika_ai_cid", esc_html($cid));
 
         delete_option("maika_ssid");
         // Sample data to return

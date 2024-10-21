@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -28,10 +28,6 @@
      
      return $links;
  }
- 
- //  <!-- ADD tailwindcss page admin -->
- wp_enqueue_script('admin-maika-tailwindcss');
- //<!-- /ADD tailwindcss -->
  
  add_action("admin_menu", "maika_show_setting_page");
  function maika_show_setting_page(){
@@ -84,6 +80,8 @@
     $maika_favcolor = get_option("maika_ai_favcolor");
     $maika_title = get_option("maika_ai_title");
     $maika_cid = get_option("maika_ai_cid");
+
+    $maika_connected_maikahub = false;
     
     // Clear all button tab settings
     if (isset($_POST['clearAll'])){
@@ -106,13 +104,14 @@
     }
 
 
-    // Check connect Maika Hub
-    if($maika_secretKey && $maika_cid){
+    // Maika check connect Maika Hub
+    if($maika_secretKey != false && $maika_cid != false){
       $url_api_check_connect_maika_hub = 'https://hub.askmaika.ai/app/api/woo/connect_status/';
-      $check_connect_maika_hub = maika_call_get_api($url_api_check_connect_maika_hub.$maika_cid, $maika_secretKey);
+      $check_connect_maika_hub = maika_call_get_api(esc_url($url_api_check_connect_maika_hub.$maika_cid), $maika_secretKey);
       // print_r($check_connect_maika_hub['data']);
       //  && $check_connect_maika_hub['data']['wordpressAPI'] == 'connected' && $check_connect_maika_hub['data']['wooAPI'] == 'connected'
       if($check_connect_maika_hub['data']['cidBinding'] == 'connected'){
+        $maika_connected_maikahub = true;
         $pass_guide_step = 2;
       }
       else{
@@ -433,7 +432,7 @@
   <div class="maika-tab-content" id="product-descriptor"
     <?php echo $currentTab == "product-descriptor" ? "" : "style='display: none'"; ?>>
     <?php 
-      if($check_connect_maika_hub['data']['cidBinding'] == 'connected'){
+      if($maika_connected_maikahub === true){
         // echo "
         // <a href='https://hub.askmaika.ai/app/woo_prod_revise?cid=$maika_cid&secret_key=$maika_secretKey' target='_blank'><button style='margin-bottom: 20px; border: 2px solid #ececec; padding: 4px 12px;' >Go to AI Product Descriptor</button></a>
         // ";
@@ -457,7 +456,7 @@
   <div class="maika-tab-content" id="product-catalog-builder"
     <?php echo $currentTab == "product-catalog-builder" ? "" : "style='display: none'"; ?>>
     <?php
-      // if($check_connect_maika_hub['data']['cidBinding'] == 'connected'){
+      // if($maika_connected_maikahub === true){
       //   echo "[iframe]";
       // }
       // else{
@@ -477,7 +476,7 @@
   <div class="maika-tab-content" id="seo-optimizer"
     <?php echo $currentTab == "seo-optimizer" ? "" : "style='display: none'"; ?>>
     <?php
-      // if($check_connect_maika_hub['data']['cidBinding'] == 'connected'){
+      // if($maika_connected_maikahub === true){
       //   echo "[iframe]";
       // }
       // else{
@@ -497,7 +496,7 @@
   <div class="maika-tab-content" id="livechat"
     <?php echo $currentTab == "livechat" ? "" : "style='display: none'"; ?>>
     <?php
-      // if($check_connect_maika_hub['data']['cidBinding'] == 'connected'){
+      // if($maika_connected_maikahub === true){
       //   echo "[iframe]";
       // }
       // else{
@@ -518,8 +517,9 @@
 <?php
     // Enqueue style
     wp_enqueue_style('admin-maika-css');
+    wp_enqueue_style('admin-maika-tailwind-css');
     wp_enqueue_style('admin-maika-mautic');
-    // Load JavaScript file
+    // Enqueue JavaScript file
     wp_enqueue_script('admin-maika-tabs');
  }
 
@@ -531,14 +531,6 @@
   if ($hook != 'toplevel_page_maika-genius') {
       return;
   }
-
-  wp_register_script(
-      'admin-maika-tailwindcss', 
-      plugin_dir_url( __FILE__ ) . 'assets/js/admin-maika-tailwindcss.js', 
-      array(), // Dependencies... if any
-      '3.4.5',   // Version
-      false     // Load into footer
-  );
 
   wp_register_script(
     'admin-maika-tabs', 
@@ -599,6 +591,14 @@
   wp_register_style(
     'admin-maika-mautic', // Handle cho style
     plugin_dir_url(__FILE__) . 'assets/css/admin-maika-mautic.css',
+    array(), // Dependencies... if any
+    '1.0', // Version
+    'all' // Media cho style
+  );
+
+  wp_register_style(
+    'admin-maika-tailwind-css', // Handle cho style
+    plugin_dir_url(__FILE__) . 'assets/css/admin-maika-tailwind.css',
     array(), // Dependencies... if any
     '1.0', // Version
     'all' // Media cho style
