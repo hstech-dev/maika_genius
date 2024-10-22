@@ -6,47 +6,47 @@ Stable tag: 1.0.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Tags: WooCommerce AI,Product Description Generator,Ecommerce Automation,AI Chatbot for WooCommerce,SEO for WooCommerce
+Tags: WooCommerce AI, Product Description Generator, Ecommerce Automation, AI Chatbot for WooCommerce, SEO for WooCommerce
 
 Maika Genius is your one-stop solution for using the power of AI to supercharge your WooCommerce shop, boost your sales, and free up your time.
 
 == Description ==
 
-# Maika Genius: Let Al Power Your Shop
+### Maika Genius: Let Al Power Your Shop
 Tired of spending hours on tedious tasks? Maika Genius is your one-stop solution for using the power of AI to supercharge your WooCommerce shop, boost your sales, and free up your time. Let AI do the heavy lifting so you can focus on what matters most.
 
 Maika Genius leverages the power of cutting-edge Al technology to supercharge your shop, but that power comes with a demand for significant computational resources. To ensure seamless performance and prevent strain on your server, Maika Genius operates through a cloud-based platform. Simply create a free Maika account, connect your website to your account, and let Maika Genius do the heavy lifting!
 
-## Main features
-### Product Descriptor
-#### **Let Al write your product descriptions**. Forget about writer's block and spending hours crafting the perfect words. Maika Genius uses the latest Generative AI to generate high-quality, unique, and SEO-optimized product descriptions, in just minutes.
-#### Key Benefits:
+### Main features
+#### Product Descriptor
+##### **Let Al write your product descriptions**. Forget about writer's block and spending hours crafting the perfect words. Maika Genius uses the latest Generative AI to generate high-quality, unique, and SEO-optimized product descriptions, in just minutes.
+##### **Key Benefits**:
 - **Effortless Content Creation:** Generate thousands of product descriptions with a single click.
 - **Personalized Content:** Choose from various templates to match your shop's unique style and voice.
 - **Perfectly Wording:** Every word is carefully chosen to engage customers and drive sales.
 - **SEO-Optimized:** Attract more customers and boost your search engine rankings with Al-powered SEO.
 - **No More Errors:** Say goodbye to typos, grammatical errors, and inconsistent wording.
 
-### Product Catalog Builder (comming soon)
-#### **Build your entire product catalog from scratch, in minutes**. Are you starting a new online store or need to quickly add a large number of products? Maika Genius makes it effortless!
-#### Key Benefits:
+#### Product Catalog Builder (comming soon)
+##### **Build your entire product catalog from scratch, in minutes**. Are you starting a new online store or need to quickly add a large number of products? Maika Genius makes it effortless!
+##### **Key Benefits**:
 - **Turn Images Into Products:** Simply upload your product images and let our Al analyze them.
 - **Automated Descriptions:** Generate high-quality descriptions for each product, tailored to your shop's style.
 - **Intelligent Categorization:** Al automatically classifies products into appropriate categories, saving you time.
 - **Complete Catalog in 5 Minutes:** Get your shop online and ready for business quickly.
 
-### SEO Optimizer (comming soon)
-#### **Unleash the power of Al to supercharge your SEO**. Maika Genius analyzes your product information, blog posts, and website structure to ensure your content is optimized for search engines.
-#### Key Benefits:
+#### SEO Optimizer (comming soon)
+##### **Unleash the power of Al to supercharge your SEO**. Maika Genius analyzes your product information, blog posts, and website structure to ensure your content is optimized for search engines.
+##### **Key Benefits**:
 - **Automated Keyword Research:** Al finds the best keywords to target your ideal audience.
 - **Intelligent Internal Linking:** Maika Genius creates a network of internal links, enhancing your website's SEO and user experience.
 - **Content Optimization:** Improve your rankings and attract more traffic with optimized product descriptions and blog posts.
 - **Time-Saving Solution:** Free up hours of tedious work and focus on growing your business.
 
-### 24/7 Al-powered Livechat Agent (comming soon)
-#### **Provide exceptional customer service, 24/7**. Maika Genius's Al-powered livechat agent is available 24/7 to answer questions, address concerns, and provide personalized recommendations to your customers.
+#### 24/7 Al-powered Livechat Agent (comming soon)
+##### **Provide exceptional customer service, 24/7**. Maika Genius's Al-powered livechat agent is available 24/7 to answer questions, address concerns, and provide personalized recommendations to your customers.
 
-#### Key Benefits:
+##### **Key Benefits**:
 - **Always Available:** Never miss a potential sale or customer question, even when you're busy.
 - **Personalized Conversations:** Al understands your product catalog and shop's unique selling points to provide tailored customer interactions.
 - **Natural and Engaging:** Your customers will have smooth and natural conversations with Maika's Al-powered agent.
@@ -62,29 +62,29 @@ Maika Genius leverages the power of cutting-edge Al technology to supercharge yo
 
 == External services ==
 
-## Explanation of External Service Usage for Maika Genius Plugin
+#### Explanation of External Service Usage for Maika Genius Plugin
 
 This plugin relies on an external service, Maika AI platform - [Maika Hub](https://hub.askmaika.ai) and [Maika CRM](https://crm.askmaika.ai), to enhance your WooCommerce store with powerful AI features. Here's how it works and what data is shared:
 
-### 1. Connection and Data Transfer:
+##### **1. Connection and Data Transfer**:
 
 To utilize Maika Genius, you'll need to create a free account on the Maika platform. This plugin will then connect your website to your Maika account, sending your product catalog information (categories, attributes, product details) to Maika's servers. This data transfer is necessary for Maika to learn about your products and provide personalized recommendations and content. It also sends your name and contact email if you decide to subscribe to our Beta program and/or Marketing campaign.
 
-### 2. AI Learning and Content Generation:
+##### **2. AI Learning and Content Generation**:
 
 Maika utilizes this data to understand your product catalog and generate relevant content. This content is then updated back to your website via the WooCommerce REST API. Maika continuously learns from your products and your website's visitor interactions to optimize communication and recommendations.
 
-### 3. Live Chat Integration (Optional):
+##### **3. Live Chat Integration (Optional)**:
 
 If you choose to enable the live chat feature, the plugin will install a live chat box on your website. This box connects directly to the Maika platform, allowing your visitors to interact with your site using AI-powered chat. You can manage all conversations through the Maika platform admin UI.
 
-## Data Transmission and Privacy:
+#### Data Transmission and Privacy:
 
 The plugin transmits your product catalog data (categories, attributes, product details) to Maika's servers. This data is used to personalize the AI-powered features for your website.
 If you enable the live chat feature, the plugin also transmits chat interactions between visitors and your AI-powered chat assistant to Maika. This data helps Maika learn and improve its responses.
 Maika handles the data transmission and processing in accordance with its terms of service and privacy policy, which can be found at [Terms of Use](https://www.askmaika.ai/terms/) and [Privacy Policy](https://www.askmaika.ai/privacy-policy/).
 
-## Why This is Important:
+#### Why This is Important:
 
 By using Maika's AI services, you benefit from advanced features that enhance your online store's functionality and customer experience.
 This transparency ensures users are informed about how their data is used and provides a clear understanding of the plugin's reliance on third-party services.
@@ -92,13 +92,11 @@ This information should be included in your plugin's readme.txt file for clear d
 
 == Installation ==
 
-### Installation
-
-1. Upload maika-genius.zip to the /wp-content/plugins/ directory
-2. Activate the plugin through the ‘Plugins’ menu in WordPress
-3. Set up Woocommerce app password & REST API key (creation instructions at page /wp-admin/admin.php?page=maika-genius&tab=guide)
-4. Connect Your Wordpress page with Maika Hub
-5. Congratulations, successful installation!
+1. Install the Maika Genius either via the WordPress Plugin or upload maika-genius.zip to the /wp-content/plugins/ directory.
+2. Activate the plugin through the ‘Plugins’ menu in WordPress.
+3. Set up "Wordpress Application Password" and "Woocommerce REST API".
+4. Connect Your Wordpress page with Maika Hub.
+5. Congratulations, installation and setup successful!
 
 == Frequently Asked Questions ==
 
