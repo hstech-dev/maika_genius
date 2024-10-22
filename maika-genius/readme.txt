@@ -183,8 +183,10 @@ This information should be included in your plugin's readme.txt file for clear d
 
 == Screenshots ==
 
-1. Desktop view
-2. Mobile view
+1. Powerful AI solutions for your store.
+2. Detailed and easy to understand instructions, user friendly.
+3. AI chatbot with natural and intelligent conversation.
+4. AI powers powerful, highly customizable product descriptions.
 
 == Changelog ==
 
