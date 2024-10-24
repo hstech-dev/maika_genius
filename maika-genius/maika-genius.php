@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.0.2
+ * Version:     1.0.3
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -300,30 +300,24 @@
   <div class="maika-tab-content" id="guide" <?php echo $currentTab == "guide" ? "" : "style='display: none'"; ?>>
     <div id="maika-required">
       <?php
-        $maikaRequired = 0;
-        $countRequired = 0;
-
-        echo "
+        if($pass_guide_step == 0){
+          echo "
           <h2 class='mt-2 text-2xl font-bold'><span class='text-red-500'>[Action Required]</span> Setup API keys for Maika Genius</h2>
-        ";
-        echo "
           <h3 class='mt-2 text-lg font-semibold'>Required 1: You'll need to create an “<strong class='font-bold'><a class='text-[#0000ff] hover:text-[#135e96]' href='/wp-admin/profile.php'>Application Password</a></strong>“. You can follow the <span class='font-semibold' style='color: blue;'><a href='#application-passwords'>instructions here.</a></span></h3>
-          <p></p>
-        ";
-        echo "
           <h3 class='text-lg font-semibold'>Required 2: Next, you'll need to generate a “<strong class='font-bold'><a class='text-[#0000ff] hover:text-[#135e96]' href='/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys&create-key=1'>WooCommerce REST API key</a></strong>“. Simply follow the steps <span class='font-semibold' style='color: blue;'><a href='#woo-rest-api'>provided here</a></span> to set it up.</h3>
-          <p></p>
-        ";
-        if($maikaApplicationPassword != null){
-          $maikaRequired += 1;
+          <hr class='mt-2'>
+          ";
         }
-        if($maikaWooAPIKey != false){
-          $maikaRequired += 1;
+
+        if($pass_guide_step == 1){
+          echo "
+          <h2 class='mt-2 text-2xl font-bold'><span class='text-red-500'>[Action Required]</span> Connect your WordPress with Maika</h2>
+          <h3 class='mt-2 text-lg font-semibold'>Click the \"Connect your WordPress with Maika\" button above to connect with Maika Hub</h3>
+          <hr class='mt-2'>
+          ";
         }
       ?>
     </div>
-
-    <hr class="mt-2">
 
     <div id="application-passwords">
       <h2 class="mt-2 text-2xl font-bold">How to create Application Passwords</h2>
@@ -404,7 +398,7 @@
       <?php wp_nonce_field('maika_ai_settings_nonce', 'maika_ai_nonce_field'); ?>
       <label for="secretKey">Secret Key: </label><br>
       <input disabled style="min-width: 300px; margin-top: 4px;" type="text" required id="secretKey" name="secretKey"
-        value="<?php echo esc_html($maika_secretKey); ?>" /><br>
+        value="<?php echo esc_html($maika_secretKey != '' ? maika_mask_string($maika_secretKey) : ''); ?>" /><br>
       <div style="margin-top: 10px; display: flex; align-items: center;">
         <label for="favcolor">Select your favorite color: </label>
         <input style="margin-left: 4px;" type="color" id="favcolor" name="favcolor"
@@ -418,7 +412,7 @@
       <div style="margin-top: 6px;">
         <label for="cid">CID: </label><br>
         <input disabled style="min-width: 300px; margin-top: 4px;" type="text" required id="cid" name="cid"
-          value="<?php echo esc_html($maika_cid != '' ? $maika_cid : ''); ?>" /><br>
+          value="<?php echo esc_html($maika_cid != '' ? maika_mask_string($maika_cid) : ''); ?>" /><br>
       </div>
       <br><input
         class="rounded border border-indigo-600 bg-indigo-600 px-8 py-2 text-center text-sm font-medium text-white hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring active:text-white"
@@ -736,6 +730,21 @@
    $responseData = json_decode(wp_remote_retrieve_body($response), true);
  
    return $responseData; // Return the parsed data
+ }
+
+ function maika_mask_string($string, $visibleChars = 8) {
+  $length = strlen($string);
+  
+  if ($length <= $visibleChars) {
+      return $string;
+  }
+
+  $start = substr($string, 0, $visibleChars);
+  $end = substr($string, -$visibleChars);
+
+  $maskedString = $start . str_repeat('*', $length - $visibleChars * 2) . $end;
+
+  return $maskedString;
  }
 
  // ==========================================================
