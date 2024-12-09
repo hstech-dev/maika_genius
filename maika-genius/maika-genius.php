@@ -141,7 +141,7 @@
 <?php
   if($maika_rfa == "true"){
     echo "
-      <iframe id='MAIKA_IFRAME' src='https://hub.askmaika.ai/app/permission?type=storage&step=ask&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px;'></iframe>
+      <iframe id='MAIKA_IFRAME_rfa' src='https://hub.askmaika.ai/app/permission?type=storage&step=ask&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px;'></iframe>
     ";
     wp_enqueue_script('admin-maika-iframe-resizer');
   }
@@ -399,7 +399,7 @@
       <?php
         if($maika_connected_maikahub === true){
           echo "
-            <iframe id='MAIKA_IFRAME' src='https://hub.askmaika.ai/app/site?cid=".esc_html($maika_cid)."&secret_key=".esc_html($maika_secretKey)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+            <iframe id='MAIKA_IFRAME_settings' src='https://hub.askmaika.ai/app/site?cid=".esc_html($maika_cid)."&secret_key=".esc_html($maika_secretKey)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
           ";
           wp_enqueue_script('admin-maika-iframe-resizer');
         }
@@ -418,7 +418,7 @@
         // <a href='https://hub.askmaika.ai/app/woo_prod_revise?cid=$maika_cid&secret_key=$maika_secretKey' target='_blank'><button style='margin-bottom: 20px; border: 2px solid #ececec; padding: 4px 12px;' >Go to AI Product Descriptor</button></a>
         // ";
         echo "
-        <iframe id='MAIKA_IFRAME' src='https://hub.askmaika.ai/app/woo_prod_revise?cid=".esc_html($maika_cid)."&secret_key=".esc_html($maika_secretKey)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+        <iframe id='MAIKA_IFRAME_pdescriptor' src='https://hub.askmaika.ai/app/woo_prod_revise?cid=".esc_html($maika_cid)."&secret_key=".esc_html($maika_secretKey)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
         ";
         wp_enqueue_script('admin-maika-iframe-resizer');
       }
