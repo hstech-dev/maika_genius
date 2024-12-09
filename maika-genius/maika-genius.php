@@ -396,27 +396,14 @@
     <!--<h2>Setting Maika Genius</h2>-->
     <form method="post">
       <?php wp_nonce_field('maika_ai_settings_nonce', 'maika_ai_nonce_field'); ?>
-      <label for="secretKey">Secret Key: </label><br>
-      <input disabled style="min-width: 300px; margin-top: 4px;" type="text" required id="secretKey" name="secretKey"
-        value="<?php echo esc_html($maika_secretKey != '' ? maika_mask_string($maika_secretKey) : ''); ?>" /><br>
-      <div style="margin-top: 10px; display: flex; align-items: center;">
-        <label for="favcolor">Select your favorite color: </label>
-        <input style="margin-left: 4px;" type="color" id="favcolor" name="favcolor"
-          value="<?php echo esc_html($maika_favcolor != '' ? $maika_favcolor : '#800080'); ?>"><br>
-      </div>
-      <div style="margin-top: 4px;">
-        <label for="title">Title: </label><br>
-        <input style="min-width: 300px; margin-top: 4px;" type="text" required id="title" name="title"
-          value="<?php echo esc_html($maika_title != '' ? $maika_title : 'Maika demo'); ?>" /><br>
-      </div>
-      <div style="margin-top: 6px;">
-        <label for="cid">CID: </label><br>
-        <input disabled style="min-width: 300px; margin-top: 4px;" type="text" required id="cid" name="cid"
-          value="<?php echo esc_html($maika_cid != '' ? maika_mask_string($maika_cid) : ''); ?>" /><br>
-      </div>
-      <br><input
-        class="rounded border border-indigo-600 bg-indigo-600 px-8 py-2 text-center text-sm font-medium text-white hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring active:text-white"
-        type="submit" name="submit" value="Save" />
+      <?php
+        if($maika_connected_maikahub === true){
+          echo "
+            <iframe id='MAIKA_IFRAME' src='https://hub.askmaika.ai/app/site?cid=".esc_html($maika_cid)."&secret_key=".esc_html($maika_secretKey)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+          ";
+          wp_enqueue_script('admin-maika-iframe-resizer');
+        }
+      ?>
       <input
         class="ml-2 rounded border border-indigo-600 bg-white px-8 py-2 text-center text-sm font-medium text-indigo-600 focus:outline-none hover:text-indigo-600 focus:ring"
         type="submit" name="clearAll" value="Disconnect - Clear all data" />
