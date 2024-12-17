@@ -39,3 +39,35 @@
         array('status' => 400)
     );
  }
+
+ function maika_check_valid_cid_secretKey($data) {
+    // Get Body Params...
+    $parameters = $data->get_params();
+    $cid = isset($parameters['cid']) ? $parameters['cid'] : null;
+    $secret_key = isset($parameters['secret_key']) ? $parameters['secret_key'] : null;
+
+    if($cid == null || $secret_key == null){
+        return new WP_Error(
+            'missing',
+            'Missing param...',
+            array('status' => 400)
+        );
+    }
+
+    $get_maika_cid = esc_html(get_option("maika_ai_cid"));
+    $get_maika_secretKey = esc_html(get_option("maika_ai_secretKey"));
+
+    if($cid == $get_maika_cid && $secret_key == $get_maika_secretKey){
+        $response = array(
+            'status' => 'success',
+            'message' => 'valid'
+        );
+        return rest_ensure_response($response);
+    }
+    
+    $response = array(
+        'status' => 'success',
+        'message' => 'invalid'
+    );
+    return rest_ensure_response($response);
+ }

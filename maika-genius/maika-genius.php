@@ -83,8 +83,15 @@
 
     $maika_connected_maikahub = false;
     
-    // Clear all button tab settings
+    // [Handle] Disconnect - Clear all data
     if (isset($_POST['clearAll'])){
+      // Disconnect website from Hub
+      $maika_disconnect_body_data = [
+        "cid" => $maika_cid,
+        "secretKey" => $maika_secretKey
+      ];
+      maika_call_post_api(esc_url('https://hub.askmaika.ai/app/api/woo/disconnect_site'), $maika_disconnect_body_data);
+
       delete_option("maika_ai_secretKey");
       delete_option("maika_ai_favcolor");
       delete_option("maika_ai_title");
@@ -92,7 +99,7 @@
       delete_option("maika_ssid");
       $del_AP = maika_delete_application_password_exists("maika");
       $del_WooAPI = maika_delete_woocommerce_api_keys();
-      
+
       //redirect link
       $rd = esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius";
 
@@ -103,14 +110,13 @@
       wp_enqueue_script('admin-maika-disconnect');
     }
 
-
     // Maika check connect Maika Hub
     if($maika_secretKey != false && $maika_cid != false){
       $url_api_check_connect_maika_hub = 'https://hub.askmaika.ai/app/api/woo/connect_status/';
       $check_connect_maika_hub = maika_call_get_api(esc_url($url_api_check_connect_maika_hub.$maika_cid), $maika_secretKey);
       // print_r($check_connect_maika_hub['data']);
       //  && $check_connect_maika_hub['data']['wordpressAPI'] == 'connected' && $check_connect_maika_hub['data']['wooAPI'] == 'connected'
-      if($check_connect_maika_hub['data']['cidBinding'] == 'connected'){
+      if(($check_connect_maika_hub['data']['cidBinding'] ?? null) == 'connected'){
         $maika_connected_maikahub = true;
         $pass_guide_step = 2;
       }
@@ -399,7 +405,6 @@
     <?php
       if($maika_connected_maikahub === true){
 
-
         echo "<div id='iframe_maika_container_settings'>";
         if($currentTab == 'settings'){ // Show iframes if accessing tab directly from link
           echo "
@@ -413,7 +418,7 @@
     <form method="post">
       <?php wp_nonce_field('maika_ai_settings_nonce', 'maika_ai_nonce_field'); ?>
       
-      <input
+      <input style="cursor: pointer;"
         class="ml-2 rounded border border-indigo-600 bg-white px-8 py-2 text-center text-sm font-medium text-indigo-600 focus:outline-none hover:text-indigo-600 focus:ring"
         type="submit" name="clearAll" value="Disconnect - Clear all data" />
     </form>
@@ -732,6 +737,31 @@
    return $responseData; // Return the parsed data
  }
 
+ function maika_call_post_api($url, $arr_body_data) {
+  // Set up the arguments for the request
+  $args = [
+      'headers' => [
+          'Content-Type' => 'application/json', // Set nội dung là JSON
+          'c-secret-key' => $api_key,          // Thêm API key vào header
+      ],
+      'body' => json_encode($arr_body_data),
+      //'timeout' => 15, // Optional: Thời gian chờ tối đa cho request
+  ];
+
+  // Send POST request
+  $response = wp_remote_post($url, $args);
+
+  // Check for errors
+  if (is_wp_error($response)) {
+      return $response->get_error_message(); // Return the error message
+  }
+
+  // Parse the JSON response
+  $responseData = json_decode(wp_remote_retrieve_body($response), true);
+
+  return $responseData; // Return the parsed data
+ }
+
  function maika_mask_string($string, $visibleChars = 8) {
   $length = strlen($string);
   
@@ -767,8 +797,6 @@
     if($maika_ai_secretKey && $maika_ai_cid){
       // Localize script to pass PHP variables to JavaScript
       wp_localize_script('maika-engine', 'maikaEngineData', array(
-        'primaryColor' => esc_js($maika_ai_favcolor),
-        'title' => esc_js($maika_ai_title),
         'cid' => esc_js($maika_ai_cid),
       ));
       // Load into script
