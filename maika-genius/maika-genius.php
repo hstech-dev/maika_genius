@@ -143,8 +143,10 @@
     echo "
       <iframe id='MAIKA_IFRAME_rfa' src='https://hub.askmaika.ai/app/permission?type=storage&step=ask&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px;'></iframe>
     ";
-    wp_enqueue_script('admin-maika-iframe-resizer');
   }
+
+  wp_enqueue_script('admin-maika-iframe-resizer');
+
 ?>
 
 <!-- GUIDE -->
@@ -263,7 +265,7 @@
 <!-- END SCOPE: Show guide for Beginner -->
 
 <div class="maika-tab-container" <?php echo $maika_rfa != "true" ? "" : "style='display: none'"; ?>>
-  <div class="maika-tabs">
+  <div class="maika-tabs" data-tabs-cid="<?php echo esc_html($maika_cid); ?>" data-tabs-secretKey="<?php echo esc_html($maika_secretKey); ?>" data-tabs-domainWeb="<?php echo esc_html($domain_web); ?>">
     <button class="maika-tab <?php echo $currentTab == "home" || $currentTab == "" ? "maika-active" : ""; ?>"
       data-tab="home">Home</button>
     <button class="maika-tab <?php echo $currentTab == "guide" ? "maika-active" : ""; ?>"
@@ -394,16 +396,23 @@
   <div class="maika-tab-content" id="settings" <?php echo $currentTab == "settings" ? "" : "style='display: none'"; ?>>
     <!-- content -->
     <!--<h2>Setting Maika Genius</h2>-->
-    <form method="post">
-      <?php wp_nonce_field('maika_ai_settings_nonce', 'maika_ai_nonce_field'); ?>
-      <?php
-        if($maika_connected_maikahub === true){
+    <?php
+      if($maika_connected_maikahub === true){
+
+
+        echo "<div id='iframe_maika_container_settings'>";
+        if($currentTab == 'settings'){ // Show iframes if accessing tab directly from link
           echo "
             <iframe id='MAIKA_IFRAME_settings' src='https://hub.askmaika.ai/app/site?cid=".esc_html($maika_cid)."&secret_key=".esc_html($maika_secretKey)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
           ";
-          wp_enqueue_script('admin-maika-iframe-resizer');
         }
-      ?>
+        echo "</div>";
+      }
+    ?>
+
+    <form method="post">
+      <?php wp_nonce_field('maika_ai_settings_nonce', 'maika_ai_nonce_field'); ?>
+      
       <input
         class="ml-2 rounded border border-indigo-600 bg-white px-8 py-2 text-center text-sm font-medium text-indigo-600 focus:outline-none hover:text-indigo-600 focus:ring"
         type="submit" name="clearAll" value="Disconnect - Clear all data" />
@@ -417,10 +426,14 @@
         // echo "
         // <a href='https://hub.askmaika.ai/app/woo_prod_revise?cid=$maika_cid&secret_key=$maika_secretKey' target='_blank'><button style='margin-bottom: 20px; border: 2px solid #ececec; padding: 4px 12px;' >Go to AI Product Descriptor</button></a>
         // ";
-        echo "
-        <iframe id='MAIKA_IFRAME_pdescriptor' src='https://hub.askmaika.ai/app/woo_prod_revise?cid=".esc_html($maika_cid)."&secret_key=".esc_html($maika_secretKey)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
-        ";
-        wp_enqueue_script('admin-maika-iframe-resizer');
+
+        echo "<div id='iframe_maika_container_product-descriptor'>";
+        if($currentTab == 'product-descriptor'){ // Show iframes if accessing tab directly from link
+          echo "
+          <iframe id='MAIKA_IFRAME_product-descriptor' src='https://hub.askmaika.ai/app/woo_prod_revise?cid=".esc_html($maika_cid)."&secret_key=".esc_html($maika_secretKey)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+          ";
+        }
+        echo "</div>";
       }
       else{
         if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_prod_descriptor.html')){
@@ -517,7 +530,7 @@
     'admin-maika-tabs', 
     plugin_dir_url( __FILE__ ) . 'assets/js/admin-maika-tabs.js', 
     array(), // Dependencies... if any
-    '1.0',   // Version
+    time(),   // Version
     false     // Load into footer
   );
 
@@ -525,7 +538,7 @@
     'admin-maika-iframe-resizer', 
     plugin_dir_url( __FILE__ ) . 'assets/js/admin-maika-iframe-resizer.js', 
     array(), // Dependencies... if any
-    '1.0',   // Version
+    time(),   // Version
     true     // Load into footer
   );
 
