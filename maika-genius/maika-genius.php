@@ -741,11 +741,10 @@
   // Set up the arguments for the request
   $args = [
       'headers' => [
-          'Content-Type' => 'application/json', // Set nội dung là JSON
-          'c-secret-key' => $api_key,          // Thêm API key vào header
+          'Content-Type' => 'application/json', // Set the content type to JSON if necessary
       ],
       'body' => json_encode($arr_body_data),
-      //'timeout' => 15, // Optional: Thời gian chờ tối đa cho request
+      //'timeout' => 15, // Optional: Set a timeout for the request
   ];
 
   // Send POST request
