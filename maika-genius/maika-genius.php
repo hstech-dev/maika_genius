@@ -419,7 +419,7 @@
       <?php wp_nonce_field('maika_ai_settings_nonce', 'maika_ai_nonce_field'); ?>
       
       <input style="cursor: pointer;"
-        class="ml-2 rounded border border-indigo-600 bg-white px-8 py-2 text-center text-sm font-medium text-indigo-600 focus:outline-none hover:text-indigo-600 focus:ring"
+        class="mt-4 rounded border border-purple-600 bg-white px-8 py-2 text-center text-sm font-medium text-purple-600 focus:outline-none hover:text-white hover:bg-purple-600 focus:ring"
         type="submit" name="clearAll" value="Disconnect - Clear all data" />
     </form>
   </div>
@@ -599,7 +599,7 @@
     'admin-maika-tailwind-css', // Handle cho style
     plugin_dir_url(__FILE__) . 'assets/css/admin-maika-tailwind.css',
     array(), // Dependencies... if any
-    '1.0', // Version
+    time(), // Version
     'all' // Media cho style
   );
  }
