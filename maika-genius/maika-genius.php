@@ -123,7 +123,7 @@
       // else{
       //   $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
       // }
-      $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 2 : 0;
+      $pass_guide_step = 2;
     }
     else{
       $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
