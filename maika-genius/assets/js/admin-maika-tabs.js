@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const dataTabs = document.querySelector('.maika-tabs');
   const dataCid = dataTabs?.getAttribute('data-tabs-cid');
-  const dataSecretKey = dataTabs?.getAttribute('data-tabs-secretKey');
+  // const dataSecretKey = dataTabs?.getAttribute('data-tabs-secretKey');
   const dataDomainWeb = dataTabs?.getAttribute('data-tabs-domainWeb');
 
   tabs.forEach(tab => {
@@ -27,14 +27,16 @@ document.addEventListener('DOMContentLoaded', () => {
         case "settings":
           const iframeContainerSettings = document.getElementById('iframe_maika_container_'+target);
           if(iframeContainerSettings){
-            const iframeHTMLSettings = `<iframe id='MAIKA_IFRAME_settings' src='https://hub.askmaika.ai/app/site?cid=${dataCid}&secret_key=${dataSecretKey}&display_mode=embed&wp_domain=${dataDomainWeb}' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>`;
+            //&secret_key=${dataSecretKey}
+            const iframeHTMLSettings = `<iframe id='MAIKA_IFRAME_settings' src='https://hub.askmaika.ai/app/site?cid=${dataCid}&display_mode=embed&wp_domain=${dataDomainWeb}' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>`;
             iframeContainerSettings.innerHTML = iframeHTMLSettings;
           }
           break;
         case "product-descriptor":
           const iframeContainerProductDescriptor = document.getElementById('iframe_maika_container_'+target);
           if(iframeContainerProductDescriptor){
-            const iframeHTMLProductDescriptor = `<iframe id='MAIKA_IFRAME_product-descriptor' src='https://hub.askmaika.ai/app/woo_prod_revise?cid=${dataCid}&secret_key=${dataSecretKey}&display_mode=embed&wp_domain=${dataDomainWeb}' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>`;
+            //&secret_key=${dataSecretKey}
+            const iframeHTMLProductDescriptor = `<iframe id='MAIKA_IFRAME_product-descriptor' src='https://hub.askmaika.ai/app/woo_prod_revise?cid=${dataCid}&display_mode=embed&wp_domain=${dataDomainWeb}' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>`;
             iframeContainerProductDescriptor.innerHTML = iframeHTMLProductDescriptor;
           }
           break;

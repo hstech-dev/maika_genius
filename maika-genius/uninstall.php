@@ -4,7 +4,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
     die;
 }
 
-delete_option("maika_ai_secretKey");
+// delete_option("maika_ai_secretKey");
 // for site options in Multisite
 // delete_site_option("maika_ai_secretKey");
 

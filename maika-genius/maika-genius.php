@@ -76,23 +76,23 @@
     $pass_guide_step = 0;
     
     // get value attr
-    $maika_secretKey = get_option("maika_ai_secretKey");
+    //$maika_secretKey = get_option("maika_ai_secretKey");
     $maika_favcolor = get_option("maika_ai_favcolor");
     $maika_title = get_option("maika_ai_title");
     $maika_cid = get_option("maika_ai_cid");
 
-    $maika_connected_maikahub = false;
+    //$maika_connected_maikahub = false;
     
     // [Handle] Disconnect - Clear all data
     if (isset($_POST['clearAll'])){
       // Disconnect website from Hub
+      //"secretKey" => $maika_secretKey
       $maika_disconnect_body_data = [
-        "cid" => $maika_cid,
-        "secretKey" => $maika_secretKey
+        "cid" => $maika_cid
       ];
       maika_call_post_api(esc_url('https://hub.askmaika.ai/app/api/woo/disconnect_site'), $maika_disconnect_body_data);
 
-      delete_option("maika_ai_secretKey");
+      //delete_option("maika_ai_secretKey");
       delete_option("maika_ai_favcolor");
       delete_option("maika_ai_title");
       delete_option("maika_ai_cid");
@@ -111,18 +111,19 @@
     }
 
     // Maika check connect Maika Hub
-    if($maika_secretKey != false && $maika_cid != false){
-      $url_api_check_connect_maika_hub = 'https://hub.askmaika.ai/app/api/woo/connect_status/';
-      $check_connect_maika_hub = maika_call_get_api(esc_url($url_api_check_connect_maika_hub.$maika_cid), $maika_secretKey);
+    if($maika_cid != false){ //$maika_secretKey != false && 
+      //$url_api_check_connect_maika_hub = 'https://hub.askmaika.ai/app/api/woo/connect_status/';
+      //$check_connect_maika_hub = maika_call_get_api(esc_url($url_api_check_connect_maika_hub.$maika_cid)); //, $maika_secretKey
       // print_r($check_connect_maika_hub['data']);
       //  && $check_connect_maika_hub['data']['wordpressAPI'] == 'connected' && $check_connect_maika_hub['data']['wooAPI'] == 'connected'
-      if(($check_connect_maika_hub['data']['cidBinding'] ?? null) == 'connected'){
-        $maika_connected_maikahub = true;
-        $pass_guide_step = 2;
-      }
-      else{
-        $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
-      }
+      // if(($check_connect_maika_hub['data']['cidBinding'] ?? null) == 'connected'){
+      //   $maika_connected_maikahub = true;
+      //   $pass_guide_step = 2;
+      // }
+      // else{
+      //   $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
+      // }
+      $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 2 : 0;
     }
     else{
       $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
@@ -271,13 +272,13 @@
 <!-- END SCOPE: Show guide for Beginner -->
 
 <div class="maika-tab-container" <?php echo $maika_rfa != "true" ? "" : "style='display: none'"; ?>>
-  <div class="maika-tabs" data-tabs-cid="<?php echo esc_html($maika_cid); ?>" data-tabs-secretKey="<?php echo esc_html($maika_secretKey); ?>" data-tabs-domainWeb="<?php echo esc_html($domain_web); ?>">
+  <div class="maika-tabs" data-tabs-cid="<?php echo esc_html($maika_cid); ?>" data-tabs-domainWeb="<?php echo esc_html($domain_web); ?>">
     <button class="maika-tab <?php echo $currentTab == "home" || $currentTab == "" ? "maika-active" : ""; ?>"
       data-tab="home">Home</button>
     <button class="maika-tab <?php echo $currentTab == "guide" ? "maika-active" : ""; ?>"
       data-tab="guide">Guide</button>
     <button class="maika-tab <?php echo $currentTab == "settings" ? "maika-active" : ""; ?>" data-tab="settings"
-      <?php echo $maika_secretKey && $maika_cid ? "" : "style='display: none;'"; ?>>Settings</button>
+      <?php echo $maika_cid ? "" : "style='display: none;'"; ?>>Settings</button>
     <button class="maika-tab <?php echo $currentTab == "product-descriptor" ? "maika-active" : ""; ?>"
       data-tab="product-descriptor">Product Descriptor</button>
     <button class="maika-tab <?php echo $currentTab == "product-catalog-builder" ? "maika-active" : ""; ?>"
@@ -403,12 +404,13 @@
     <!-- content -->
     <!--<h2>Setting Maika Genius</h2>-->
     <?php
-      if($maika_connected_maikahub === true){
+      if($maika_cid != false){ //$maika_connected_maikahub === true
 
         echo "<div id='iframe_maika_container_settings'>";
         if($currentTab == 'settings'){ // Show iframes if accessing tab directly from link
+          // "&secret_key=".esc_html($maika_secretKey).
           echo "
-            <iframe id='MAIKA_IFRAME_settings' src='https://hub.askmaika.ai/app/site?cid=".esc_html($maika_cid)."&secret_key=".esc_html($maika_secretKey)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+            <iframe id='MAIKA_IFRAME_settings' src='https://hub.askmaika.ai/app/site?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
           ";
         }
         echo "</div>";
@@ -427,15 +429,16 @@
   <div class="maika-tab-content" id="product-descriptor"
     <?php echo $currentTab == "product-descriptor" ? "" : "style='display: none'"; ?>>
     <?php 
-      if($maika_connected_maikahub === true){
+      if($maika_cid != false){ //$maika_connected_maikahub === true
         // echo "
         // <a href='https://hub.askmaika.ai/app/woo_prod_revise?cid=$maika_cid&secret_key=$maika_secretKey' target='_blank'><button style='margin-bottom: 20px; border: 2px solid #ececec; padding: 4px 12px;' >Go to AI Product Descriptor</button></a>
         // ";
 
         echo "<div id='iframe_maika_container_product-descriptor'>";
         if($currentTab == 'product-descriptor'){ // Show iframes if accessing tab directly from link
+          // "&secret_key=".esc_html($maika_secretKey).
           echo "
-          <iframe id='MAIKA_IFRAME_product-descriptor' src='https://hub.askmaika.ai/app/woo_prod_revise?cid=".esc_html($maika_cid)."&secret_key=".esc_html($maika_secretKey)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+          <iframe id='MAIKA_IFRAME_product-descriptor' src='https://hub.askmaika.ai/app/woo_prod_revise?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
           ";
         }
         echo "</div>";
@@ -455,7 +458,7 @@
   <div class="maika-tab-content" id="product-catalog-builder"
     <?php echo $currentTab == "product-catalog-builder" ? "" : "style='display: none'"; ?>>
     <?php
-      // if($maika_connected_maikahub === true){
+      // if($maika_cid != false){ //$maika_connected_maikahub === true
       //   echo "[iframe]";
       // }
       // else{
@@ -475,7 +478,7 @@
   <div class="maika-tab-content" id="seo-optimizer"
     <?php echo $currentTab == "seo-optimizer" ? "" : "style='display: none'"; ?>>
     <?php
-      // if($maika_connected_maikahub === true){
+      // if($maika_cid != false){ //$maika_connected_maikahub === true
       //   echo "[iframe]";
       // }
       // else{
@@ -713,12 +716,12 @@
     }
  }
 
- function maika_call_get_api($url, $api_key) {
+ function maika_call_get_api($url, $api_key='') {
    // Set up the arguments for the request
    $args = [
        'headers' => [
-           'Content-Type' => 'application/json', // Set the content type to JSON if necessary
-           'c-secret-key' => $api_key, // If the API requires authorization
+           'Content-Type' => 'application/json' // Set the content type to JSON if necessary
+           //'c-secret-key' => $api_key, // If the API requires authorization
        ],
        //'timeout' => 15, // Optional: Set a timeout for the request
    ];
@@ -788,12 +791,12 @@
  // add custom script
  add_action('wp_footer', 'maika_chatbox_config');
  function maika_chatbox_config(){
-    $maika_ai_secretKey = get_option("maika_ai_secretKey");
+    // $maika_ai_secretKey = get_option("maika_ai_secretKey");
     $maika_ai_favcolor = get_option("maika_ai_favcolor") ? get_option("maika_ai_favcolor") : "#800080";
     $maika_ai_title = get_option("maika_ai_title") ? get_option("maika_ai_title") : "Maika";
     $maika_ai_cid = get_option("maika_ai_cid");
 
-    if($maika_ai_secretKey && $maika_ai_cid){
+    if($maika_ai_cid){ //$maika_ai_secretKey && 
       // Localize script to pass PHP variables to JavaScript
       wp_localize_script('maika-engine', 'maikaEngineData', array(
         'cid' => esc_js($maika_ai_cid),
