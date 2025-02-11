@@ -1,12 +1,12 @@
-=== Maika Genius ===
+=== Maika Genius - AI Content Generator & Writer, Live Chat & AI Chatbot, ChatGPT (OpenAI), GPT-4o, Gemini for Woocommerce ===
 Contributors: tomaskmaika
 Requires at least: 5.6
-Tested up to: 6.6
-Stable tag: 1.0.3
+Tested up to: 6.7.1
+Stable tag: 1.1.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Tags: WooCommerce AI, Product Description Generator, Ecommerce Automation, AI Chatbot for WooCommerce, SEO for WooCommerce
+Tags: chatgpt, openai, ai content, chatbot, live chat
 
 Maika Genius is your one-stop solution for using the power of AI to supercharge your WooCommerce shop, boost your sales, and free up your time.
 
@@ -187,6 +187,9 @@ This information should be included in your plugin's readme.txt file for clear d
 4. AI powers powerful, highly customizable product descriptions.
 
 == Changelog ==
+
+= [v1.1.0] =
+- We're improving the plugin's UI with a more intuitive settings page and expanded customization options. Users will have a smoother experience, making adjustments faster and easier. 🚀
 
 = [v1.0.3] =
 - Fixed minor issues UI.
