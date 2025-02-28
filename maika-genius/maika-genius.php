@@ -410,7 +410,7 @@
         if($currentTab == 'settings'){ // Show iframes if accessing tab directly from link
           // "&secret_key=".esc_html($maika_secretKey).
           echo "
-            <iframe id='MAIKA_IFRAME_settings' src='https://hub.askmaika.ai/app/site?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+            <iframe id='MAIKA_IFRAME_settings' src='https://hub.askmaika.ai/app/site?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."&mode=setting' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
           ";
         }
         echo "</div>";
@@ -505,12 +505,24 @@
       //// render HTML content_livechat
       // }
 
-      if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_livechat.html')){
-        ob_start();
-        require_once plugin_dir_path(__FILE__).'assets/html/content_livechat.html';
-        $htmlContent = ob_get_clean();
+      // if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_livechat.html')){
+      //   ob_start();
+      //   require_once plugin_dir_path(__FILE__).'assets/html/content_livechat.html';
+      //   $htmlContent = ob_get_clean();
 
-        echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
+      //   echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
+      // }
+
+      if($maika_cid != false){ //$maika_connected_maikahub === true
+
+        echo "<div id='iframe_maika_container_livechat'>";
+        if($currentTab == 'livechat'){ // Show iframes if accessing tab directly from link
+          // "&secret_key=".esc_html($maika_secretKey).
+          echo "
+            <iframe id='MAIKA_IFRAME_livechat' src='https://hub.askmaika.ai/app/site?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."&mode=livechat' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+          ";
+        }
+        echo "</div>";
       }
     ?>
   </div>

@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const iframeContainerSettings = document.getElementById('iframe_maika_container_'+target);
           if(iframeContainerSettings){
             //&secret_key=${dataSecretKey}
-            const iframeHTMLSettings = `<iframe id='MAIKA_IFRAME_settings' src='https://hub.askmaika.ai/app/site?cid=${dataCid}&display_mode=embed&wp_domain=${dataDomainWeb}' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>`;
+            const iframeHTMLSettings = `<iframe id='MAIKA_IFRAME_settings' src='https://hub.askmaika.ai/app/site?cid=${dataCid}&display_mode=embed&wp_domain=${dataDomainWeb}&mode=setting' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>`;
             iframeContainerSettings.innerHTML = iframeHTMLSettings;
           }
           break;
@@ -40,10 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
             iframeContainerProductDescriptor.innerHTML = iframeHTMLProductDescriptor;
           }
           break;
+        case "livechat":
+          const iframeContainerLivechat = document.getElementById('iframe_maika_container_'+target);
+          if(iframeContainerLivechat){
+            //&secret_key=${dataSecretKey}
+            const iframeHTMLLivechat = `<iframe id='MAIKA_IFRAME_product-descriptor' src='https://hub.askmaika.ai/app/site?cid=${dataCid}&display_mode=embed&wp_domain=${dataDomainWeb}&mode=livechat' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>`;
+            iframeContainerLivechat.innerHTML = iframeHTMLLivechat;
+          }
+          break;
       }
 
       // Remove iframes in other tabs
-      const list_iframes = ['iframe_maika_container_settings', 'iframe_maika_container_product-descriptor'];
+      const list_iframes = ['iframe_maika_container_settings', 'iframe_maika_container_product-descriptor', 'iframe_maika_container_livechat'];
       for(const ifs of list_iframes){
         if(ifs.includes(target)){
           continue;
