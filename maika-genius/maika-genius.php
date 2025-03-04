@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.1.1
+ * Version:     1.1.2
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -528,13 +528,14 @@
   </div>
 </div>
 
-<?php
+  <?php
     // Enqueue style
     wp_enqueue_style('admin-maika-css');
     wp_enqueue_style('admin-maika-tailwind-css');
     wp_enqueue_style('admin-maika-mautic');
     // Enqueue JavaScript file
     wp_enqueue_script('admin-maika-tabs');
+    wp_enqueue_script('admin-maika-iframe-notification');
  }
 
  // ****************************************************
@@ -557,6 +558,14 @@
   wp_register_script(
     'admin-maika-iframe-resizer', 
     plugin_dir_url( __FILE__ ) . 'assets/js/admin-maika-iframe-resizer.js', 
+    array(), // Dependencies... if any
+    time(),   // Version
+    true     // Load into footer
+  );
+
+  wp_register_script(
+    'admin-maika-iframe-notification', 
+    plugin_dir_url( __FILE__ ) . 'assets/js/admin-maika-iframe-notification.js', 
     array(), // Dependencies... if any
     time(),   // Version
     true     // Load into footer
@@ -792,7 +801,7 @@
  }
 
  // ==========================================================
- // Hook add link script in page
+ // Hook add link script in user page
  add_action('wp_enqueue_scripts', 'maika_chatbox_add_script');
  function maika_chatbox_add_script() {
     // add file JavaScript (maika.js) in footer
