@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.1.2
+ * Version:     1.2.0
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -279,12 +279,14 @@
       data-tab="guide">Guide</button>
     <button class="maika-tab <?php echo $currentTab == "settings" ? "maika-active" : ""; ?>" data-tab="settings"
       <?php echo $maika_cid ? "" : "style='display: none;'"; ?>>Settings</button>
+    <button class="maika-tab <?php echo $currentTab == "product-structure" ? "maika-active" : ""; ?>"
+      data-tab="product-structure">Product Structure</button>
     <button class="maika-tab <?php echo $currentTab == "product-descriptor" ? "maika-active" : ""; ?>"
       data-tab="product-descriptor">Product Descriptor</button>
     <button class="maika-tab <?php echo $currentTab == "product-catalog-builder" ? "maika-active" : ""; ?>"
     data-tab="product-catalog-builder">Product Catalog Builder</button>
     <button class="maika-tab <?php echo $currentTab == "seo-optimizer" ? "maika-active" : ""; ?>"
-      data-tab="seo-optimizer">SEO Optimizer</button>
+      data-tab="seo-optimizer">SEO <br> Optimizer</button>
       <button class="maika-tab <?php echo $currentTab == "livechat" ? "maika-active" : ""; ?>"
       data-tab="livechat">Livechat</button>
   </div>
@@ -426,6 +428,31 @@
     </form>
   </div>
 
+  <div class="maika-tab-content" id="product-structure"
+    <?php echo $currentTab == "product-structure" ? "" : "style='display: none'"; ?>>
+    <?php 
+      if($maika_cid != false){ //$maika_connected_maikahub === true
+        echo "<div id='iframe_maika_container_product-structure'>";
+        if($currentTab == 'product-structure'){ // Show iframes if accessing tab directly from link
+          // "&secret_key=".esc_html($maika_secretKey).
+          echo "
+          <iframe id='MAIKA_IFRAME_product-structure' src='https://hub.askmaika.ai/app/woo_prod_structure?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+          ";
+        }
+        echo "</div>";
+      }
+      // else{
+      //   if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_prod_structure.html')){
+      //     ob_start();
+      //     require_once plugin_dir_path(__FILE__).'assets/html/content_prod_structure.html';
+      //     $htmlContent = ob_get_clean();
+
+      //     echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
+      //   }
+      // }
+    ?>
+  </div>
+
   <div class="maika-tab-content" id="product-descriptor"
     <?php echo $currentTab == "product-descriptor" ? "" : "style='display: none'"; ?>>
     <?php 
@@ -458,19 +485,37 @@
   <div class="maika-tab-content" id="product-catalog-builder"
     <?php echo $currentTab == "product-catalog-builder" ? "" : "style='display: none'"; ?>>
     <?php
-      // if($maika_cid != false){ //$maika_connected_maikahub === true
-      //   echo "[iframe]";
-      // }
-      // else{
-      //  render HTML content_prod_cat_builder
-      // }
+      // if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html')){
+      //   ob_start();
+      //   require_once plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html';
+      //   $htmlContent = ob_get_clean();
 
-      if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html')){
-        ob_start();
-        require_once plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html';
-        $htmlContent = ob_get_clean();
+      //   echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
+      // }
+      // ------- old
 
-        echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
+      if($maika_cid != false){ //$maika_connected_maikahub === true
+        // echo "
+        // <a href='https://hub.askmaika.ai/app/woo_prod_revise?cid=$maika_cid&secret_key=$maika_secretKey' target='_blank'><button style='margin-bottom: 20px; border: 2px solid #ececec; padding: 4px 12px;' >Go to AI Product Descriptor</button></a>
+        // ";
+
+        echo "<div id='iframe_maika_container_product-catalog-builder'>";
+        if($currentTab == 'product-catalog-builder'){ // Show iframes if accessing tab directly from link
+          // "&secret_key=".esc_html($maika_secretKey).
+          echo "
+          <iframe id='MAIKA_IFRAME_product-catalog-builder' src='https://hub.askmaika.ai/app/woo_prod_catalog?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+          ";
+        }
+        echo "</div>";
+      }
+      else{
+        if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html')){
+          ob_start();
+          require_once plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html';
+          $htmlContent = ob_get_clean();
+
+          echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
+        }
       }
     ?>
   </div>
