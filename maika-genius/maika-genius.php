@@ -44,10 +44,10 @@
 
     // sub menu
     add_submenu_page(
-      "maika-genius",             // Slug menu cha
-      "Home",                     // Tiêu đề trang
-      "Home",                     // Tiêu đề menu
-      "manage_options",           // Quyền truy cập
+      "maika-genius",             // Slug parent menu
+      "Home",                     // Page title
+      "Home",                     // Menu title
+      "manage_options",           // Permission
       "maika-genius",             // Slug submenu
       "maika_genius_home_page"    // Callback function
     );
@@ -116,7 +116,7 @@
     );
  }
 
- // Callback function cho trang Home
+ // Callback function for Home page
  function maika_genius_home_page() {
     if(file_exists(plugin_dir_path(__FILE__).'includes/config/constants.php')){
       require_once plugin_dir_path(__FILE__).'includes/config/constants.php';
@@ -153,18 +153,6 @@
           }
 
           if($pass_guide_step == 1){
-            // $domain_web = maika_getlink_domain_web();
-
-            // $userLogin = wp_get_current_user();
-            // $current_username = $userLogin->user_login;
-            // $current_email = $userLogin->user_email;
-
-            // $maika_ssid = get_option("maika_ssid");
-            // if($maika_ssid == false){
-            //   $maika_ssid = bin2hex(random_bytes(16));
-            //   update_option("maika_ssid", $maika_ssid);
-            // }
-
             $linkConnectService = maika_getlink_connect_maikahub();
 
             echo "
@@ -291,7 +279,6 @@
  function maika_genius_ai_page(){
     // get value
     $maika_user_id = get_current_user_id();
-    // $domain_web = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . (isset($_SERVER['HTTP_HOST']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST'])) : "null");
     $domain_web = maika_getlink_domain_web();
 
     // current tab
@@ -300,34 +287,19 @@
     // check rfa
     $maika_rfa = isset($_GET['rfa']) ? sanitize_text_field(wp_unslash($_GET['rfa'])) : "";
 
-    //check application password exists and get value
-    // $maikaApplicationPassword = maika_check_application_password_exists("maika") ? maika_get_application_password_value("maika") : null;
-
-    //Check rest api woocomerce
-    // $maikaWooAPIKey = maika_check_woocommerce_api_keys(); // WooConsumerSecret
-
     $pass_guide_step = maika_check_pass_guide_step();
     
     // get value attr
-    //$maika_secretKey = get_option("maika_ai_secretKey");
-    //$maika_favcolor = get_option("maika_ai_favcolor");
-    //$maika_title = get_option("maika_ai_title");
     $maika_cid = get_option("maika_ai_cid");
 
-    //$maika_connected_maikahub = false;
-    
     // [Handle] Disconnect - Clear all data
     if (isset($_POST['clearAll'])){
       // Disconnect website from Hub
-      //"secretKey" => $maika_secretKey
       $maika_disconnect_body_data = [
         "cid" => $maika_cid
       ];
       maika_call_post_api(esc_url('https://hub.askmaika.ai/app/api/woo/disconnect_site'), $maika_disconnect_body_data);
 
-      //delete_option("maika_ai_secretKey");
-      //delete_option("maika_ai_favcolor");
-      //delete_option("maika_ai_title");
       delete_option("maika_ai_cid");
       delete_option("maika_ssid");
       $del_AP = maika_delete_application_password_exists("maika");
@@ -342,26 +314,6 @@
       // Load into script
       wp_enqueue_script('admin-maika-disconnect');
     }
-
-    // // Maika check connect Maika Hub
-    // if($maika_cid != false){
-    //   $pass_guide_step = 2;
-    // }
-    // else{
-    //   $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
-    // }
-
-    // $userLogin = wp_get_current_user();
-    // $current_username = $userLogin->user_login;
-    // $current_email = $userLogin->user_email;
-
-    // $maika_ssid = get_option("maika_ssid");
-    // if($maika_ssid == false){
-    //   $maika_ssid = bin2hex(random_bytes(16));
-    //   update_option("maika_ssid", $maika_ssid);
-    // }
-
-    // $linkConnectService = "https://hub.askmaika.ai/app/auth/?domain=".esc_url($domain_web)."&ssid=".$maika_ssid."&email=".$current_email."&username=".$current_username;
 
     $linkConnectService = maika_getlink_connect_maikahub();
     
@@ -496,10 +448,6 @@
 
 <div class="maika-tab-container" <?php echo $maika_rfa != "true" ? "" : "style='display: none'"; ?>>
   <div class="maika-tabs" data-tabs-cid="<?php echo esc_html($maika_cid); ?>" data-tabs-domainWeb="<?php echo esc_html($domain_web); ?>">
-    <!-- <button class="maika-tab <?php echo $currentTab == "home" || $currentTab == "" ? "maika-active" : ""; ?>"
-      data-tab="home">Home</button>
-    <button class="maika-tab <?php echo $currentTab == "guide" ? "maika-active" : ""; ?>"
-      data-tab="guide">Guide</button> -->
     <button class="maika-tab <?php echo $currentTab == "settings" || $currentTab == "" ? "maika-active" : ""; ?>" 
       data-tab="settings">Settings</button>
     <button class="maika-tab <?php echo $currentTab == "product-structure" ? "maika-active" : ""; ?>"
@@ -521,14 +469,12 @@
 
   <div class="maika-tab-content" id="settings" <?php echo $currentTab == "settings" || $currentTab == "" ? "" : "style='display: none'"; ?>>
     <!-- content -->
-    <!--<h2>Setting Maika Genius</h2>-->
     <?php
       $hideBtnClearAllData = false;
       if($maika_cid != false){ //$maika_connected_maikahub === true
 
         echo "<div id='iframe_maika_container_settings'>";
         if($currentTab == 'settings' || $currentTab == ""){ // Show iframes if accessing tab directly from link
-          // "&secret_key=".esc_html($maika_secretKey).
           echo "
             <iframe id='MAIKA_IFRAME_settings' src='https://hub.askmaika.ai/app/site?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."&mode=setting' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
           ";
@@ -560,7 +506,6 @@
       if($maika_cid != false){ //$maika_connected_maikahub === true
         echo "<div id='iframe_maika_container_product-structure'>";
         if($currentTab == 'product-structure'){ // Show iframes if accessing tab directly from link
-          // "&secret_key=".esc_html($maika_secretKey).
           echo "
           <iframe id='MAIKA_IFRAME_product-structure' src='https://hub.askmaika.ai/app/woo_prod_structure?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
           ";
@@ -583,7 +528,6 @@
 
         echo "<div id='iframe_maika_container_product-descriptor'>";
         if($currentTab == 'product-descriptor'){ // Show iframes if accessing tab directly from link
-          // "&secret_key=".esc_html($maika_secretKey).
           echo "
           <iframe id='MAIKA_IFRAME_product-descriptor' src='https://hub.askmaika.ai/app/woo_prod_revise?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
           ";
@@ -605,23 +549,9 @@
   <div class="maika-tab-content" id="product-catalog-builder"
     <?php echo $currentTab == "product-catalog-builder" ? "" : "style='display: none'"; ?>>
     <?php
-      // if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html')){
-      //   ob_start();
-      //   require_once plugin_dir_path(__FILE__).'assets/html/content_prod_cat_builder.html';
-      //   $htmlContent = ob_get_clean();
-
-      //   echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
-      // }
-      // ------- old
-
       if($maika_cid != false){ //$maika_connected_maikahub === true
-        // echo "
-        // <a href='https://hub.askmaika.ai/app/woo_prod_revise?cid=$maika_cid&secret_key=$maika_secretKey' target='_blank'><button style='margin-bottom: 20px; border: 2px solid #ececec; padding: 4px 12px;' >Go to AI Product Descriptor</button></a>
-        // ";
-
         echo "<div id='iframe_maika_container_product-catalog-builder'>";
         if($currentTab == 'product-catalog-builder'){ // Show iframes if accessing tab directly from link
-          // "&secret_key=".esc_html($maika_secretKey).
           echo "
           <iframe id='MAIKA_IFRAME_product-catalog-builder' src='https://hub.askmaika.ai/app/woo_prod_catalog?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
           ";
@@ -643,13 +573,6 @@
   <div class="maika-tab-content" id="seo-optimizer"
     <?php echo $currentTab == "seo-optimizer" ? "" : "style='display: none'"; ?>>
     <?php
-      // if($maika_cid != false){ //$maika_connected_maikahub === true
-      //   echo "[iframe]";
-      // }
-      // else{
-      //   render HTML content_seo_opt
-      // }
-
       if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_seo_opt.html')){
         ob_start();
         require_once plugin_dir_path(__FILE__).'assets/html/content_seo_opt.html';
@@ -663,26 +586,9 @@
   <div class="maika-tab-content" id="livechat"
     <?php echo $currentTab == "livechat" ? "" : "style='display: none'"; ?>>
     <?php
-      // if($maika_connected_maikahub === true){
-      //   echo "[iframe]";
-      // }
-      // else{
-      //// render HTML content_livechat
-      // }
-
-      // if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_livechat.html')){
-      //   ob_start();
-      //   require_once plugin_dir_path(__FILE__).'assets/html/content_livechat.html';
-      //   $htmlContent = ob_get_clean();
-
-      //   echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
-      // }
-
       if($maika_cid != false){ //$maika_connected_maikahub === true
-
         echo "<div id='iframe_maika_container_livechat'>";
         if($currentTab == 'livechat'){ // Show iframes if accessing tab directly from link
-          // "&secret_key=".esc_html($maika_secretKey).
           echo "
             <iframe id='MAIKA_IFRAME_livechat' src='https://hub.askmaika.ai/app/site?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."&mode=livechat' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
           ";
@@ -690,7 +596,13 @@
         echo "</div>";
       }
       else {
-        echo "<h2 style='color: red; font-weight: 500; font-size: 1.2rem;'>You need to connect to Maika Hub to use this feature!</h2>";
+        if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_livechat.html')){
+          ob_start();
+          require_once plugin_dir_path(__FILE__).'assets/html/content_livechat.html';
+          $htmlContent = ob_get_clean();
+
+          echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
+        }
       }
     ?>
   </div>
@@ -1019,12 +931,9 @@
  // add custom script
  add_action('wp_footer', 'maika_chatbox_config');
  function maika_chatbox_config(){
-    // $maika_ai_secretKey = get_option("maika_ai_secretKey");
-    //$maika_ai_favcolor = get_option("maika_ai_favcolor") ? get_option("maika_ai_favcolor") : "#800080";
-    //$maika_ai_title = get_option("maika_ai_title") ? get_option("maika_ai_title") : "Maika";
     $maika_ai_cid = get_option("maika_ai_cid");
 
-    if($maika_ai_cid){ //$maika_ai_secretKey && 
+    if($maika_ai_cid){
       // Localize script to pass PHP variables to JavaScript
       wp_localize_script('maika-engine', 'maikaEngineData', array(
         'cid' => esc_js($maika_ai_cid),
