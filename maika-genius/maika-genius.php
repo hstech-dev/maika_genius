@@ -63,10 +63,55 @@
 
     add_submenu_page(
       "maika-genius",
-      "AI Tools",
-      "AI Tools",
+      "Settings",
+      "Settings",
       "manage_options",
       "maika-genius-ai",
+      "maika_genius_ai_page"
+    );
+
+    add_submenu_page(
+      "maika-genius",
+      "Product Structure",
+      "Product Structure",
+      "manage_options",
+      "maika-genius-ai&tab=product-structure",
+      "maika_genius_ai_page"
+    );
+
+    add_submenu_page(
+      "maika-genius",
+      "Product Descriptor",
+      "Product Descriptor",
+      "manage_options",
+      "maika-genius-ai&tab=product-descriptor",
+      "maika_genius_ai_page"
+    );
+
+    add_submenu_page(
+      "maika-genius",
+      "Product Catalog Builder",
+      "Product Catalog Builder",
+      "manage_options",
+      "maika-genius-ai&tab=product-catalog-builder",
+      "maika_genius_ai_page"
+    );
+
+    add_submenu_page(
+      "maika-genius",
+      "Seo Optimizer",
+      "Seo Optimizer",
+      "manage_options",
+      "maika-genius-ai&tab=seo-optimizer",
+      "maika_genius_ai_page"
+    );
+
+    add_submenu_page(
+      "maika-genius",
+      "Livechat",
+      "Livechat",
+      "manage_options",
+      "maika-genius-ai&tab=livechat",
       "maika_genius_ai_page"
     );
  }
@@ -88,22 +133,9 @@
     }
  }
 
- // Callback function cho trang Guide
+ // Callback function for Guide page
  function maika_genius_guide_page() {
-    //check application password exists and get value
-    $maikaApplicationPassword = maika_check_application_password_exists("maika") ? maika_get_application_password_value("maika") : null;
-    //Check rest api woocomerce
-    $maikaWooAPIKey = maika_check_woocommerce_api_keys(); // WooConsumerSecret
-
-    $pass_guide_step = 0;
-    $maika_cid = get_option("maika_ai_cid");
-
-    if($maika_cid != false){
-      $pass_guide_step = 2;
-    }
-    else{
-      $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
-    }
+    $pass_guide_step = maika_check_pass_guide_step();
 
     wp_enqueue_style('admin-maika-tailwind-css');
     wp_enqueue_style('admin-maika-css');
@@ -121,19 +153,19 @@
           }
 
           if($pass_guide_step == 1){
-            $domain_web = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . (isset($_SERVER['HTTP_HOST']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST'])) : "null");
+            // $domain_web = maika_getlink_domain_web();
 
-            $userLogin = wp_get_current_user();
-            $current_username = $userLogin->user_login;
-            $current_email = $userLogin->user_email;
+            // $userLogin = wp_get_current_user();
+            // $current_username = $userLogin->user_login;
+            // $current_email = $userLogin->user_email;
 
-            $maika_ssid = get_option("maika_ssid");
-            if($maika_ssid == false){
-              $maika_ssid = bin2hex(random_bytes(16));
-              update_option("maika_ssid", $maika_ssid);
-            }
+            // $maika_ssid = get_option("maika_ssid");
+            // if($maika_ssid == false){
+            //   $maika_ssid = bin2hex(random_bytes(16));
+            //   update_option("maika_ssid", $maika_ssid);
+            // }
 
-            $linkConnectService = "https://hub.askmaika.ai/app/auth/?domain=".esc_url($domain_web)."&ssid=".$maika_ssid."&email=".$current_email."&username=".$current_username;
+            $linkConnectService = maika_getlink_connect_maikahub();
 
             echo "
               <div class='mt-4 flex items-center'>
@@ -154,34 +186,50 @@
       <div id="application-passwords">
         <h2 class="mt-2 text-2xl font-bold">How to create Application Passwords</h2>
 
-        <h3 class="mt-2 text-lg font-semibold">Step 1: Navigate to Your Profile</h3>
-        <p>From the left-hand menu, click on <span class="font-semibold">“Users”</span> and then select <span
-            class="font-semibold">“<a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/profile.php">Profile</a>”</span> (or <span class="font-semibold">“<a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/profile.php">Your
-              Profile</a>”</span>).</p>
-        <img class="guide-image ml-4 mt-2" src="<?php echo esc_url(plugins_url('assets/images/your-profile.png', __FILE__)); ?>"
+        <details>
+          <summary class="cursor-pointer">
+            <h3 class="mt-2 text-lg font-semibold inline-flex maika-guide-step">Step 1: Navigate to Your Profile</h3>
+          </summary>
+          <p>From the left-hand menu, click on <span class="font-semibold">“Users”</span> and then select <span
+              class="font-semibold">“<a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/profile.php">Profile</a>”</span> (or <span class="font-semibold">“<a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/profile.php">Your
+                Profile</a>”</span>).</p>
+          <img class="guide-image ml-4 mt-2" src="<?php echo esc_url(plugins_url('assets/images/your-profile.png', __FILE__)); ?>"
           alt="your-profile">
+        </details>
 
-        <h3 class="mt-4 text-lg font-semibold">Step 2: Find the Application Passwords Section</h3>
-        <p>Scroll down to the “<span class="font-semibold">Application Passwords</span>” section, which is usually located
+        <details>
+          <summary class="cursor-pointer">
+            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 2: Find the Application Passwords Section</h3>
+          </summary>
+          <p>Scroll down to the “<span class="font-semibold">Application Passwords</span>” section, which is usually located
           towards near the bottom of your profile page.</p>
+        </details>
 
-        <h3 class="mt-4 text-lg font-semibold">Step 3: Generate a New Application Password</h3>
-        <p>In the “<span class="font-semibold">Application Passwords</span>” section, you’ll see a field to “<span
-            class="font-semibold">Add New Application Password</span>”. Enter the Application Passwords name “<span
-            class="font-semibold">maika</span>” for your new password to identify its use - <span
-            class="text-red-500">Please enter the correct Application Password name: <span class="font-bold">maika</span></span>.<br>After
-          entering a name, click the “<span class="font-semibold">Add New Application Password</span>” button. This action
-          will generate a new application password for you.</p>
-        <img class="guide-image ml-4 mt-2"
-          src="<?php echo esc_url(plugins_url('assets/images/profile-application-password.png', __FILE__)); ?>"
-          alt="profile-application-password">
+        <details>
+          <summary class="cursor-pointer">
+            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 3: Generate a New Application Password</h3>
+          </summary>
+          <p>In the “<span class="font-semibold">Application Passwords</span>” section, you’ll see a field to “<span
+              class="font-semibold">Add New Application Password</span>”. Enter the Application Passwords name “<span
+              class="font-semibold">maika</span>” for your new password to identify its use - <span
+              class="text-red-500">Please enter the correct Application Password name: <span class="font-bold">maika</span></span>.<br>After
+            entering a name, click the “<span class="font-semibold">Add New Application Password</span>” button. This action
+            will generate a new application password for you.</p>
+          <img class="guide-image ml-4 mt-2"
+            src="<?php echo esc_url(plugins_url('assets/images/profile-application-password.png', __FILE__)); ?>"
+            alt="profile-application-password">
+        </details>
 
-        <h3 class="mt-4 text-lg font-semibold">Step 4: Copy Your New 'Application Password'</h3>
-        <p>A new application password will be displayed. Copy this password and store it in a safe place. You won’t be
-          able to see it again after you leave this page.</p>
-        <img class="guide-image ml-4 mt-2"
-          src="<?php echo esc_url(plugins_url('assets/images/copy-application-password.png', __FILE__)); ?>"
-          alt="copy-application-password">
+        <details>
+          <summary class="cursor-pointer">
+            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 4: Copy Your New 'Application Password'</h3>
+          </summary>
+          <p>A new application password will be displayed. Copy this password and store it in a safe place. You won’t be
+            able to see it again after you leave this page.</p>
+          <img class="guide-image ml-4 mt-2"
+            src="<?php echo esc_url(plugins_url('assets/images/copy-application-password.png', __FILE__)); ?>"
+            alt="copy-application-password">
+        </details>
       </div>
 
       <hr class="mt-4">
@@ -189,61 +237,62 @@
       <div id="woo-rest-api">
         <h2 class="mt-2 text-2xl font-bold">How to create an API key for WooCommerce, follow these steps</h2>
 
-        <h3 class="mt-2 text-lg font-semibold">Step 1: Access WooCommerce</h3>
-        <p>Select “<span class="font-semibold">WooCommerce</span>” from the left-hand menu. Click on “<span
-            class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings">Settings</a></span>” from the WooCommerce menu.</p>
-        <img class="guide-image ml-4 mt-2" src="<?php echo esc_url(plugins_url('assets/images/woo-settings.png', __FILE__)); ?>"
-          alt="woo-settings">
+        <details>
+          <summary class="cursor-pointer">
+            <h3 class="mt-2 text-lg font-semibold inline-flex maika-guide-step">Step 1: Access WooCommerce</h3>
+          </summary>
+          <p>Select “<span class="font-semibold">WooCommerce</span>” from the left-hand menu. Click on “<span
+              class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings">Settings</a></span>” from the WooCommerce menu.</p>
+          <img class="guide-image ml-4 mt-2" src="<?php echo esc_url(plugins_url('assets/images/woo-settings.png', __FILE__)); ?>"
+            alt="woo-settings">
+        </details>
 
-        <h3 class="mt-4 text-lg font-semibold">Step 2: Go to API Settings</h3>
-        <p>Select the “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced">Advanced</a></span>” tab. Choose “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys">REST API</a></span>”. Click the “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys&create-key=1">Add Key</a></span>” button.</p>
-        <img class="guide-image ml-4 mt-2" src="<?php echo esc_url(plugins_url('assets/images/restapi-addkey.webp', __FILE__)); ?>"
-          alt="restapi-addkey">
+        <details>
+          <summary class="cursor-pointer">
+            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 2: Go to API Settings</h3>
+          </summary>
+          <p>Select the “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced">Advanced</a></span>” tab. Choose “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys">REST API</a></span>”. Click the “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys&create-key=1">Add Key</a></span>” button.</p>
+          <img class="guide-image ml-4 mt-2" src="<?php echo esc_url(plugins_url('assets/images/restapi-addkey.webp', __FILE__)); ?>"
+            alt="restapi-addkey">
+        </details>
 
-        <h3 class="mt-4 text-lg font-semibold">Step 3: Fill in the following information</h3>
-        <p><span class="font-semibold">Description</span>: A name or description for the API key, enter “<span
-            class="font-semibold">maika</span>” - <span class="text-red-500">Please enter the correct description: <span
-              class="font-bold">maika</span></span>.<br><span class="font-semibold">User</span>: Choose the user you
-          want to assign the API key to, <span class="font-semibold">select your account</span>.<br><span
-            class="font-semibold">Permissions</span>: Select the permissions for the API key. Chose <span
-            class="font-semibold">Read/Write - </span><span class="text-red-500">Please choose the correct permissions:
-            <span class="font-bold">Read/Write</span></span>.</p>
-        <img class="guide-image ml-4 mt-2"
-          src="<?php echo esc_url(plugins_url('assets/images/woo-generate-api.png', __FILE__)); ?>" alt="woo-generate-api">
+        <details>
+          <summary class="cursor-pointer">
+            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 3: Fill in the following information</h3>
+          </summary>
+          <p><span class="font-semibold">Description</span>: A name or description for the API key, enter “<span
+              class="font-semibold">maika</span>” - <span class="text-red-500">Please enter the correct description: <span
+                class="font-bold">maika</span></span>.<br><span class="font-semibold">User</span>: Choose the user you
+            want to assign the API key to, <span class="font-semibold">select your account</span>.<br><span
+              class="font-semibold">Permissions</span>: Select the permissions for the API key. Chose <span
+              class="font-semibold">Read/Write - </span><span class="text-red-500">Please choose the correct permissions:
+              <span class="font-bold">Read/Write</span></span>.</p>
+          <img class="guide-image ml-4 mt-2"
+            src="<?php echo esc_url(plugins_url('assets/images/woo-generate-api.png', __FILE__)); ?>" alt="woo-generate-api">
+        </details> 
 
-        <h3 class="mt-4 text-lg font-semibold">Step 4: Generate the API Key</h3>
-        <p>Click the “<span class="font-semibold">Generate API Key</span>” button.
-          You will see a message with the <span class="font-semibold">Consumer Key</span> and <span
-            class="font-semibold">Consumer Secret</span>. Make sure to <span class="font-semibold">copy and store these
-            values in a safe place, as they will not be displayed again.</span></p>
-        <img class="guide-image ml-4 mt-2"
-          src="<?php echo esc_url(plugins_url('assets/images/restapi-keygeneration.png', __FILE__)); ?>"
-          alt="restapi-keygeneration">
-
+        <details>
+          <summary class="cursor-pointer">
+            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 4: Generate the API Key</h3>
+          </summary>
+          <p>Click the “<span class="font-semibold">Generate API Key</span>” button.
+            You will see a message with the <span class="font-semibold">Consumer Key</span> and <span
+              class="font-semibold">Consumer Secret</span>. Make sure to <span class="font-semibold">copy and store these
+              values in a safe place, as they will not be displayed again.</span></p>
+          <img class="guide-image ml-4 mt-2"
+            src="<?php echo esc_url(plugins_url('assets/images/restapi-keygeneration.png', __FILE__)); ?>"
+            alt="restapi-keygeneration">
+        </details>
       </div>
     </section>
     <?php
  }
         
  function maika_genius_ai_page(){
-    // Submit settings
-    // if (isset($_POST['submit'])){
-    //   // Verify nonce
-    //   if (!isset($_POST['maika_ai_nonce_field']) || !check_admin_referer('maika_ai_settings_nonce', 'maika_ai_nonce_field')) {
-    //     wp_die('An error occurred, take it back!');
-    //   }
-
-    //   if(isset($_POST['favcolor']) && trim(sanitize_text_field(wp_unslash($_POST['favcolor']))) != ""){
-    //       update_option("maika_ai_favcolor", sanitize_text_field(wp_unslash($_POST['favcolor'])));
-    //   }
-    //   if(isset($_POST['title']) && trim(sanitize_text_field(wp_unslash($_POST['title']))) != ""){
-    //       update_option("maika_ai_title", sanitize_text_field(wp_unslash($_POST['title'])));
-    //   }
-    // }
-
     // get value
     $maika_user_id = get_current_user_id();
-    $domain_web = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . (isset($_SERVER['HTTP_HOST']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST'])) : "null");
+    // $domain_web = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . (isset($_SERVER['HTTP_HOST']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST'])) : "null");
+    $domain_web = maika_getlink_domain_web();
 
     // current tab
     $currentTab = isset($_GET['tab']) ? sanitize_text_field(wp_unslash($_GET['tab'])) : "";
@@ -252,12 +301,12 @@
     $maika_rfa = isset($_GET['rfa']) ? sanitize_text_field(wp_unslash($_GET['rfa'])) : "";
 
     //check application password exists and get value
-    $maikaApplicationPassword = maika_check_application_password_exists("maika") ? maika_get_application_password_value("maika") : null;
+    // $maikaApplicationPassword = maika_check_application_password_exists("maika") ? maika_get_application_password_value("maika") : null;
 
     //Check rest api woocomerce
-    $maikaWooAPIKey = maika_check_woocommerce_api_keys(); // WooConsumerSecret
+    // $maikaWooAPIKey = maika_check_woocommerce_api_keys(); // WooConsumerSecret
 
-    $pass_guide_step = 0;
+    $pass_guide_step = maika_check_pass_guide_step();
     
     // get value attr
     //$maika_secretKey = get_option("maika_ai_secretKey");
@@ -294,25 +343,27 @@
       wp_enqueue_script('admin-maika-disconnect');
     }
 
-    // Maika check connect Maika Hub
-    if($maika_cid != false){
-      $pass_guide_step = 2;
-    }
-    else{
-      $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
-    }
+    // // Maika check connect Maika Hub
+    // if($maika_cid != false){
+    //   $pass_guide_step = 2;
+    // }
+    // else{
+    //   $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
+    // }
 
-    $userLogin = wp_get_current_user();
-    $current_username = $userLogin->user_login;
-    $current_email = $userLogin->user_email;
+    // $userLogin = wp_get_current_user();
+    // $current_username = $userLogin->user_login;
+    // $current_email = $userLogin->user_email;
 
-    $maika_ssid = get_option("maika_ssid");
-    if($maika_ssid == false){
-      $maika_ssid = bin2hex(random_bytes(16));
-      update_option("maika_ssid", $maika_ssid);
-    }
+    // $maika_ssid = get_option("maika_ssid");
+    // if($maika_ssid == false){
+    //   $maika_ssid = bin2hex(random_bytes(16));
+    //   update_option("maika_ssid", $maika_ssid);
+    // }
 
-    $linkConnectService = "https://hub.askmaika.ai/app/auth/?domain=".esc_url($domain_web)."&ssid=".$maika_ssid."&email=".$current_email."&username=".$current_username;
+    // $linkConnectService = "https://hub.askmaika.ai/app/auth/?domain=".esc_url($domain_web)."&ssid=".$maika_ssid."&email=".$current_email."&username=".$current_username;
+
+    $linkConnectService = maika_getlink_connect_maikahub();
     
     ?>
 
@@ -724,7 +775,7 @@
     'admin-maika-css', // Handle cho style
     plugin_dir_url(__FILE__) . 'assets/css/admin-maika.css',
     array(), // Dependencies... if any
-    '1.0', // Version
+    time(), // Version
     'all' // Media cho style
   );
 
@@ -732,7 +783,7 @@
     'admin-maika-mautic', // Handle cho style
     plugin_dir_url(__FILE__) . 'assets/css/admin-maika-mautic.css',
     array(), // Dependencies... if any
-    '1.0', // Version
+    time(), // Version
     'all' // Media cho style
   );
 
@@ -915,6 +966,45 @@
   $maskedString = $start . str_repeat('*', $length - $visibleChars * 2) . $end;
 
   return $maskedString;
+ }
+
+ function maika_check_pass_guide_step(){
+    //check application password exists and get value
+    $maikaApplicationPassword = maika_check_application_password_exists("maika") ? maika_get_application_password_value("maika") : null;
+    //Check rest api woocomerce
+    $maikaWooAPIKey = maika_check_woocommerce_api_keys(); // WooConsumerSecret
+
+    $pass_guide_step = 0;
+    $maika_cid = get_option("maika_ai_cid");
+
+    if($maika_cid != false){
+      $pass_guide_step = 2;
+    }
+    else{
+      $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
+    }
+
+    return $pass_guide_step;
+ }
+
+ function maika_getlink_connect_maikahub(){
+    $domain_web = maika_getlink_domain_web();
+
+    $userLogin = wp_get_current_user();
+    $current_username = $userLogin->user_login;
+    $current_email = $userLogin->user_email;
+
+    $maika_ssid = get_option("maika_ssid");
+    if($maika_ssid == false){
+      $maika_ssid = bin2hex(random_bytes(16));
+      update_option("maika_ssid", $maika_ssid);
+    }
+
+    return "https://hub.askmaika.ai/app/auth/?domain=".esc_url($domain_web)."&ssid=".$maika_ssid."&email=".$current_email."&username=".$current_username;
+ }
+
+ function maika_getlink_domain_web(){
+    return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . (isset($_SERVER['HTTP_HOST']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST'])) : "null");
  }
 
  // ==========================================================

@@ -36,6 +36,15 @@
   animation: pulse 0.6s ease-in-out infinite;
 }
 
+.maika-guide-step {
+  color: #555555;
+  transition: .3s;
+}
+
+.maika-guide-step:hover {
+  color: black;
+}
+
 /* END BTN CONNECT MAIKAHUB */
 
 .guide-image {
