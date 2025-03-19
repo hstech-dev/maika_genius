@@ -78,7 +78,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  min-width: 832px;
+  /* min-width: 832px; */
   filter: drop-shadow(2px 4px 6px #e0e0e0);
 }
 
@@ -92,7 +92,7 @@
 .maika-tabs .maika-tab {
   flex: 1;
   /* padding: 10px 20px; */
-  padding: 4px;
+  padding: 4px 6px;
   /* width: 160px; */
   width: fit-content;
   text-align: center;
@@ -136,4 +136,15 @@
   border-top: 1px solid #e0e0e0;
   min-height: 100px;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .maika-tab {
+    /* min-width: 120px; */
+    min-width: 90px;
+  }
+
+  .maika-tabs {
+    margin-left: 14px;
+  }
 }

@@ -2,7 +2,7 @@
 Contributors: tomaskmaika
 Requires at least: 5.6
 Tested up to: 6.7.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -113,21 +113,21 @@ This information should be included in your plugin's readme.txt file for clear d
 	- Livechat: Limit 100 sessions
 	- Support: Community support
 
-- **Maika Grow ($24/year):**
+- **Maika Grow ($299/year):**
 	- Product Descriptor: Limit 500 products, unlimited descriptions, access to all templates
 	- Product Catalog Builder: Limit 5,000 sessions
 	- SEO Optimizer: Not available
 	- Livechat: Limit 100 sessions
 	- Support: Community support
 
-- **Maika Sell ($50/year or $7/month):**
+- **Maika Sell ($79/month or $599/year):**
 	- Product Descriptor: Limit 1,000 products, unlimited descriptions, access to all templates
 	- Product Catalog Builder: Limit 5,000 sessions
 	- SEO Optimizer: Full access
 	- Livechat: Limit 100 sessions
 	- Support: Email support
 
-- **Maika Genius ($320/year or $40/month):**
+- **Maika Genius ($399/month or $2999/year):**
 	- Product Descriptor: Limit 1,000 products, unlimited descriptions, access to all templates
 	- Product Catalog Builder: Unlimited sessions
 	- SEO Optimizer: Full access
@@ -187,6 +187,9 @@ This information should be included in your plugin's readme.txt file for clear d
 4. AI powers powerful, highly customizable product descriptions.
 
 == Changelog ==
+= [v1.2.1] =
+- Fixed minor issues UI and improved performance.
+
 = [v1.2.0] =
 - Added product-structure for better category and attribute management, and product-catalog-builder to create products from images using AI automation.
 - Fixed minor issues UI and improved performance.
