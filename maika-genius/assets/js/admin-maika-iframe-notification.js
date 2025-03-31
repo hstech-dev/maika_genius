@@ -15,6 +15,7 @@ function showNotification({ type, message, duration, closeMode, width }) {
   notification.style.fontSize = '16px';
   notification.style.borderRadius = '5px';
   notification.style.width = width === 'auto' ? 'auto' : `${width}`;
+  notification.style.zIndex = '9999'; 
   notification.style.textAlign = 'center';
   notification.style.display = 'flex';
   notification.style.alignItems = 'center';

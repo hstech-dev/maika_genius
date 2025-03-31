@@ -2,7 +2,7 @@
 Contributors: tomaskmaika
 Requires at least: 5.6
 Tested up to: 6.7.1
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -27,7 +27,7 @@ Maika Genius leverages the power of cutting-edge Al technology to supercharge yo
 - **SEO-Optimized:** Attract more customers and boost your search engine rankings with Al-powered SEO.
 - **No More Errors:** Say goodbye to typos, grammatical errors, and inconsistent wording.
 
-#### Product Catalog Builder (comming soon)
+#### Product Catalog Builder
 ##### **Build your entire product catalog from scratch, in minutes**. Are you starting a new online store or need to quickly add a large number of products? Maika Genius makes it effortless!
 ##### **Key Benefits**:
 - **Turn Images Into Products:** Simply upload your product images and let our Al analyze them.
@@ -43,7 +43,7 @@ Maika Genius leverages the power of cutting-edge Al technology to supercharge yo
 - **Content Optimization:** Improve your rankings and attract more traffic with optimized product descriptions and blog posts.
 - **Time-Saving Solution:** Free up hours of tedious work and focus on growing your business.
 
-#### 24/7 Al-powered Livechat Agent (comming soon)
+#### 24/7 Al-powered Livechat Agent
 ##### **Provide exceptional customer service, 24/7**. Maika Genius's Al-powered livechat agent is available 24/7 to answer questions, address concerns, and provide personalized recommendations to your customers.
 
 ##### **Key Benefits**:
@@ -187,6 +187,9 @@ This information should be included in your plugin's readme.txt file for clear d
 4. AI powers powerful, highly customizable product descriptions.
 
 == Changelog ==
+= [v1.2.3] =
+- Fixed minor issues UI and improved performance.
+
 = [v1.2.2] =
 - Update UI and improved performance.
 
