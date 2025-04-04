@@ -32,11 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
             iframeContainerSettings.innerHTML = iframeHTMLSettings;
           }
           break;
-        case "product-structure":
+        case "shop-structure":
           const iframeContainerProductStructure = document.getElementById('iframe_maika_container_'+target);
           if(iframeContainerProductStructure){
             //&secret_key=${dataSecretKey}
-            const iframeHTMLProductStructure = `<iframe id='MAIKA_IFRAME_product-structure' src='https://hub.askmaika.ai/app/woo_prod_structure?cid=${dataCid}&display_mode=embed&wp_domain=${dataDomainWeb}' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>`;
+            const iframeHTMLProductStructure = `<iframe id='MAIKA_IFRAME_shop-structure' src='https://hub.askmaika.ai/app/woo_prod_structure?cid=${dataCid}&display_mode=embed&wp_domain=${dataDomainWeb}' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>`;
             iframeContainerProductStructure.innerHTML = iframeHTMLProductStructure;
           }
           break;
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // Remove iframes in other tabs
-      const list_iframes = ['iframe_maika_container_settings', 'iframe_maika_container_product-structure', 'iframe_maika_container_product-descriptor', 'iframe_maika_container_product-catalog-builder', 'iframe_maika_container_livechat'];
+      const list_iframes = ['iframe_maika_container_settings', 'iframe_maika_container_shop-structure', 'iframe_maika_container_product-descriptor', 'iframe_maika_container_product-catalog-builder', 'iframe_maika_container_livechat'];
       for(const ifs of list_iframes){
         if(ifs.includes(target)){
           continue;
