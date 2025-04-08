@@ -2,7 +2,7 @@
 Contributors: tomaskmaika
 Requires at least: 5.6
 Tested up to: 6.7.1
-Stable tag: 1.2.5
+Stable tag: 1.2.6
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,6 +18,14 @@ Tired of spending hours on tedious tasks? Maika Genius is your one-stop solution
 Maika Genius leverages the power of cutting-edge Al technology to supercharge your shop, but that power comes with a demand for significant computational resources. To ensure seamless performance and prevent strain on your server, Maika Genius operates through a cloud-based platform. Simply create a free Maika account, connect your website to your account, and let Maika Genius do the heavy lifting!
 
 ### Main features
+#### Product Catalog Builder
+##### **Build your entire product catalog from scratch, in minutes**. Are you starting a new online store or need to quickly add a large number of products? Maika Genius makes it effortless!
+##### **Key Benefits**:
+- **Turn Images Into Products:** Simply upload your product images and let our Al analyze them.
+- **Automated Descriptions:** Generate high-quality descriptions for each product, tailored to your shop's style.
+- **Intelligent Categorization:** Al automatically classifies products into appropriate categories, saving you time.
+- **Complete Catalog in 5 Minutes:** Get your shop online and ready for business quickly.
+
 #### Product Descriptor
 ##### **Let Al write your product descriptions**. Forget about writer's block and spending hours crafting the perfect words. Maika Genius uses the latest Generative AI to generate high-quality, unique, and SEO-optimized product descriptions, in just minutes.
 ##### **Key Benefits**:
@@ -26,14 +34,6 @@ Maika Genius leverages the power of cutting-edge Al technology to supercharge yo
 - **Perfectly Wording:** Every word is carefully chosen to engage customers and drive sales.
 - **SEO-Optimized:** Attract more customers and boost your search engine rankings with Al-powered SEO.
 - **No More Errors:** Say goodbye to typos, grammatical errors, and inconsistent wording.
-
-#### Product Catalog Builder
-##### **Build your entire product catalog from scratch, in minutes**. Are you starting a new online store or need to quickly add a large number of products? Maika Genius makes it effortless!
-##### **Key Benefits**:
-- **Turn Images Into Products:** Simply upload your product images and let our Al analyze them.
-- **Automated Descriptions:** Generate high-quality descriptions for each product, tailored to your shop's style.
-- **Intelligent Categorization:** Al automatically classifies products into appropriate categories, saving you time.
-- **Complete Catalog in 5 Minutes:** Get your shop online and ready for business quickly.
 
 #### SEO Optimizer (comming soon)
 ##### **Unleash the power of Al to supercharge your SEO**. Maika Genius analyzes your product information, blog posts, and website structure to ensure your content is optimized for search engines.
@@ -107,29 +107,29 @@ This information should be included in your plugin's readme.txt file for clear d
 - Yes, Maika Genius offers a free version with basic features. However, premium features like advanced SEO optimization and the AI-powered live chat agent require a subscription. You can choose from different pricing plans based on your needs:
 
 - **Maika Starter (Free):**
-	- Product Descriptor: Limit 100 products and 1,000 descriptions
 	- Product Catalog Builder: Limit 100 sessions
+	- Product Descriptor: Limit 100 products and 1,000 descriptions
 	- SEO Optimizer: Not available
 	- Livechat: Limit 100 sessions
 	- Support: Community support
 
 - **Maika Grow ($299/year):**
-	- Product Descriptor: Limit 500 products, unlimited descriptions, access to all templates
 	- Product Catalog Builder: Limit 5,000 sessions
+	- Product Descriptor: Limit 500 products, unlimited descriptions, access to all templates
 	- SEO Optimizer: Not available
 	- Livechat: Limit 100 sessions
 	- Support: Community support
 
 - **Maika Sell ($79/month or $599/year):**
-	- Product Descriptor: Limit 1,000 products, unlimited descriptions, access to all templates
 	- Product Catalog Builder: Limit 5,000 sessions
+	- Product Descriptor: Limit 1,000 products, unlimited descriptions, access to all templates
 	- SEO Optimizer: Full access
 	- Livechat: Limit 100 sessions
 	- Support: Email support
 
 - **Maika Genius ($399/month or $2999/year):**
-	- Product Descriptor: Limit 1,000 products, unlimited descriptions, access to all templates
 	- Product Catalog Builder: Unlimited sessions
+	- Product Descriptor: Limit 1,000 products, unlimited descriptions, access to all templates
 	- SEO Optimizer: Full access
 	- Livechat: Unlimited sessions
 	- Support: Email support
@@ -187,6 +187,9 @@ This information should be included in your plugin's readme.txt file for clear d
 4. AI powers powerful, highly customizable product descriptions.
 
 == Changelog ==
+= [v1.2.6] =
+- Fixed minor issues UI and improved performance.
+
 = [v1.2.5] =
 - Fixed minor issues UI and improved performance.
 
