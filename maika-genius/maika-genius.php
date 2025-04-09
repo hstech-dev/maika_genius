@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.2.6
+ * Version:     1.2.7
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -181,8 +181,9 @@
           <p>From the left-hand menu, click on <span class="font-semibold">“Users”</span> and then select <span
               class="font-semibold">“<a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/profile.php">Profile</a>”</span> (or <span class="font-semibold">“<a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/profile.php">Your
                 Profile</a>”</span>).</p>
-          <img class="guide-image ml-4 mt-2" src="<?php echo esc_url(plugins_url('assets/images/your-profile.png', __FILE__)); ?>"
-          alt="your-profile">
+          <?php 
+            maika_show_image_from_plugin('your-profile.png', $alt = 'your-profile', $class = 'guide-image ml-4 mt-2')
+          ?>
         </details>
 
         <details>
@@ -203,9 +204,9 @@
               class="text-red-500">Please enter the correct Application Password name: <span class="font-bold">maika</span></span>.<br>After
             entering a name, click the “<span class="font-semibold">Add New Application Password</span>” button. This action
             will generate a new application password for you.</p>
-          <img class="guide-image ml-4 mt-2"
-            src="<?php echo esc_url(plugins_url('assets/images/profile-application-password.png', __FILE__)); ?>"
-            alt="profile-application-password">
+          <?php 
+            maika_show_image_from_plugin('profile-application-password.png', $alt = 'profile-application-password', $class = 'guide-image ml-4 mt-2')
+          ?>
         </details>
 
         <details>
@@ -214,9 +215,9 @@
           </summary>
           <p>A new application password will be displayed. Copy this password and store it in a safe place. You won’t be
             able to see it again after you leave this page.</p>
-          <img class="guide-image ml-4 mt-2"
-            src="<?php echo esc_url(plugins_url('assets/images/copy-application-password.png', __FILE__)); ?>"
-            alt="copy-application-password">
+          <?php 
+            maika_show_image_from_plugin('copy-application-password.png', $alt = 'copy-application-password', $class = 'guide-image ml-4 mt-2')
+          ?>
         </details>
       </div>
 
@@ -231,8 +232,9 @@
           </summary>
           <p>Select “<span class="font-semibold">WooCommerce</span>” from the left-hand menu. Click on “<span
               class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings">Settings</a></span>” from the WooCommerce menu.</p>
-          <img class="guide-image ml-4 mt-2" src="<?php echo esc_url(plugins_url('assets/images/woo-settings.png', __FILE__)); ?>"
-            alt="woo-settings">
+          <?php 
+            maika_show_image_from_plugin('woo-settings.png', $alt = 'woo-settings', $class = 'guide-image ml-4 mt-2')
+          ?>
         </details>
 
         <details>
@@ -240,8 +242,9 @@
             <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 2: Go to API Settings</h3>
           </summary>
           <p>Select the “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced">Advanced</a></span>” tab. Choose “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys">REST API</a></span>”. Click the “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys&create-key=1">Add Key</a></span>” button.</p>
-          <img class="guide-image ml-4 mt-2" src="<?php echo esc_url(plugins_url('assets/images/restapi-addkey.webp', __FILE__)); ?>"
-            alt="restapi-addkey">
+          <?php 
+            maika_show_image_from_plugin('restapi-addkey.webp', $alt = 'restapi-addkey', $class = 'guide-image ml-4 mt-2')
+          ?>
         </details>
 
         <details>
@@ -255,8 +258,9 @@
               class="font-semibold">Permissions</span>: Select the permissions for the API key. Chose <span
               class="font-semibold">Read/Write - </span><span class="text-red-500">Please choose the correct permissions:
               <span class="font-bold">Read/Write</span></span>.</p>
-          <img class="guide-image ml-4 mt-2"
-            src="<?php echo esc_url(plugins_url('assets/images/woo-generate-api.png', __FILE__)); ?>" alt="woo-generate-api">
+          <?php 
+            maika_show_image_from_plugin('woo-generate-api.png', $alt = 'woo-generate-api', $class = 'guide-image ml-4 mt-2')
+          ?>
         </details> 
 
         <details>
@@ -267,9 +271,9 @@
             You will see a message with the <span class="font-semibold">Consumer Key</span> and <span
               class="font-semibold">Consumer Secret</span>. Make sure to <span class="font-semibold">copy and store these
               values in a safe place, as they will not be displayed again.</span></p>
-          <img class="guide-image ml-4 mt-2"
-            src="<?php echo esc_url(plugins_url('assets/images/restapi-keygeneration.png', __FILE__)); ?>"
-            alt="restapi-keygeneration">
+          <?php 
+            maika_show_image_from_plugin('restapi-keygeneration.png', $alt = 'restapi-keygeneration', $class = 'guide-image ml-4 mt-2')
+          ?>
         </details>
       </div>
     </section>
@@ -297,7 +301,7 @@
     $maika_cid = get_option("maika_ai_cid");
 
     // [Action] Button 'Disconnect - Clear all data'
-    if (isset($_POST['clearAll'])){
+    if (isset($_POST['clearAll']) && check_admin_referer('maika_ai_clear_all_settings_action', 'maika_ai_clear_all_settings_nonce')){
       // Disconnect website from Hub
       $maika_disconnect_body_data = [
         "cid" => $maika_cid
@@ -341,7 +345,7 @@
           if(!$hideBtnClearAllData){
         ?>
             <form method="post">
-              <?php wp_nonce_field('maika_ai_settings_nonce', 'maika_ai_nonce_field'); ?>
+              <?php wp_nonce_field('maika_ai_clear_all_settings_action', 'maika_ai_clear_all_settings_nonce'); ?>
 
               <input style="cursor: pointer;"
                 class="mt-4 rounded border border-purple-600 bg-white px-8 py-2 text-center text-sm font-medium text-purple-600 focus:outline-none hover:text-white hover:bg-purple-600 focus:ring"
@@ -747,7 +751,13 @@
 
  // ==================== UTILS FUNCTION ====================
  function maika_check_rfa(){
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     return isset($_GET['rfa']) ? sanitize_text_field(wp_unslash($_GET['rfa'])) : "";
+ }
+
+ function maika_show_image_from_plugin($filename, $alt = '', $class = '') {
+    // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+    echo '<img src="' . esc_url(plugins_url('assets/images/' . $filename, __FILE__)) . '" alt="' . esc_attr($alt) . '" class="' . esc_attr($class) . '" loading="lazy">';
  }
 
  function maika_show_iframe_for_rfa(){
