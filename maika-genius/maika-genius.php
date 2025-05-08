@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.2.7
+ * Version:     1.3.0
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -28,6 +28,26 @@
      
      return $links;
  }
+
+//  // 1. Khi plugin được kích hoạt, lưu transient để flag redirect
+// register_activation_hook(__FILE__, 'my_plugin_activate');
+// function my_plugin_activate() {
+//     set_transient('my_plugin_activation_redirect', true, 30); // Sống 30 giây là đủ
+// }
+
+// // 2. Thực hiện redirect nếu có flag
+// add_action('admin_init', 'my_plugin_redirect');
+// function my_plugin_redirect() {
+//     if (get_transient('my_plugin_activation_redirect')) {
+//         delete_transient('my_plugin_activation_redirect');
+
+//         // Kiểm tra điều kiện để tránh lỗi trên mạng multisite hoặc khi active nhiều plugin cùng lúc
+//         if (!is_network_admin() && !isset($_GET['activate-multi'])) {
+//             wp_safe_redirect(admin_url('admin.php?page=maika-genius'));
+//             exit;
+//         }
+//     }
+// }
  
  add_action("admin_menu", "maika_show_setting_page");
  function maika_show_setting_page(){
@@ -387,7 +407,7 @@
         if($maika_cid != false){
           echo "<div id='iframe_maika_container_shop-structure'>";
             echo "
-            <iframe id='MAIKA_IFRAME_shop-structure' src='https://hub.askmaika.ai/app/woo_prod_structure?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+            <iframe id='MAIKA_IFRAME_shop-structure' src='https://hub.askmaika.ai/app/woo_shop_structure?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
             ";
           echo "</div>";
         }
