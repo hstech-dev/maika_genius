@@ -2,6 +2,7 @@
     window.MaikaEngine = window.MaikaEngine || {q: []};
     MaikaEngine.q.push(['initLiveChat', {
         cid: maikaEngineData.cid,
-        actBySettings: true
+        actBySettings: true,
+        cartToken: maikaEngineData.cartToken,
     }]);
 })();

@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.3.0
+ * Version:     1.3.1
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -747,9 +747,12 @@
     $maika_ai_cid = get_option("maika_ai_cid");
 
     if($maika_ai_cid){
+      $headersCartToken = maika_call_get_header_api(maika_getlink_domain_web().'/wp-json/wc/store/v1/cart');
+      $cartToken = isset($headersCartToken['cart-token']) ? $headersCartToken['cart-token'] : '';
       // Localize script to pass PHP variables to JavaScript
       wp_localize_script('maika-engine', 'maikaEngineData', array(
         'cid' => esc_js($maika_ai_cid),
+        'cartToken' => esc_js($cartToken),
       ));
       // Load into script
       wp_enqueue_script('maika-engine');
@@ -915,6 +918,30 @@
     $responseData = json_decode(wp_remote_retrieve_body($response), true);
   
     return $responseData; // Return the parsed data
+ }
+
+ function maika_call_get_header_api($url, $api_key='') {
+  // Set up the arguments for the request
+  $args = [
+      'headers' => [
+          'Content-Type' => 'application/json' // Set the content type to JSON if necessary
+          //'c-secret-key' => $api_key, // If the API requires authorization
+      ],
+      //'timeout' => 15, // Optional: Set a timeout for the request
+  ];
+
+  // Make the request
+  $response = wp_remote_get($url, $args);
+
+  // Check for errors
+  if (is_wp_error($response)) {
+      return $response->get_error_message(); // Return the error message
+  }
+
+  // Parse the JSON response
+  $responseHeader = wp_remote_retrieve_headers($response);
+
+  return $responseHeader; // Return the parsed data
  }
  
  function maika_call_post_api($url, $arr_body_data) {
