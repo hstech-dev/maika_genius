@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.3.4
+ * Version:     1.3.5
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -124,6 +124,54 @@
       "maika_genius_livechat_page"
     );
  }
+
+ // Notice
+ // add_action('admin_notices', 'shop_structure_admin_notice');
+ function shop_structure_admin_notice(){
+    if (isset($_GET['page']) && strpos($_GET['page'], 'maika-genius') === 0) {
+      return;
+    }
+    ?>
+    <style>
+      .maika-genius-notice-layout {
+        display: flex;
+        column-gap: 12px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+      .maika-genius-notice-aside {
+        width: 40px;
+      }
+      .maika-genius-notice-aside img {
+        width: 100%;
+      }
+      .maika-genius-notice-content {
+        width: calc(100% - 40px);
+      }
+      .maika-genius-notice-content-title {
+        margin-top: .5em;
+      }
+    </style>
+    <div class="notice notice-info is-dismissible">
+      <div class="maika-genius-notice-layout">
+        <div class="maika-genius-notice-aside">
+          <img src="<?= esc_url(plugins_url('assets/images/maika-genius.png', __FILE__)) ?>" alt="maika genius logo">
+        </div>
+        <div class="maika-genius-notice-content">
+          <h2 class="maika-genius-notice-content-title">Maika Genius</h2>
+        </div>
+      </div>
+    </div>
+    <?php
+ }
+
+ // CSS for notice
+//  add_action('admin_enqueue_scripts', function () {
+//     wp_add_inline_style('wp-admin', '
+//         CODE STYLE HERE
+//     ');
+//  });
+ // End - Notice
 
  // Callback function for Home page
  function maika_genius_home_page() {
