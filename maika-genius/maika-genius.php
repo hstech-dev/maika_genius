@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.3.2
+ * Version:     1.3.4
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -81,8 +81,17 @@
 
     add_submenu_page(
       "maika-genius",
-      "Product Catalog Builder",
-      "Product Catalog Builder",
+      "Structure Editor",
+      "Structure Editor",
+      "manage_options",
+      "maika-genius-shop-structure-editor",
+      "maika_genius_shop_structure_editor_page"
+    );
+
+    add_submenu_page(
+      "maika-genius",
+      "Catalog Builder",
+      "Catalog Builder",
       "manage_options",
       "maika-genius-product-catalog-builder",
       "maika_genius_product_catalog_builder_page"
@@ -400,6 +409,47 @@
   <?php
  }
 
+  function maika_genius_shop_structure_editor_page(){
+    // --- Enqueue style
+    wp_enqueue_style('admin-maika-css');
+    wp_enqueue_style('admin-maika-tailwind-css');
+    // wp_enqueue_style('admin-maika-mautic');
+    // --- Enqueue JavaScript file
+    // wp_enqueue_script('admin-maika-tabs');
+    wp_enqueue_script('admin-maika-iframe-notification');
+    wp_enqueue_script('admin-maika-iframe-resizer');
+
+    $domain_web = maika_getlink_domain_web();
+
+    // check rfa
+    $maika_rfa = maika_check_rfa();
+    if($maika_rfa == "true"){
+      maika_show_iframe_for_rfa();
+    }
+
+    $maika_cid = get_option("maika_ai_cid");
+
+    maika_guide_process_bar();
+  ?>
+    <div class="maika-tab-container" <?php echo $maika_rfa != "true" ? "" : "style='display: none'"; ?>>
+      <div class="maika-tab-content" id="structure-editor">
+      <?php 
+        if($maika_cid != false){
+          echo "<div id='iframe_maika_container_structure-editor'>";
+            echo "
+            <iframe id='MAIKA_IFRAME_structure-editor' src='https://hub.askmaika.ai/app/woo_shop_structure_edit?cid=".esc_html($maika_cid)."&display_mode=embed&wp_domain=".esc_url($domain_web)."' style='border: none; height: auto; width: 100%; min-height: 800px'></iframe>
+            ";
+          echo "</div>";
+        }
+        else {
+          echo "<h2 style='color: red; font-weight: 500; font-size: 1.2rem;'>You need to connect to Maika Hub to use this feature!</h2>";
+        }
+      ?>
+      </div>
+    </div>
+  <?php
+ }
+
  function maika_genius_product_catalog_builder_page(){
     // --- Enqueue style
     wp_enqueue_style('admin-maika-css');
@@ -608,6 +658,7 @@
     if (  $hook != 'toplevel_page_maika-genius' 
           && $hook != 'maika-genius_page_maika-genius-settings' 
           && $hook != 'maika-genius_page_maika-genius-shop-structure' 
+          && $hook != 'maika-genius_page_maika-genius-structure-editor' 
           && $hook != 'maika-genius_page_maika-genius-product-catalog-builder' 
           && $hook != 'maika-genius_page_maika-genius-product-descriptor' 
           && $hook != 'maika-genius_page_maika-genius-seo-optimizer' 
@@ -673,6 +724,7 @@
     if (  $hook != 'toplevel_page_maika-genius' 
           && $hook != 'maika-genius_page_maika-genius-settings'
           && $hook != 'maika-genius_page_maika-genius-shop-structure' 
+          && $hook != 'maika-genius_page_maika-genius-structure-editor' 
           && $hook != 'maika-genius_page_maika-genius-product-catalog-builder' 
           && $hook != 'maika-genius_page_maika-genius-product-descriptor' 
           && $hook != 'maika-genius_page_maika-genius-seo-optimizer' 
