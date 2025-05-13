@@ -1,6 +1,5 @@
 function getCartToken() {
-    // console.log("domain: " + maikaEngineData.domain);
-    return fetch(maikaEngineData.domain + '/wp-json/wc/store/v1/cart', {
+    return fetch('/wp-json/wc/store/v1/cart', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

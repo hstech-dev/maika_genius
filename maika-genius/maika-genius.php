@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.3.5
+ * Version:     1.3.6
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -126,18 +126,61 @@
  }
 
  // Notice
- // add_action('admin_notices', 'shop_structure_admin_notice');
+ add_action('admin_notices', 'shop_structure_admin_notice');
  function shop_structure_admin_notice(){
-    if (isset($_GET['page']) && strpos($_GET['page'], 'maika-genius') === 0) {
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    if (isset($_GET['page']) && strpos(sanitize_text_field(wp_unslash($_GET['page'])), 'maika-genius') === 0) {
       return;
     }
     ?>
-    <style>
+    <div class="notice maika-genius-notice-info is-dismissible">
+      <div class="maika-genius-notice-layout">
+        <div class="maika-genius-notice-aside">
+          <?php 
+            maika_show_image_from_plugin('maika-genius.png', $alt = 'maika genius logo', $class = '')
+          ?>
+        </div>
+        <div class="maika-genius-notice-content">
+          <?php
+            $maika_cid = get_option("maika_ai_cid");
+            if($maika_cid != false){
+              ?>
+                <h2 class="maika-genius-notice-content-title">Maika Genius - What's shaping your store’s success?</h2>
+                <p>Your store has a hidden structure that drives conversions, but you haven't seen it yet. Click <em>Analyze Your Store Free</em> to reveal how everything connects – and what’s missing.</p>
+                <p>&#10024; A single click could transform the way you organize and sell.</p>
+                <a href="/wp-admin/admin.php?page=maika-genius-shop-structure">
+                  <button class="maika-genius-notice-content-button">Analyze Your Store Free</button>
+                </a>
+              <?php
+            }
+            else {
+              ?>
+                <h2 class="maika-genius-notice-content-title">Maika Genius - Unlock the Hidden Potential of Your Store</h2>
+                <p>You’re just one step away from uncovering the structure behind high-converting stores. Complete the essential setup so Maika Genius can start analyzing and offering insights to help you improve your store’s performance.</p>
+                <a href="/wp-admin/admin.php?page=maika-genius-guide">
+                  <button class="maika-genius-notice-content-button">Set Up Maika Genius</button>
+                </a>
+              <?php
+            }
+          ?>
+          
+        </div>
+      </div>
+    </div>
+    <?php
+ }
+
+ // CSS for notice
+ add_action('admin_enqueue_scripts', function () {
+    wp_add_inline_style('wp-admin', "
       .maika-genius-notice-layout {
         display: flex;
         column-gap: 12px;
         padding-top: 12px;
         padding-bottom: 12px;
+      }
+      .maika-genius-notice-info {
+        border-left-color: #9333EA;
       }
       .maika-genius-notice-aside {
         width: 40px;
@@ -151,26 +194,23 @@
       .maika-genius-notice-content-title {
         margin-top: .5em;
       }
-    </style>
-    <div class="notice notice-info is-dismissible">
-      <div class="maika-genius-notice-layout">
-        <div class="maika-genius-notice-aside">
-          <img src="<?= esc_url(plugins_url('assets/images/maika-genius.png', __FILE__)) ?>" alt="maika genius logo">
-        </div>
-        <div class="maika-genius-notice-content">
-          <h2 class="maika-genius-notice-content-title">Maika Genius</h2>
-        </div>
-      </div>
-    </div>
-    <?php
- }
-
- // CSS for notice
-//  add_action('admin_enqueue_scripts', function () {
-//     wp_add_inline_style('wp-admin', '
-//         CODE STYLE HERE
-//     ');
-//  });
+      .maika-genius-notice-content-button {
+        margin-top: 10px;
+        padding: 8px 20px 10px;
+        background: #9333EA;
+        border-width: 0;
+        border-radius: 4px;
+        outline: none;
+        color: white;
+        font-weight: 500;
+        transition: all 300ms;
+      }
+      .maika-genius-notice-content-button:hover {
+        cursor: pointer;
+        background: #7e28c9;
+      }
+    ");
+ });
  // End - Notice
 
  // Callback function for Home page
@@ -830,7 +870,6 @@
       // Localize script to pass PHP variables to JavaScript
       wp_localize_script('maika-engine', 'maikaEngineData', array(
         'cid' => esc_js($maika_ai_cid),
-        'domain' => esc_js(maika_getlink_domain_web()),
       ));
       // Load into script
       wp_enqueue_script('maika-engine');
