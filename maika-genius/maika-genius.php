@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.3.7
+ * Version:     1.3.8
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -1258,4 +1258,9 @@
  // Routes
  if(file_exists(plugin_dir_path(__FILE__).'includes/api/wp/routes.php')){
     require_once plugin_dir_path(__FILE__).'includes/api/wp/routes.php';
+ }
+
+ // Cart Session
+ if(file_exists(plugin_dir_path(__FILE__).'includes/api/woo/cart_session.php')){
+    require_once plugin_dir_path(__FILE__).'includes/api/woo/cart_session.php';
  }
