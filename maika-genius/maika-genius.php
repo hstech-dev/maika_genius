@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.3.8
+ * Version:     1.3.9
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -1174,8 +1174,8 @@
            <h3 class='mt-4 text-lg font-semibold'>How to generate Application Passwords and WooCommerce REST API Keys</h3>
            <p class='text-base'>In just a few simple steps, you can create Application Passwords and WooCommerce REST API Keys for your WordPress site. Our visual guide will walk you through the process quickly, ensuring that you can get started without any hassle:</p>
            <ul class='list-disc ml-6 mt-2'>
-             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius&tab=guide#application-passwords'>Guide to Creating Application Passwords for Your WordPress Site</a></li>
-             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius&tab=guide#woo-rest-api'>Guide to Creating API key for WooCommerce Your Shop</a></li>
+             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#application-passwords'>Guide to Creating Application Passwords for Your WordPress Site</a></li>
+             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#woo-rest-api'>Guide to Creating API key for WooCommerce Your Shop</a></li>
            </ul>
          </div>
          ";
@@ -1191,8 +1191,8 @@
            <h3 class='mt-4 text-lg font-semibold'>How to generate Application Passwords and WooCommerce REST API Keys</h3>
            <p class='text-base'>In just a few simple steps, you can create Application Passwords and WooCommerce REST API Keys for your WordPress site. Our visual guide will walk you through the process quickly, ensuring that you can get started without any hassle:</p>
            <ul class='list-disc ml-6 mt-2'>
-             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius&tab=guide#application-passwords'>Guide to Creating Application Passwords for Your WordPress Site</a></li>
-             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius&tab=guide#woo-rest-api'>Guide to Creating API key for WooCommerce Your Shop</a></li>
+             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#application-passwords'>Guide to Creating Application Passwords for Your WordPress Site</a></li>
+             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#woo-rest-api'>Guide to Creating API key for WooCommerce Your Shop</a></li>
            </ul>
          </div>
          ";
@@ -1216,8 +1216,8 @@
           <h3 class='mt-4 text-lg font-semibold'>How to generate Application Passwords and WooCommerce REST API Keys</h3>
           <p class='text-base'>In just a few simple steps, you can create Application Passwords and WooCommerce REST API Keys for your WordPress site. Our visual guide will walk you through the process quickly, ensuring that you can get started without any hassle:</p>
           <ul class='list-disc ml-6 mt-2'>
-            <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius&tab=guide#application-passwords'>Guide to Creating Application Passwords for Your WordPress Site</a></li>
-            <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius&tab=guide#woo-rest-api'>Guide to Creating API key for WooCommerce Your Shop</a></li>
+            <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#application-passwords'>Guide to Creating Application Passwords for Your WordPress Site</a></li>
+            <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#woo-rest-api'>Guide to Creating API key for WooCommerce Your Shop</a></li>
           </ul>
         </div>
         ";

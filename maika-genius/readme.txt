@@ -2,7 +2,7 @@
 Contributors: tomaskmaika
 Requires at least: 5.6
 Tested up to: 6.8
-Stable tag: 1.3.8
+Stable tag: 1.3.9
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -187,6 +187,9 @@ This information should be included in your plugin's readme.txt file for clear d
 4. AI powers powerful, highly customizable product descriptions.
 
 == Changelog ==
+= [v1.3.9] =
+- Fix minor user interface bugs, improve performance and enhance security.
+
 = [v1.3.8] =
 - Fix minor user interface bugs, improve performance and enhance security.
 
