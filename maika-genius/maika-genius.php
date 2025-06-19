@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.3.9
+ * Version:     1.3.10
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -21,7 +21,7 @@
  add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'maika_add_settings_link');
  function maika_add_settings_link($links) {
      // create link 'Settings'
-     $settings_link = '<a href="admin.php?page=maika-genius">' . __('Settings', 'maika-genius') . '</a>';
+     $settings_link = '<a href="admin.php?page=maika-genius-settings">' . __('Settings', 'maika-genius') . '</a>';
      
      // add link 'Settings' before the button 'Deactivate'
      array_unshift($links, $settings_link);
