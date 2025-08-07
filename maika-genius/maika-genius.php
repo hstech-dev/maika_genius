@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.3.10
+ * Version:     1.3.11
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -243,8 +243,10 @@
           if($pass_guide_step == 0){
             echo "
             <h2 class='mt-2 text-2xl font-bold'><span class='text-red-500'>[Action Required]</span> Setup API keys for Maika Genius</h2>
-            <h3 class='mt-2 text-lg font-semibold'>Required 1: You'll need to create an “<strong class='font-bold'><a class='text-[#0000ff] hover:text-[#135e96]' href='/wp-admin/profile.php'>Application Password</a></strong>“. You can follow the <span class='font-semibold' style='color: blue;'><a href='#application-passwords'>instructions here.</a></span></h3>
-            <h3 class='text-lg font-semibold'>Required 2: Next, you'll need to generate a “<strong class='font-bold'><a class='text-[#0000ff] hover:text-[#135e96]' href='/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys&create-key=1'>WooCommerce REST API key</a></strong>“. Simply follow the steps <span class='font-semibold' style='color: blue;'><a href='#woo-rest-api'>provided here</a></span> to set it up.</h3>
+            <h3 class='mt-2 text-lg font-semibold'>Required 1: You'll need to create an “<strong class='font-bold'><a class='text-[#0000ff] hover:text-[#135e96]' href='/wp-admin/profile.php'>Application Password</a></strong>“.</h3>
+            <h3 class='text-lg font-semibold'>Required 2: Next, you'll need to generate a “<strong class='font-bold'><a class='text-[#0000ff] hover:text-[#135e96]' href='/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys&create-key=1'>WooCommerce REST API key</a></strong>“.</h3>
+            <h3 class='mt-2 text-lg font-semibold' style='color: #9333EA'>👉 Once both the “Application Password” and “WooCommerce REST API key” have been created, click the button below to return to the Settings page and continue connecting to Maika Hub.</h3>
+            <a href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-settings'><button class='maika-genius-button'>Return to Settings page</button></a>
             <hr class='mt-2'>
             ";
           }
@@ -373,6 +375,14 @@
           ?>
         </details>
       </div>
+
+      <hr class="mt-4">
+
+      <div id="return-to-the-settings-page">
+        <h2 class='mt-2 text-2xl font-bold'>👉 Once both the “Application Password” and “WooCommerce REST API key” have been created, click the button below to return to the Settings page and continue connecting to Maika Hub.</h2>
+        <a href="<?php esc_url($domain_web); ?>/wp-admin/admin.php?page=maika-genius-settings"><button class='mt-2 maika-genius-button'>Return to Settings page</button></a>
+      </div>
+
     </section>
     <?php
  }
@@ -436,7 +446,13 @@
           }
           else {
             $hideBtnClearAllData = true;
-            echo "<h2 style='color: red; font-weight: 500; font-size: 1.2rem;'>You need to connect to Maika Hub!</h2>";
+            $pass_guide_step = maika_check_pass_guide_step();
+            echo "<div style='display: flex; align-items: center; gap: 10px;'>
+              <h2 style='color: red; font-weight: 500; font-size: 1.2rem;'>You need to connect to Maika Hub!</h2>";
+            if($pass_guide_step == 0){
+              echo "<a target='_blank' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide'><button class='maika-genius-button'>Connect Now With Guide</button></a>";
+            }
+            echo "</div>";
           }
 
           if(!$hideBtnClearAllData){
