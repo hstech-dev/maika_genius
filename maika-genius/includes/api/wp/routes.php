@@ -22,9 +22,10 @@
     $check_maika_ssid = esc_html(get_option("maika_ssid"));
     if($ssid == $check_maika_ssid){
         //update_option("maika_ai_secretKey", esc_html($secret_key));
-        update_option("maika_ai_cid", esc_html($cid));
+        // update_option("maika_ai_cid", esc_html($cid));
+        update_option("maika_ai_cid_temp", esc_html($cid));
 
-        delete_option("maika_ssid");
+        //delete_option("maika_ssid");
         // Sample data to return
         $response = array(
             'status' => 'success',

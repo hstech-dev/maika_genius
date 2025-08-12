@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.3.11
+ * Version:     1.4.1
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
@@ -14,6 +14,7 @@
  
  // Protect the file from direct access
  if (!defined('ABSPATH')) {
+     // demo: Maika CID: dev_hiy__hsnails_stack-us3_st4as_com 
      exit;
  }
  
@@ -218,173 +219,31 @@
     if(file_exists(plugin_dir_path(__FILE__).'includes/config/constants.php')){
       require_once plugin_dir_path(__FILE__).'includes/config/constants.php';
 
-      if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_home.html')){
+      // if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_home.html')){
+      if(file_exists(plugin_dir_path(__FILE__).'assets/html/content_home.php')){
         wp_enqueue_style('admin-maika-tailwind-css');
 
-        ob_start();
-        require_once plugin_dir_path(__FILE__).'assets/html/content_home.html';
-        $htmlContent = ob_get_clean();
+        $maika_cid = get_option("maika_ai_cid");
+
+        // ob_start();
+        // require_once plugin_dir_path(__FILE__).'assets/html/content_home.html';
+        require_once plugin_dir_path(__FILE__).'assets/html/content_home.php';
+        // $htmlContent = ob_get_clean();
       
-        echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
+        // echo wp_kses($htmlContent, Maika_Constants::MAIKA_ALLOWED_TAGS_HTML);
       }
     }
  }
 
  // Callback function for Guide page
  function maika_genius_guide_page() {
+    //echo "Maika CID: " .get_option("maika_ai_cid") ."<br>";
     $pass_guide_step = maika_check_pass_guide_step();
 
     wp_enqueue_style('admin-maika-tailwind-css');
     wp_enqueue_style('admin-maika-css');
-    ?>
-    <section id="maika-genius-guide-page">
-      <div id="maika-required">
-        <?php
-          if($pass_guide_step == 0){
-            echo "
-            <h2 class='mt-2 text-2xl font-bold'><span class='text-red-500'>[Action Required]</span> Setup API keys for Maika Genius</h2>
-            <h3 class='mt-2 text-lg font-semibold'>Required 1: You'll need to create an “<strong class='font-bold'><a class='text-[#0000ff] hover:text-[#135e96]' href='/wp-admin/profile.php'>Application Password</a></strong>“.</h3>
-            <h3 class='text-lg font-semibold'>Required 2: Next, you'll need to generate a “<strong class='font-bold'><a class='text-[#0000ff] hover:text-[#135e96]' href='/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys&create-key=1'>WooCommerce REST API key</a></strong>“.</h3>
-            <h3 class='mt-2 text-lg font-semibold' style='color: #9333EA'>👉 Once both the “Application Password” and “WooCommerce REST API key” have been created, click the button below to return to the Settings page and continue connecting to Maika Hub.</h3>
-            <a href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-settings'><button class='maika-genius-button'>Return to Settings page</button></a>
-            <hr class='mt-2'>
-            ";
-          }
 
-          if($pass_guide_step == 1){
-            $linkConnectService = maika_getlink_connect_maikahub();
-
-            echo "
-              <div class='mt-4 flex items-center'>
-                <h4 class='font-medium text-base'>Click the button next to connect to Maika</h4>
-                <a href='".esc_url($linkConnectService)."' ><button class='ml-4 service-button pulse'>Connect your WordPress with Maika</button></a>
-              </div>
-            ";
-
-            echo "
-            <h2 class='mt-2 text-2xl font-bold'><span class='text-red-500'>[Action Required]</span> Connect your WordPress with Maika</h2>
-            <h3 class='mt-2 text-lg font-semibold'>Click the \"Connect your WordPress with Maika\" button above to connect with Maika Hub</h3>
-            <hr class='mt-2'>
-            ";
-          }
-        ?>
-      </div>
-
-      <div id="application-passwords">
-        <h2 class="mt-2 text-2xl font-bold">How to create Application Passwords</h2>
-
-        <details>
-          <summary class="cursor-pointer">
-            <h3 class="mt-2 text-lg font-semibold inline-flex maika-guide-step">Step 1: Navigate to Your Profile</h3>
-          </summary>
-          <p>From the left-hand menu, click on <span class="font-semibold">“Users”</span> and then select <span
-              class="font-semibold">“<a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/profile.php">Profile</a>”</span> (or <span class="font-semibold">“<a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/profile.php">Your
-                Profile</a>”</span>).</p>
-          <?php 
-            maika_show_image_from_plugin('your-profile.png', $alt = 'your-profile', $class = 'guide-image ml-4 mt-2')
-          ?>
-        </details>
-
-        <details>
-          <summary class="cursor-pointer">
-            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 2: Find the Application Passwords Section</h3>
-          </summary>
-          <p>Scroll down to the “<span class="font-semibold">Application Passwords</span>” section, which is usually located
-          towards near the bottom of your profile page.</p>
-        </details>
-
-        <details>
-          <summary class="cursor-pointer">
-            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 3: Generate a New Application Password</h3>
-          </summary>
-          <p>In the “<span class="font-semibold">Application Passwords</span>” section, you’ll see a field to “<span
-              class="font-semibold">Add New Application Password</span>”. Enter the Application Passwords name “<span
-              class="font-semibold">maika</span>” for your new password to identify its use - <span
-              class="text-red-500">Please enter the correct Application Password name: <span class="font-bold">maika</span></span>.<br>After
-            entering a name, click the “<span class="font-semibold">Add New Application Password</span>” button. This action
-            will generate a new application password for you.</p>
-          <?php 
-            maika_show_image_from_plugin('profile-application-password.png', $alt = 'profile-application-password', $class = 'guide-image ml-4 mt-2')
-          ?>
-        </details>
-
-        <details>
-          <summary class="cursor-pointer">
-            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 4: Copy Your New 'Application Password'</h3>
-          </summary>
-          <p>A new application password will be displayed. Copy this password and store it in a safe place. You won’t be
-            able to see it again after you leave this page.</p>
-          <?php 
-            maika_show_image_from_plugin('copy-application-password.png', $alt = 'copy-application-password', $class = 'guide-image ml-4 mt-2')
-          ?>
-        </details>
-      </div>
-
-      <hr class="mt-4">
-
-      <div id="woo-rest-api">
-        <h2 class="mt-2 text-2xl font-bold">How to create an API key for WooCommerce, follow these steps</h2>
-
-        <details>
-          <summary class="cursor-pointer">
-            <h3 class="mt-2 text-lg font-semibold inline-flex maika-guide-step">Step 1: Access WooCommerce</h3>
-          </summary>
-          <p>Select “<span class="font-semibold">WooCommerce</span>” from the left-hand menu. Click on “<span
-              class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings">Settings</a></span>” from the WooCommerce menu.</p>
-          <?php 
-            maika_show_image_from_plugin('woo-settings.png', $alt = 'woo-settings', $class = 'guide-image ml-4 mt-2')
-          ?>
-        </details>
-
-        <details>
-          <summary class="cursor-pointer">
-            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 2: Go to API Settings</h3>
-          </summary>
-          <p>Select the “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced">Advanced</a></span>” tab. Choose “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys">REST API</a></span>”. Click the “<span class="font-semibold"><a class='text-[#0000ff] hover:text-[#135e96]' href="/wp-admin/admin.php?page=wc-settings&tab=advanced&section=keys&create-key=1">Add Key</a></span>” button.</p>
-          <?php 
-            maika_show_image_from_plugin('restapi-addkey.webp', $alt = 'restapi-addkey', $class = 'guide-image ml-4 mt-2')
-          ?>
-        </details>
-
-        <details>
-          <summary class="cursor-pointer">
-            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 3: Fill in the following information</h3>
-          </summary>
-          <p><span class="font-semibold">Description</span>: A name or description for the API key, enter “<span
-              class="font-semibold">maika</span>” - <span class="text-red-500">Please enter the correct description: <span
-                class="font-bold">maika</span></span>.<br><span class="font-semibold">User</span>: Choose the user you
-            want to assign the API key to, <span class="font-semibold">select your account</span>.<br><span
-              class="font-semibold">Permissions</span>: Select the permissions for the API key. Chose <span
-              class="font-semibold">Read/Write - </span><span class="text-red-500">Please choose the correct permissions:
-              <span class="font-bold">Read/Write</span></span>.</p>
-          <?php 
-            maika_show_image_from_plugin('woo-generate-api.png', $alt = 'woo-generate-api', $class = 'guide-image ml-4 mt-2')
-          ?>
-        </details> 
-
-        <details>
-          <summary class="cursor-pointer">
-            <h3 class="mt-4 text-lg font-semibold inline-flex maika-guide-step">Step 4: Generate the API Key</h3>
-          </summary>
-          <p>Click the “<span class="font-semibold">Generate API Key</span>” button.
-            You will see a message with the <span class="font-semibold">Consumer Key</span> and <span
-              class="font-semibold">Consumer Secret</span>. Make sure to <span class="font-semibold">copy and store these
-              values in a safe place, as they will not be displayed again.</span></p>
-          <?php 
-            maika_show_image_from_plugin('restapi-keygeneration.png', $alt = 'restapi-keygeneration', $class = 'guide-image ml-4 mt-2')
-          ?>
-        </details>
-      </div>
-
-      <hr class="mt-4">
-
-      <div id="return-to-the-settings-page">
-        <h2 class='mt-2 text-2xl font-bold'>👉 Once both the “Application Password” and “WooCommerce REST API key” have been created, click the button below to return to the Settings page and continue connecting to Maika Hub.</h2>
-        <a href="<?php esc_url($domain_web); ?>/wp-admin/admin.php?page=maika-genius-settings"><button class='mt-2 maika-genius-button'>Return to Settings page</button></a>
-      </div>
-
-    </section>
-    <?php
+    maika_guide_process_bar();
  }
 
  function maika_genius_settings_page() {
@@ -406,6 +265,9 @@
     }
 
     $maika_cid = get_option("maika_ai_cid");
+    if ($maika_rfa != "true" && $maika_cid == false){
+      maika_show_popup_if_not_integration("the Settings feature");
+    }
 
     // [Action] Button 'Disconnect - Clear all data'
     if (isset($_POST['clearAll']) && check_admin_referer('maika_ai_clear_all_settings_action', 'maika_ai_clear_all_settings_nonce')){
@@ -416,7 +278,8 @@
       maika_call_post_api(esc_url('https://hub.askmaika.ai/app/api/woo/disconnect_site'), $maika_disconnect_body_data);
 
       delete_option("maika_ai_cid");
-      delete_option("maika_ssid");
+      delete_option("maika_ai_cid_temp");
+      // delete_option("maika_ssid");
       $del_AP = maika_delete_application_password_exists("maika");
       $del_WooAPI = maika_delete_woocommerce_api_keys();
 
@@ -430,7 +293,7 @@
       wp_enqueue_script('admin-maika-disconnect');
     }
 
-    maika_guide_process_bar();
+    // maika_guide_process_bar();
     ?>
     <div class="maika-tab-container" <?php echo $maika_rfa != "true" ? "" : "style='display: none'"; ?>>
       <div class="maika-tab-content" id="settings">
@@ -457,11 +320,12 @@
 
           if(!$hideBtnClearAllData){
         ?>
+            <hr style="margin-bottom: 14px;">
             <form method="post">
               <?php wp_nonce_field('maika_ai_clear_all_settings_action', 'maika_ai_clear_all_settings_nonce'); ?>
 
               <input style="cursor: pointer;"
-                class="mt-4 rounded border border-purple-600 bg-white px-8 py-2 text-center text-sm font-medium text-purple-600 focus:outline-none hover:text-white hover:bg-purple-600 focus:ring"
+                class="maika-reset-button"
                 type="submit" name="clearAll" value="Disconnect - Clear all data" />
             </form>
         <?php
@@ -491,8 +355,11 @@
     }
 
     $maika_cid = get_option("maika_ai_cid");
+    if ($maika_rfa != "true" && $maika_cid == false){
+      maika_show_popup_if_not_integration("the Shop Structure feature");
+    }
 
-    maika_guide_process_bar();
+    // maika_guide_process_bar();
   ?>
     <div class="maika-tab-container" <?php echo $maika_rfa != "true" ? "" : "style='display: none'"; ?>>
       <div class="maika-tab-content" id="shop-structure">
@@ -532,8 +399,11 @@
     }
 
     $maika_cid = get_option("maika_ai_cid");
+    if ($maika_rfa != "true" && $maika_cid == false){
+      maika_show_popup_if_not_integration("the Structure Editor feature");
+    }
 
-    maika_guide_process_bar();
+    // maika_guide_process_bar();
   ?>
     <div class="maika-tab-container" <?php echo $maika_rfa != "true" ? "" : "style='display: none'"; ?>>
       <div class="maika-tab-content" id="structure-editor">
@@ -573,8 +443,11 @@
     }
 
     $maika_cid = get_option("maika_ai_cid");
+    if ($maika_rfa != "true" && $maika_cid == false){
+      maika_show_popup_if_not_integration("the Catalog Builder feature");
+    }
 
-    maika_guide_process_bar();
+    // maika_guide_process_bar();
   ?>
     <div class="maika-tab-container" <?php echo $maika_rfa != "true" ? "" : "style='display: none'"; ?>>
       <div class="maika-tab-content" id="product-catalog-builder">
@@ -625,8 +498,11 @@
     }
 
     $maika_cid = get_option("maika_ai_cid");
+    if ($maika_rfa != "true" && $maika_cid == false){
+      maika_show_popup_if_not_integration("the Product Descriptor feature");
+    }
 
-    maika_guide_process_bar();
+    // maika_guide_process_bar();
   ?>
     <div class="maika-tab-container" <?php echo $maika_rfa != "true" ? "" : "style='display: none'"; ?>>
       <div class="maika-tab-content" id="product-descriptor">
@@ -682,7 +558,7 @@
 
     $maika_cid = get_option("maika_ai_cid");
 
-    maika_guide_process_bar();
+    // maika_guide_process_bar();
   ?>
     <div class="maika-tab-container" <?php echo $maika_rfa != "true" ? "" : "style='display: none'"; ?>>
       <div class="maika-tab-content" id="seo-optimizer">
@@ -721,8 +597,11 @@
     }
   
     $maika_cid = get_option("maika_ai_cid");
+    if ($maika_rfa != "true" && $maika_cid == false){
+      maika_show_popup_if_not_integration("the Livechat feature");
+    }
   
-    maika_guide_process_bar();
+    // maika_guide_process_bar();
   ?>
     <div class="maika-tab-container" <?php echo $maika_rfa != "true" ? "" : "style='display: none'"; ?>>
       <div class="maika-tab-content" id="livechat">
@@ -762,7 +641,7 @@
     if (  $hook != 'toplevel_page_maika-genius' 
           && $hook != 'maika-genius_page_maika-genius-settings' 
           && $hook != 'maika-genius_page_maika-genius-shop-structure' 
-          && $hook != 'maika-genius_page_maika-genius-structure-editor' 
+          && $hook != 'maika-genius_page_maika-genius-shop-structure-editor' 
           && $hook != 'maika-genius_page_maika-genius-product-catalog-builder' 
           && $hook != 'maika-genius_page_maika-genius-product-descriptor' 
           && $hook != 'maika-genius_page_maika-genius-seo-optimizer' 
@@ -828,7 +707,7 @@
     if (  $hook != 'toplevel_page_maika-genius' 
           && $hook != 'maika-genius_page_maika-genius-settings'
           && $hook != 'maika-genius_page_maika-genius-shop-structure' 
-          && $hook != 'maika-genius_page_maika-genius-structure-editor' 
+          && $hook != 'maika-genius_page_maika-genius-shop-structure-editor' 
           && $hook != 'maika-genius_page_maika-genius-product-catalog-builder' 
           && $hook != 'maika-genius_page_maika-genius-product-descriptor' 
           && $hook != 'maika-genius_page_maika-genius-seo-optimizer' 
@@ -924,6 +803,39 @@
     ";
  }
 
+ function maika_show_popup_if_not_integration($feature_name = 'this features'){
+  ?>
+  <!-- Overlay -->
+  <div id="maika-overlay" style="position: fixed; z-index: 9998; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px);"></div>
+
+  <!-- Popup -->
+  <div id="maika-popup" style="position: fixed; z-index: 9999; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90%; width: 400px; background: #fff; padding: 1.8rem; border-radius: 12px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); font-family: system-ui, sans-serif;">
+
+    <!-- Btn Close -->
+    <!-- <div onclick="document.getElementById('maika-popup').style.display='none';document.getElementById('maika-overlay').style.display='none';"
+         style="position: absolute; top: 10px; right: 14px; font-size: 1.25rem; color: #aaa; cursor: pointer; font-weight: bold;">
+      ×
+    </div> -->
+
+    <!-- Title -->
+    <h2 style="font-size: 1.45rem; font-weight: bold; color: #9333ea; margin-bottom: 0.75rem; text-align: center;">
+      Connect with Maika Hub
+    </h2>
+
+    <!-- Content -->
+    <p style="font-size: 1rem; color: #333; text-align: center; margin-bottom: 1.25rem;">
+      To unlock <?php echo $feature_name; ?>, please take a moment to connect your website with <strong>Maika Hub</strong>. It’s quick and easy!
+    </p>
+
+    <!-- Redirect button to the Guide Page -->
+    <a href="/wp-admin/admin.php?page=maika-genius-guide"
+       style="display: inline-block; background-color: #9333ea; color: #fff; text-decoration: none; padding: 0.6rem 1.25rem; border-radius: 6px; outline: none; font-weight: 600; text-align: center; transition: background 0.3s; width: 100%; box-sizing: border-box;">
+      View Integration Guide
+    </a>
+  </div>
+  <?php
+ }
+
  function maika_check_application_password_exists($application_name) {
     // get list Application Passwords
     $app_passwords = get_user_meta(get_current_user_id(), '_application_passwords', true);
@@ -960,6 +872,32 @@
     }
 
     return false;
+ }
+
+ function maika_create_application_password_for_current_user( $app_name = 'maika' ) {
+    if ( ! is_user_logged_in() ) {
+        return new WP_Error( 'not_logged_in', 'Bạn chưa đăng nhập' );
+    }
+
+    $user_id = get_current_user_id();
+
+    if(maika_check_application_password_exists($app_name) != false){
+      maika_delete_application_password_exists($app_name); // Delete Old AP
+    }
+
+    // Create Application Password
+    $new_password = WP_Application_Passwords::create_new_application_password(
+        $user_id,
+        array( 'name' => $app_name )
+    );
+
+    if ( is_wp_error( $new_password ) ) {
+        return $new_password;
+    }
+
+    update_option("mkg_wp_ap", $new_password[0]);
+
+    return $new_password[0];
  }
  
  function maika_delete_application_password_exists($application_name){
@@ -1000,6 +938,42 @@
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
     $keys = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}woocommerce_api_keys", OBJECT);
     return $keys;
+ }
+
+ function maika_create_wc_rest_api_key_for_current_user( $description = 'maika' ) {
+    if ( ! is_user_logged_in() ) {
+        return new WP_Error( 'not_logged_in', 'Bạn chưa đăng nhập' );
+    }
+    
+    if(maika_check_woocommerce_api_keys() != false){
+      maika_delete_woocommerce_api_keys(); // Delete Old Woo Rest API Key
+    }
+
+    $user_id = get_current_user_id();
+    global $wpdb;
+
+    $consumer_key    = 'ck_' . wc_rand_hash();
+    $consumer_secret = 'cs_' . wc_rand_hash();
+
+    $data = array(
+        'user_id'         => $user_id,
+        'description'     => $description,
+        'permissions'     => 'read_write',
+        'consumer_key'    => wc_api_hash( $consumer_key ),
+        'consumer_secret' => $consumer_secret,
+        'truncated_key'   => substr( $consumer_key, -7 ),
+    );
+
+    $wpdb->insert( $wpdb->prefix . 'woocommerce_api_keys', $data );
+
+    update_option("mkg_wcm_ck", $consumer_key);
+    update_option("mkg_wcm_cs", $consumer_secret);
+
+    return array(
+        'key_id'          => $wpdb->insert_id,
+        'consumer_key'    => $consumer_key,
+        'consumer_secret' => $consumer_secret,
+    );
  }
  
  function maika_delete_woocommerce_api_keys(){
@@ -1100,12 +1074,16 @@
   
     $pass_guide_step = 0;
     $maika_cid = get_option("maika_ai_cid");
+    $maika_ai_cid_temp = get_option("maika_ai_cid_temp");
   
-    if($maika_cid != false){
+    if($maika_cid != false && ($maikaApplicationPassword != null && $maikaWooAPIKey != false)){
       $pass_guide_step = 2;
     }
     else{
-      $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
+      if($maika_ai_cid_temp != false){
+        $pass_guide_step = 1;
+      }
+      // $pass_guide_step = ($maikaApplicationPassword != null && $maikaWooAPIKey != false) ? 1 : 0;
     }
    
     return $pass_guide_step;
@@ -1126,128 +1104,344 @@
    
     return "https://hub.askmaika.ai/app/auth/?domain=".esc_url($domain_web)."&ssid=".$maika_ssid."&email=".$current_email."&username=".$current_username;
  }
+
+ function maika_getlink_create_account_maikahub(){
+    $domain_web = maika_getlink_domain_web();
+  
+    $userLogin = wp_get_current_user();
+    $current_username = $userLogin->user_login;
+    $current_email = $userLogin->user_email;
+  
+    $maika_ssid = get_option("maika_ssid");
+    if($maika_ssid == false){
+      $maika_ssid = bin2hex(random_bytes(16));
+      update_option("maika_ssid", $maika_ssid);
+    }
+   
+    // return "https://hub.askmaika.ai/app/auth/?domain=".esc_url($domain_web)."&ssid=".$maika_ssid."&email=".$current_email."&username=".$current_username;
+
+    $fingerprint = maika_get_instance_string();
+
+    return "https://hub.askmaika.ai/app/auth/?domain=" .esc_url($domain_web). "&ssid=" .$maika_ssid. "&fingerprint=" .$fingerprint;
+ }
  
  function maika_getlink_domain_web(){
     return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . (isset($_SERVER['HTTP_HOST']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_HOST'])) : "null");
  }
 
+ function maika_get_instance_string(){
+    $maika_instance_string = get_option("mkg_instance_string");
+    if($maika_instance_string != false){
+      return $maika_instance_string;
+    }
+
+    $domain_web = maika_getlink_domain_web();
+    $maika_create_instance_string = maika_normalize_tring($domain_web);
+    update_option("mkg_instance_string", $maika_create_instance_string);
+    return $maika_create_instance_string;
+ }
+
+ function maika_normalize_tring($inputString)
+ {
+     $normalizedString = mb_strtolower($inputString, 'UTF-8');
+ 
+     $normalizedString = str_replace(
+         ['á', 'à', 'ả', 'ạ', 'ã', 'ă', 'ằ', 'ắ', 'ẳ', 'ặ', 'ẵ', 'â', 'ầ', 'ấ', 'ẩ', 'ậ', 'ẫ'],
+         ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
+         $normalizedString
+     );
+     $normalizedString = str_replace(
+         ['é', 'è', 'ẻ', 'ẹ', 'ẽ', 'ê', 'ề', 'ế', 'ể', 'ệ', 'ễ'],
+         ['e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e'],
+         $normalizedString
+     );
+     $normalizedString = str_replace(
+         ['í', 'ì', 'ỉ', 'ị', 'ĩ'],
+         ['i', 'i', 'i', 'i', 'i'],
+         $normalizedString
+     );
+     $normalizedString = str_replace(
+         ['ó', 'ò', 'ỏ', 'ọ', 'õ', 'ô', 'ồ', 'ố', 'ổ', 'ộ', 'ỗ', 'ơ', 'ờ', 'ớ', 'ở', 'ợ', 'ỡ'],
+         ['o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o'],
+         $normalizedString
+     );
+     $normalizedString = str_replace(
+         ['ú', 'ù', 'ủ', 'ụ', 'ũ', 'ư', 'ừ', 'ứ', 'ử', 'ự', 'ữ'],
+         ['u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u'],
+         $normalizedString
+     );
+     $normalizedString = str_replace(
+         ['ý', 'ỳ', 'ỷ', 'ỵ', 'ỹ'],
+         ['y', 'y', 'y', 'y', 'y'],
+         $normalizedString
+     );
+     $normalizedString = str_replace(
+         ['đ'],
+         ['d'],
+         $normalizedString
+     );
+ 
+     $normalizedString = preg_replace('/[^a-z0-9]/', '', $normalizedString);
+ 
+     return $normalizedString;
+ }
+
  function maika_guide_process_bar(){
     $maika_rfa = maika_check_rfa();
-    $pass_guide_step = maika_check_pass_guide_step();
     $domain_web = maika_getlink_domain_web();
     $linkConnectService = maika_getlink_connect_maikahub();
+
+    // [Action] Button 'Disconnect - Clear all data'
+    if (isset($_POST['reset-and-reconnect']) && check_admin_referer('maika_ai_clear_all_settings_action', 'maika_ai_clear_all_settings_nonce')){
+
+      $maika_cid = get_option("maika_ai_cid");
+
+      if($maika_cid != false){
+        // Disconnect website from Hub
+        $maika_disconnect_body_data = [
+          "cid" => $maika_cid
+        ];
+        maika_call_post_api(esc_url('https://hub.askmaika.ai/app/api/woo/disconnect_site'), $maika_disconnect_body_data);
+  
+        delete_option("maika_ai_cid");
+
+        $del_AP = maika_delete_application_password_exists("maika");
+        $del_WooAPI = maika_delete_woocommerce_api_keys();
+      }
+
+      $maika_cid_temp = get_option("maika_ai_cid_temp");
+      if($maika_cid_temp != false){
+        delete_option("maika_ai_cid_temp");
+      }
+
+      //redirect link
+      $rd = esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide";
+
+      wp_localize_script('admin-maika-disconnect', 'adminMaikaEngineData', array(
+        'slugMaikaGenius' => esc_url($rd),
+      ));
+      // Load into script
+      wp_enqueue_script('admin-maika-disconnect');
+    }
+
+    // Handle generate key & finish interation
+    if (isset($_POST['submit_generate_and_send_key']) && check_admin_referer('maika_ai_generate_and_send_key_action', 'maika_ai_generate_and_send_key_nonce')) {
+      $maika_wp_ap = maika_create_application_password_for_current_user();
+      
+      $maika_wcm_ak = maika_create_wc_rest_api_key_for_current_user();
+      $maika_wcm_ck = $maika_wcm_ak['consumer_key'];
+      $maika_wcm_cs = $maika_wcm_ak['consumer_secret'];
+      $maika_ssid = get_option("maika_ssid");
+      $current_user = wp_get_current_user();
+      $current_username = $current_user->user_login;
+      $maika_ai_cid_temp = get_option("maika_ai_cid_temp");
+      $maika_credential_body_data = [
+        "cid" => $maika_ai_cid_temp,
+        "secretKey" => "$maika_ssid",
+        "wp_name" => "$current_username",
+        "wp_password" => "$maika_wp_ap",
+        "woo_name" => "$maika_wcm_ck",
+        "woo_password" => "$maika_wcm_cs"
+      ];
+      $resultCallAPI = maika_call_post_api(esc_url('https://hub.askmaika.ai/app/api/woo/site_credential'), $maika_credential_body_data);
+      if($resultCallAPI['status'] == "SUCCESS"){
+        update_option("maika_ai_cid", $maika_ai_cid_temp);
+
+        // Delete WP_AP and WCM_AK temporarily stored in DB
+        delete_option("mkg_wp_ap");
+        delete_option("mkg_wcm_ck");
+        delete_option("mkg_wcm_cs");
+      }
+      else{
+        echo "<h2 style='margin-top: 20px; color: red; font-size: 1.25rem;'>An error occurred please try again or contact <a style='color: blue;' target='_blank' href='https://www.facebook.com/hybrid.maika'>https://www.facebook.com/hybrid.maika</a> for support!</h2>";
+      }
+      // echo "---<br>";
+      // echo ($resultCallAPI['status']);
+      // echo "<br>---";
+    }
+
+    $pass_guide_step = maika_check_pass_guide_step();
     ?>
 
-    <div <?php echo $maika_rfa != "true" ? "" : "style='display: none;'"; ?> <?php echo $pass_guide_step === 2 ? "style='display: none;'" : ""; ?> class="mt-8 mr-[20px] mx-auto px-8 py-6 text-base text-gray-800 rounded-lg bg-purple-200" role="alert">
+    <div <?php echo $maika_rfa != "true" ? "style='z-index: 9999; position: relative;'" : "style='display: none;'"; ?> class="mt-4 mr-[20px] mx-auto px-8 py-6 text-base text-gray-800 rounded-lg bg-purple-200" role="alert">
     <h2 class="mt-4 mb-4 text-2xl lg:text-3xl font-semibold flex items-center justify-left">Get connected with platform Maika <svg id="whatMaikaGenius" class="ml-2" style="height: 25px; width: 25px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgb(147 51 234 / var(--tw-bg-opacity))" d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm169.8-90.7c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg></h2>
 
-    <div id='contentWhatMaikaGenius' style='display: none;' class='mb-4 border-l-[3px] rounded border-purple-700 pl-3'>
-      <p class='text-base'><span class="font-medium">Maika Genius </span>leverages the power of cutting-edge Al technology to supercharge
-        your shop, but that power comes with a demand for significant computational resources. To ensure seamless
-        performance and prevent strain on your server, Maika Genius operates through a cloud-based platform. Simply create
-        a free Maika account, connect your website to your account, and let Maika Genius do the heavy lifting! For
-        detailed instructions on setting up your account and connecting your website, please refer to our comprehensive
-        user guide.</p>
+      <div id='contentWhatMaikaGenius' style='display: none;' class='mb-4 border-l-[3px] rounded border-purple-700 pl-3'>
+        <p class='text-base'><span class="font-medium">Maika Genius </span>leverages the power of cutting-edge Al technology to supercharge
+          your shop, but that power comes with a demand for significant computational resources. To ensure seamless
+          performance and prevent strain on your server, Maika Genius operates through a cloud-based platform. Simply create
+          a free Maika account, connect your website to your account, and let Maika Genius do the heavy lifting! For
+          detailed instructions on setting up your account and connecting your website, please refer to our comprehensive
+          user guide.</p>
+      </div>
+
+      <ol class="mt-4 mb-2 flex items-center w-full text-sm text-gray-500 font-medium sm:text-base">
+        <li
+          class="flex md:w-full items-center text-purple-600 sm:after:content-[''] after:w-full after:h-1 after:border-b <?php echo ($pass_guide_step == 1 || $pass_guide_step == 2) ? "after:border-purple-400" : "after:border-gray-200"; ?> after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-6 ">
+          <div class="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2 ">
+            <span
+              class="w-6 h-6 bg-purple-600 border border-purple-200 rounded-full flex justify-center items-center mr-3 text-sm text-white lg:w-10 lg:h-10"><?php echo ($pass_guide_step == 1 || $pass_guide_step == 2) ? "✓" : "1"; ?></span>
+            Connect Maika Hub
+          </div>
+        </li>
+        <li
+          class="flex md:w-full items-center <?php echo ($pass_guide_step == 1 || $pass_guide_step == 2) ? "text-purple-600" : "text-gray-600"; ?> sm:after:content-[''] after:w-full after:h-1 after:border-b <?php echo ($pass_guide_step == 2) ? "after:border-purple-400" : "after:border-gray-200"; ?> after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-6 ">
+          <div class="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2 ">
+            <span
+              class="w-6 h-6 <?php echo ($pass_guide_step == 1 || $pass_guide_step == 2) ? "bg-purple-600 border-purple-200 text-sm text-white" : "bg-gray-100 border-gray-200"; ?> border rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10"><?php echo ($pass_guide_step == 2) ? "✓" : "2"; ?></span>
+            Grant Access Permission
+          </div>
+        </li>
+        <li
+          class="flex md:w-full items-center <?php echo ($pass_guide_step == 2) ? "text-purple-600" : "text-gray-600"; ?>">
+          <div class="flex items-center">
+            <span
+              class="w-6 h-6 <?php echo ($pass_guide_step == 2) ? "bg-purple-600 border-purple-200 text-sm text-white" : "bg-gray-100 border-gray-200"; ?> border rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10">🚀</span>
+            Finish
+          </div>
+        </li>
+      </ol>
+
+      <!-- ######################## -->
+      <div style="margin: 20px auto 0; font-family: system-ui, sans-serif;">
+        <!-- Step 1 -->
+        <div id="step-1" style="<?php echo $pass_guide_step === 0 ? "display: block;" : "display: none;"; ?> background: #f9f9f9; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+          <h2 style="color: #9333ea; margin-bottom: 0.75rem; font-size: 1.2rem; font-weight: 500;">Step 1: Connect Maika Hub</h2>
+          <h3 style="font-size: 1.1rem; color: #444; font-weight: 500; margin-bottom: .5rem;">Why Maika Genius Needs Maika Hub</h3>
+          <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">
+            Maika Genius works hand-in-hand with <strong style="font-weight: 500;">Maika Hub</strong> and <strong style="font-weight: 500;">Maika CRM</strong> to deliver AI-driven content, recommendations, and marketing ideas for your WooCommerce store.
+          </p>
+          <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">To get started, you’ll need a <strong style="font-weight: 500;">free Maika Hub account</strong> — it takes less than a minute.</p>
+          <p style="font-size: 1rem; color: #444; margin-bottom: .75rem;"><strong style="font-weight: 500;">➡ Click the button below to <em>Connect Maika Hub</em>.</strong></p>
+
+          <a style="outline: none;" href="<?php echo esc_url(maika_getlink_create_account_maikahub()); ?>" class="service-button pulse">
+            Connect Maika Hub
+          </a>
+
+          <hr style="margin-top: 16px; margin-bottom: 16px;">
+
+          <details>
+            <summary class="cursor-pointer">
+              <h3 style="text-decoration: 2px underline; display: inline-block; font-size: 1.1rem; color: #444; font-weight: 500; margin-bottom: .5rem;">What happens after connecting to Maika Hub?</h3>
+            </summary>
+            <ol style="list-style: decimal; margin-left: 24px;">
+              <li><strong style="font-weight: 500;">Integration</strong> – Your store securely connects with Maika Hub, sharing product details (categories, attributes, descriptions) so Maika understands your offerings.</li>
+              <li><strong style="font-weight: 500;">AI personalization</strong> – Maika generates tailored content and recommendations for your store, improving over time from your products and customer interactions.</li>
+              <li><strong style="font-weight: 500;">Optional live chat</strong> – Enable AI-powered chat on your site, managed from your Maika Hub dashboard.</li>
+            </ol>
+            <h4 style="font-size: 1.05rem; color: #444; font-weight: 500; margin-top: 20px; margin-bottom: .5rem;">Privacy you can trust</h4>
+            <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">Your data is only used to enhance AI features for your store. If live chat is enabled, conversations are processed securely. See our <a style="color: blue;" href="https://www.askmaika.ai/terms/" target="_blank">Terms of Use</a> and <a style="color: blue;" href="https://www.askmaika.ai/privacy-policy/" target="_blank">Privacy Policy</a> for details.</p>
+          </details>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="step-2" style="<?php echo $pass_guide_step === 1 ? "display: block;" : "display: none;"; ?> background: #f9f9f9; padding: 1.5rem; border-radius: 10px;">
+          <h2 style="color: #9333ea; margin-bottom: 0.75rem; font-size: 1.2rem; font-weight: 500;">Step 2: Grant Access Permission</h2>
+          <h3 style="font-size: 1.1rem; color: #444; font-weight: 500; margin-bottom: .5rem;">The Easy Way – One Click Setup 🚀</h3>
+          <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">
+            Connecting your WordPress and WooCommerce store to Maika Hub has never been easier.
+          </p>
+          <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;"><strong style="font-weight: 500;">➡ Just click the button below, and we’ll take care of everything for you.</strong></p>
+
+          <form method="POST">
+            <?php wp_nonce_field('maika_ai_generate_and_send_key_action', 'maika_ai_generate_and_send_key_nonce'); ?>
+            <button class="service-button pulse" type="submit" name="submit_generate_and_send_key">Grant Access Permission</button>
+          </form>
+
+          <hr style="margin-top: 16px; margin-bottom: 16px;">
+
+          <details>
+            <summary class="cursor-pointer">
+              <h3 style="text-decoration: 2px underline; display: inline-block; font-size: 1.1rem; color: #444; font-weight: 500; margin-bottom: .5rem;">What happens when I press "Grant Access Permission"?</h3>
+            </summary>
+            
+            <ol style="list-style: disc; margin-left: 24px;">
+              <li><strong style="font-weight: 500;">Automatically create</strong> both your <strong style="font-weight: 500;">Application Password</strong> (WordPress) and <strong style="font-weight: 500;">WooCommerce REST API Key</strong>.</li>
+              <li><strong style="font-weight: 500;">Securely send</strong> them to <strong style="font-weight: 500;">Maika Hub</strong>.</li>
+              <li>Instantly <strong style="font-weight: 500;">complete the integration</strong> so you can start using all features right away.</li>
+            </ol>
+
+            <hr style="margin-top: 16px; margin-bottom: 16px;">
+
+            <h4 style="font-size: 1.1rem; color: #444; font-weight: 500; margin-top: 10px; margin-bottom: .5rem;">What Are Application Password & WooCommerce REST API Key?</h4>
+            <h5 style="font-size: 1.05rem; color: #444; font-weight: 500; margin-top: 10px; margin-bottom: .5rem;">🔑 Application Password</h5>
+            <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">An <strong style="font-weight: 500;">Application Password</strong> is a special login key created in your WordPress site. It allows <strong style="font-weight: 500;">Maika Hub</strong> to connect securely <strong style="font-weight: 500;">without using your main WordPress password</strong>.</p>
+            <ol style="list-style: disc; margin-left: 24px;">
+              <li>Keeps your account safe.</li>
+              <li>Can be <strong style="font-weight: 500;">revoked anytime</strong> if you no longer need the connection.</li>
+              <li>Enables our app to interact with your site smoothly.</li>
+            </ol>
+
+            <h5 style="font-size: 1.05rem; color: #444; font-weight: 500; margin-top: 20px; margin-bottom: .5rem;">🛒 WooCommerce REST API Key</h5>
+            <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">The <strong style="font-weight: 500;">WooCommerce REST API Key</strong> is a pair of codes (<strong style="font-weight: 500;">Consumer Key</strong> and <strong style="font-weight: 500;">Consumer Secret</strong>) that:</p>
+            <ol style="list-style: disc; margin-left: 24px;">
+              <li>Allow <strong style="font-weight: 500;">Maika Hub</strong> to connect to your WooCommerce store securely.</li>
+              <li>Let you manage <strong style="font-weight: 500;">orders, products, and customers</strong> directly through the integration.</li>
+              <li>Can be <strong style="font-weight: 500;">revoked anytime</strong> for maximum control and safety.</li>
+            </ol>
+            <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">With both keys, your store and <strong style="font-weight: 500;">Maika Hub</strong> can communicate securely, unlocking the full power of our features.</p>
+          </details>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div id="step-3" style="<?php echo $pass_guide_step === 2 ? "display: block;" : "display: none;"; ?> background: #f9f9f9; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem;">
+        <h2 style="color: #9333ea; margin-bottom: 0.75rem; font-size: 1.2rem; font-weight: 500;">🎉 Integration Complete!</h2>
+        <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">Your store is now <strong style="font-weight: 500;">successfully connected</strong> to <strong style="font-weight: 500;">Maika Hub</strong>.</p>
+        <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">Everything’s ready — you can start enjoying the full power of <strong style="font-weight: 500;">Maika Genius</strong> right away! 🚀</p>
+
+        <hr style="margin-top: 16px; margin-bottom: 16px;">
+
+        <h3 style="font-size: 1.1rem; color: #444; font-weight: 500; margin-top: 10px; margin-bottom: .5rem;">✨ What’s Next?</h3>
+        <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">Unlock a new level of eCommerce experience with features like:</p>
+        <div class="maika-feature-grid-container">
+          <div class="maika-feature-card">
+              <h3>Settings</h3>
+              <a href="/wp-admin/admin.php?page=maika-genius-settings">Launch →</a>
+          </div>
+
+          <div class="maika-feature-card">
+              <h3>Shop Structure</h3>
+              <a href="/wp-admin/admin.php?page=maika-genius-shop-structure">Launch →</a>
+          </div>
+
+          <div class="maika-feature-card">
+              <h3>Catalog Builder</h3>
+              <a href="/wp-admin/admin.php?page=maika-genius-product-catalog-builder">Launch →</a>
+          </div>
+
+          <div class="maika-feature-card">
+              <h3>Product Descriptor</h3>
+              <a href="/wp-admin/admin.php?page=maika-genius-product-descriptor">Launch →</a>
+          </div>
+
+          <div class="maika-feature-card">
+              <h3>SEO Optimizer</h3>
+              <a href="/wp-admin/admin.php?page=maika-genius-seo-optimizer">Launch →</a>
+          </div>
+
+          <div class="maika-feature-card">
+              <h3>Livechat</h3>
+              <a href="/wp-admin/admin.php?page=maika-genius-livechat">Launch →</a>
+          </div>
+        </div>
+      </div>
+      <!-- ######################## -->
+      <!-- Reset & Re-connect [button] -->
+      <div id="reset-and-reconnect" style="<?php echo $pass_guide_step >= 1 ? "display: block;" : "display: none;"; ?> margin-top: 20px; text-align: end;">
+        <form method="POST">
+            <?php wp_nonce_field('maika_ai_clear_all_settings_action', 'maika_ai_clear_all_settings_nonce'); ?>
+            <button class="maika-reset-button" type="submit" name="reset-and-reconnect">Reset & Re-Connect</button>
+        </form>
+      </div>
     </div>
 
-    <ol class="mt-4 mb-2 flex items-center w-full text-sm text-gray-500 font-medium sm:text-base">
-      <li
-        class="flex md:w-full items-center text-purple-600 sm:after:content-[''] after:w-full after:h-1 after:border-b <?php echo ($pass_guide_step == 1 || $pass_guide_step == 2) ? "after:border-purple-400" : "after:border-gray-200"; ?> after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-6 ">
-        <div class="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2 ">
-          <span
-            class="w-6 h-6 bg-purple-600 border border-purple-200 rounded-full flex justify-center items-center mr-3 text-sm text-white lg:w-10 lg:h-10"><?php echo ($pass_guide_step == 1 || $pass_guide_step == 2) ? "✓" : "1"; ?></span>
-          Create your keys <svg id="createYourKeys" class="ml-2" style="height: 20px; width: 20px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm169.8-90.7c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
-        </div>
-      </li>
-      <li
-        class="flex md:w-full items-center <?php echo ($pass_guide_step == 1 || $pass_guide_step == 2) ? "text-purple-600" : "text-gray-600"; ?> sm:after:content-[''] after:w-full after:h-1 after:border-b <?php echo ($pass_guide_step == 2) ? "after:border-purple-400" : "after:border-gray-200"; ?> after:border-1 after:hidden sm:after:inline-block after:mx-4 xl:after:mx-6 ">
-        <div class="flex items-center whitespace-nowrap after:content-['/'] sm:after:hidden after:mx-2 ">
-          <span
-            class="w-6 h-6 <?php echo ($pass_guide_step == 1 || $pass_guide_step == 2) ? "bg-purple-600 border-purple-200 text-sm text-white" : "bg-gray-100 border-gray-200"; ?> border rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10"><?php echo ($pass_guide_step == 2) ? "✓" : "2"; ?></span>
-          Connect to Maika
-        </div>
-      </li>
-      <li
-        class="flex md:w-full items-center <?php echo ($pass_guide_step == 2) ? "text-purple-600" : "text-gray-600"; ?>">
-        <div class="flex items-center">
-          <span
-            class="w-6 h-6 <?php echo ($pass_guide_step == 2) ? "bg-purple-600 border-purple-200 text-sm text-white" : "bg-gray-100 border-gray-200"; ?> border rounded-full flex justify-center items-center mr-3 lg:w-10 lg:h-10">🚀</span>
-          Finish
-        </div>
-      </li>
-    </ol>
-
-
-    <?php
-       if($pass_guide_step == 0){
-         echo "
-         <div id='contentCreateYourKeys' style='display: none;' class='border-l-[3px] rounded border-purple-700 pl-3'>
-           <h3 class='text-lg font-semibold'>Introduction to Application Passwords and WooCommerce REST API Keys</h3>
-           <ul class='list-disc ml-6 mt-2'>
-             <li class='text-base'><span class='font-medium'>Application Password:</span> To fully utilize the amazing features of our application, you'll need to create an Application Password in WordPress. This special password allows our app to connect to your WordPress site securely, without using your main account password. This not only helps protect your account but also ensures that all features work seamlessly. Once created, simply copy and paste this password into our app to complete the connection. You can revoke this password at any time if you no longer want the app to have access.</li>
-             <li class='text-base'><span class='font-medium'>WooCommerce REST API Key:</span> In addition, to experience all the fantastic features we offer, you'll also need to create a WooCommerce REST API Key. This unique code enables our application to connect securely to your online store without requiring your main account password. Creating an API Key is straightforward and will make managing orders, products, and customers much easier. Just follow the instructions on the WooCommerce settings page, and you'll receive two codes: <span class='font-medium'>Consumer Key</span> and <span class='font-medium'>Consumer Secret</span>. Copy and paste these codes into our application to activate the features. And rest assured, you can revoke the API Key at any time if you wish to stop the app's access to your store, keeping your account and data safe.</li>
-           </ul>
-           <h3 class='mt-4 text-lg font-semibold'>How to generate Application Passwords and WooCommerce REST API Keys</h3>
-           <p class='text-base'>In just a few simple steps, you can create Application Passwords and WooCommerce REST API Keys for your WordPress site. Our visual guide will walk you through the process quickly, ensuring that you can get started without any hassle:</p>
-           <ul class='list-disc ml-6 mt-2'>
-             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#application-passwords'>Guide to Creating Application Passwords for Your WordPress Site</a></li>
-             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#woo-rest-api'>Guide to Creating API key for WooCommerce Your Shop</a></li>
-           </ul>
-         </div>
-         ";
-       }
-       if($pass_guide_step == 1){
-         echo "
-         <div id='contentCreateYourKeys' style='display: none;' class='border-l-[3px] rounded border-purple-700 pl-3'>
-           <h3 class='text-lg font-semibold'>Introduction to Application Passwords and WooCommerce REST API Keys</h3>
-           <ul class='list-disc ml-6 mt-2'>
-             <li class='text-base'><span class='font-medium'>Application Password:</span> To fully utilize the amazing features of our application, you'll need to create an Application Password in WordPress. This special password allows our app to connect to your WordPress site securely, without using your main account password. This not only helps protect your account but also ensures that all features work seamlessly. Once created, simply copy and paste this password into our app to complete the connection. You can revoke this password at any time if you no longer want the app to have access.</li>
-             <li class='text-base'><span class='font-medium'>WooCommerce REST API Key:</span> In addition, to experience all the fantastic features we offer, you'll also need to create a WooCommerce REST API Key. This unique code enables our application to connect securely to your online store without requiring your main account password. Creating an API Key is straightforward and will make managing orders, products, and customers much easier. Just follow the instructions on the WooCommerce settings page, and you'll receive two codes: <span class='font-medium'>Consumer Key</span> and <span class='font-medium'>Consumer Secret</span>. Copy and paste these codes into our application to activate the features. And rest assured, you can revoke the API Key at any time if you wish to stop the app's access to your store, keeping your account and data safe.</li>
-           </ul>
-           <h3 class='mt-4 text-lg font-semibold'>How to generate Application Passwords and WooCommerce REST API Keys</h3>
-           <p class='text-base'>In just a few simple steps, you can create Application Passwords and WooCommerce REST API Keys for your WordPress site. Our visual guide will walk you through the process quickly, ensuring that you can get started without any hassle:</p>
-           <ul class='list-disc ml-6 mt-2'>
-             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#application-passwords'>Guide to Creating Application Passwords for Your WordPress Site</a></li>
-             <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#woo-rest-api'>Guide to Creating API key for WooCommerce Your Shop</a></li>
-           </ul>
-         </div>
-         ";
-
-         echo "
-         <div class='mt-4 flex items-center'>
-           <h4 class='font-medium text-base'>Click the button next to connect to Maika</h4>
-           <a href='".esc_url($linkConnectService)."' ><button class='ml-4 service-button pulse'>Connect your WordPress with Maika</button></a>
-         </div>
-       ";
-       }
-     
-       if($pass_guide_step == 2){
-        echo "
-        <div id='contentCreateYourKeys' style='display: none;' class='border-l-[3px] rounded border-purple-700 pl-3'>
-          <h3 class='text-lg font-semibold'>Introduction to Application Passwords and WooCommerce REST API Keys</h3>
-          <ul class='list-disc ml-6 mt-2'>
-            <li class='text-base'><span class='font-medium'>Application Password:</span> To fully utilize the amazing features of our application, you'll need to create an Application Password in WordPress. This special password allows our app to connect to your WordPress site securely, without using your main account password. This not only helps protect your account but also ensures that all features work seamlessly. Once created, simply copy and paste this password into our app to complete the connection. You can revoke this password at any time if you no longer want the app to have access.</li>
-            <li class='text-base'><span class='font-medium'>WooCommerce REST API Key:</span> In addition, to experience all the fantastic features we offer, you'll also need to create a WooCommerce REST API Key. This unique code enables our application to connect securely to your online store without requiring your main account password. Creating an API Key is straightforward and will make managing orders, products, and customers much easier. Just follow the instructions on the WooCommerce settings page, and you'll receive two codes: <span class='font-medium'>Consumer Key</span> and <span class='font-medium'>Consumer Secret</span>. Copy and paste these codes into our application to activate the features. And rest assured, you can revoke the API Key at any time if you wish to stop the app's access to your store, keeping your account and data safe.</li>
-          </ul>
-          <h3 class='mt-4 text-lg font-semibold'>How to generate Application Passwords and WooCommerce REST API Keys</h3>
-          <p class='text-base'>In just a few simple steps, you can create Application Passwords and WooCommerce REST API Keys for your WordPress site. Our visual guide will walk you through the process quickly, ensuring that you can get started without any hassle:</p>
-          <ul class='list-disc ml-6 mt-2'>
-            <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#application-passwords'>Guide to Creating Application Passwords for Your WordPress Site</a></li>
-            <li class='text-base'><a class='underline text-blue-700' href='".esc_url($domain_web)."/wp-admin/admin.php?page=maika-genius-guide#woo-rest-api'>Guide to Creating API key for WooCommerce Your Shop</a></li>
-          </ul>
-        </div>
-        ";
-       }
-     ?>
-
-  </div>
     <?php
     // Load JS file show guide for Beginner
     // guide to creating your keys
-    wp_enqueue_script('admin-maika-beginner-01');  
+    // wp_enqueue_script('admin-maika-beginner-01');  
     // guide: What Maika Genius
     wp_enqueue_script('admin-maika-beginner-02');
-
  }
 
  // ==================== ADD API ====================

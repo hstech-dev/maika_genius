@@ -19,6 +19,7 @@
   width: 350px;
   padding: 15px 20px;
   font-size: 1rem;
+  text-align: center;
   color: white;
   border: none;
   border-radius: 4px;
@@ -171,4 +172,82 @@
   .maika-tabs {
     margin-left: 14px;
   }
+}
+
+/* ######## */
+.maika-feature-grid-container {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: 1fr;
+    margin: auto;
+    padding: 20px 0;
+}
+/* Responsive Breakpoints */
+@media (min-width: 768px) {
+    .maika-feature-grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .maika-feature-grid-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.maika-feature-card {
+    background: linear-gradient(145deg, #ffffff, #f4f7ff);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(22, 28, 45, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+.maika-feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(22, 28, 45, 0.15);
+}
+.maika-feature-card h3 {
+    margin: 0 0 20px 0;
+    font-size: 1.2em;
+    color: #161c2d;
+}
+.maika-feature-card a {
+    background-color: #9333ea;
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+    margin-top: auto;
+}
+
+.maika-reset-button {
+  border-radius: 0.25rem;
+  border: 1px solid #909090;
+  background-color: #ffffff;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #909090;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.maika-reset-button:hover {
+  color: #ffffff;
+  background-color: #909090;
+}
+
+.maika-reset-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(144, 144, 144, 0.5);
 }
