@@ -824,7 +824,7 @@
 
     <!-- Content -->
     <p style="font-size: 1rem; color: #333; text-align: center; margin-bottom: 1.25rem;">
-      To unlock <?php echo $feature_name; ?>, please take a moment to connect your website with <strong>Maika Hub</strong>. It’s quick and easy!
+      To unlock <?php echo esc_html($feature_name); ?>, please take a moment to connect your website with <strong>Maika Hub</strong>. It’s quick and easy!
     </p>
 
     <!-- Redirect button to the Guide Page -->
@@ -964,6 +964,7 @@
         'truncated_key'   => substr( $consumer_key, -7 ),
     );
 
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
     $wpdb->insert( $wpdb->prefix . 'woocommerce_api_keys', $data );
 
     update_option("mkg_wcm_ck", $consumer_key);
