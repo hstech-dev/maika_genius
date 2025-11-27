@@ -23,7 +23,7 @@
           <?php
             if(isset($maika_cid)&& $maika_cid != false){
               echo "
-              <a class='mt-4 block rounded border border-purple-600 bg-purple-600 px-12 py-3 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white sm:mt-6' href='/wp-admin/admin.php?page=maika-genius-shop-structure'>
+              <a class='mt-4 block rounded border border-purple-600 bg-purple-600 px-12 py-3 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white sm:mt-6' href='https://hub.askmaika.ai/app/site/{$maika_cid}/woo_shop_structure'>
                 Analyze Your Store Free
               </a>
               ";
@@ -43,10 +43,10 @@
           <h2 class="text-4xl font-extrabold">Product Catalog Builder</h2>
 
           <?php
-            if(isset($maika_cid)&& $maika_cid != false){
+            if(isset($maika_cid) && $maika_cid != false){
               echo "
                 <div class='ml-4 flex flex-wrap gap-4 text-center'>
-                  <a class='block rounded border border-purple-600 bg-purple-600 px-6 py-1 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white' href='/wp-admin/admin.php?page=maika-genius-product-catalog-builder'>
+                  <a class='block rounded border border-purple-600 bg-purple-600 px-6 py-1 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white' href='https://hub.askmaika.ai/app/site/{$maika_cid}/woo_prod_catalog'>
                     Launch
                   </a>
                 </div>
@@ -81,11 +81,8 @@
             if(isset($maika_cid)&& $maika_cid != false){
               echo "
                 <div class='ml-4 flex flex-wrap gap-4 text-center'>
-                  <a class='block rounded border border-purple-600 bg-purple-600 px-6 py-1 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white' href='/wp-admin/admin.php?page=maika-genius-product-descriptor'>
+                  <a class='block rounded border border-purple-600 bg-purple-600 px-6 py-1 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white' href='https://hub.askmaika.ai/app/site/{$maika_cid}/woo_prod_descriptor'>
                     Launch
-                  </a>
-                  <a class='block rounded border border-purple-600 bg-purple-600 px-6 py-1 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white' href='https://static.askmaika.ai/maika-genius-demo'>
-                    View Demo
                   </a>
                 </div>
               ";
@@ -117,20 +114,7 @@
       <hr class="mb-6">
       <div id="seo-optimizer">
         <div class="flex">
-          <h2 class="text-4xl font-extrabold">SEO Optimizer</h2>
-
-          <?php
-            if(isset($maika_cid)&& $maika_cid != false){
-              echo "
-                <div class='ml-4 flex flex-wrap gap-4 text-center'>
-                  <a class='block rounded border border-purple-600 bg-purple-600 px-6 py-1 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white'
-                    href='/wp-admin/admin.php?page=maika-genius-seo-optimizer'>
-                    Launch
-                  </a>
-                </div>
-              ";
-            }
-          ?>
+          <h2 class="text-4xl font-extrabold">SEO Optimizer <span class="text-gray-500 text-base"> (coming soon)</span></h2>
         </div>
 
         <p class="mt-2 mb-2 text-base font-semibold text-gray-900">Unleash the power of Al to supercharge your SEO. <span
@@ -161,7 +145,7 @@
               echo "
                 <div class='ml-4 flex flex-wrap gap-4 text-center'>
                   <a class='block rounded border border-purple-600 bg-purple-600 px-6 py-1 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white'
-                    href='/wp-admin/admin.php?page=maika-genius-livechat'>
+                    href='https://hub.askmaika.ai/app/site/{$maika_cid}?mode=chat'>
                     Launch
                   </a>
                 </div>

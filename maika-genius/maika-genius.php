@@ -55,75 +55,75 @@
 
     add_submenu_page(
       "maika-genius",
-      "Guide",
-      "Guide",
+      "Settings",
+      "Settings",
       "manage_options",
       "maika-genius-guide",
       "maika_genius_guide_page"
     );
 
-    add_submenu_page(
-      "maika-genius",
-      "Settings",
-      "Settings",
-      "manage_options",
-      "maika-genius-settings",
-      "maika_genius_settings_page"
-    );
+    // add_submenu_page(
+    //   "maika-genius",
+    //   "Settings",
+    //   "Settings",
+    //   "manage_options",
+    //   "maika-genius-settings",
+    //   "maika_genius_settings_page"
+    // );
 
-    add_submenu_page(
-      "maika-genius",
-      "Shop Structure",
-      "Shop Structure",
-      "manage_options",
-      "maika-genius-shop-structure",
-      "maika_genius_shop_structure_page"
-    );
+    // add_submenu_page(
+    //   "maika-genius",
+    //   "Shop Structure",
+    //   "Shop Structure",
+    //   "manage_options",
+    //   "maika-genius-shop-structure",
+    //   "maika_genius_shop_structure_page"
+    // );
 
-    add_submenu_page(
-      "maika-genius",
-      "Structure Editor",
-      "Structure Editor",
-      "manage_options",
-      "maika-genius-shop-structure-editor",
-      "maika_genius_shop_structure_editor_page"
-    );
+    // add_submenu_page(
+    //   "maika-genius",
+    //   "Structure Editor",
+    //   "Structure Editor",
+    //   "manage_options",
+    //   "maika-genius-shop-structure-editor",
+    //   "maika_genius_shop_structure_editor_page"
+    // );
 
-    add_submenu_page(
-      "maika-genius",
-      "Catalog Builder",
-      "Catalog Builder",
-      "manage_options",
-      "maika-genius-product-catalog-builder",
-      "maika_genius_product_catalog_builder_page"
-    );
+    // add_submenu_page(
+    //   "maika-genius",
+    //   "Catalog Builder",
+    //   "Catalog Builder",
+    //   "manage_options",
+    //   "maika-genius-product-catalog-builder",
+    //   "maika_genius_product_catalog_builder_page"
+    // );
 
-    add_submenu_page(
-      "maika-genius",
-      "Product Descriptor",
-      "Product Descriptor",
-      "manage_options",
-      "maika-genius-product-descriptor",
-      "maika_genius_product_descriptor_page"
-    );
+    // add_submenu_page(
+    //   "maika-genius",
+    //   "Product Descriptor",
+    //   "Product Descriptor",
+    //   "manage_options",
+    //   "maika-genius-product-descriptor",
+    //   "maika_genius_product_descriptor_page"
+    // );
 
-    add_submenu_page(
-      "maika-genius",
-      "SEO Optimizer",
-      "SEO Optimizer",
-      "manage_options",
-      "maika-genius-seo-optimizer",
-      "maika_genius_seo_optimizer_page"
-    );
+    // add_submenu_page(
+    //   "maika-genius",
+    //   "SEO Optimizer",
+    //   "SEO Optimizer",
+    //   "manage_options",
+    //   "maika-genius-seo-optimizer",
+    //   "maika_genius_seo_optimizer_page"
+    // );
 
-    add_submenu_page(
-      "maika-genius",
-      "Livechat",
-      "Livechat",
-      "manage_options",
-      "maika-genius-livechat",
-      "maika_genius_livechat_page"
-    );
+    // add_submenu_page(
+    //   "maika-genius",
+    //   "Livechat",
+    //   "Livechat",
+    //   "manage_options",
+    //   "maika-genius-livechat",
+    //   "maika_genius_livechat_page"
+    // );
  }
 
  // Notice
@@ -1191,11 +1191,9 @@
     $maika_rfa = maika_check_rfa();
     $domain_web = maika_getlink_domain_web();
     $linkConnectService = maika_getlink_connect_maikahub();
-
+    $maika_cid = get_option("maika_ai_cid");
     // [Action] Button 'Disconnect - Clear all data'
-    if (isset($_POST['reset-and-reconnect']) && check_admin_referer('maika_ai_clear_all_settings_action', 'maika_ai_clear_all_settings_nonce')){
-
-      $maika_cid = get_option("maika_ai_cid");
+    if (isset($_POST['reset-and-reconnect']) && check_admin_referer('maika_ai_clear_all_settings_action', 'maika_ai_clear_all_settings_nonce')) {
 
       if($maika_cid != false){
         // Disconnect website from Hub
@@ -1394,36 +1392,34 @@
         <hr style="margin-top: 16px; margin-bottom: 16px;">
 
         <h3 style="font-size: 1.1rem; color: #444; font-weight: 500; margin-top: 10px; margin-bottom: .5rem;">✨ What’s Next?</h3>
-        <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">Unlock a new level of eCommerce experience with features like:</p>
+        <p style="font-size: 1rem; color: #444; margin-bottom: .5rem;">Unlock a new level of eCommerce experience with Maika Genius</p>
+        
+
         <div class="maika-feature-grid-container">
           <div class="maika-feature-card">
-              <h3>Settings</h3>
-              <a href="/wp-admin/admin.php?page=maika-genius-settings">Launch →</a>
+              <h3>Brand Personality</h3>
+              <a href="https://hub.askmaika.ai/app/site/<?php echo $maika_cid; ?>">Launch →</a>
+              
           </div>
 
           <div class="maika-feature-card">
               <h3>Shop Structure</h3>
-              <a href="/wp-admin/admin.php?page=maika-genius-shop-structure">Launch →</a>
+              <a href="https://hub.askmaika.ai/app/site/<?php echo $maika_cid; ?>/woo_shop_structure">Launch →</a>
           </div>
 
           <div class="maika-feature-card">
               <h3>Catalog Builder</h3>
-              <a href="/wp-admin/admin.php?page=maika-genius-product-catalog-builder">Launch →</a>
+              <a href="https://hub.askmaika.ai/app/site/<?php echo $maika_cid; ?>/woo_prod_catalog">Launch →</a>
           </div>
 
           <div class="maika-feature-card">
               <h3>Product Descriptor</h3>
-              <a href="/wp-admin/admin.php?page=maika-genius-product-descriptor">Launch →</a>
-          </div>
-
-          <div class="maika-feature-card">
-              <h3>SEO Optimizer</h3>
-              <a href="/wp-admin/admin.php?page=maika-genius-seo-optimizer">Launch →</a>
+              <a href="https://hub.askmaika.ai/app/site/<?php echo $maika_cid; ?>/woo_prod_descriptor">Launch →</a>
           </div>
 
           <div class="maika-feature-card">
               <h3>Livechat</h3>
-              <a href="/wp-admin/admin.php?page=maika-genius-livechat">Launch →</a>
+              <a href="https://hub.askmaika.ai/app/site/<?php echo $maika_cid; ?>?mode=chat">Launch →</a>
           </div>
         </div>
       </div>
