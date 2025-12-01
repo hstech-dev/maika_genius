@@ -1258,7 +1258,7 @@
       // echo ($resultCallAPI['status']);
       // echo "<br>---";
     }
-
+    $maika_cid = get_option("maika_ai_cid");
     $pass_guide_step = maika_check_pass_guide_step();
     ?>
 
