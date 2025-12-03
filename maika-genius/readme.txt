@@ -188,6 +188,9 @@ This information should be included in your plugin's readme.txt file for clear d
 
 == Changelog ==
 
+= [v1.5.0] =
+- Revamp Admin Dashboard from using IFrame into direct to hub.askmaika.ai for smoother UX journey
+
 = [v1.4.1] =
 - Fix minor user interface bugs, improve performance and enhance security.
 
