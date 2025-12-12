@@ -146,12 +146,20 @@
             $maika_cid = get_option("maika_ai_cid");
             if($maika_cid != false){
               ?>
-                <h2 class="maika-genius-notice-content-title">Maika Genius - What's shaping your store’s success?</h2>
+                <!-- <h2 class="maika-genius-notice-content-title">Maika Genius - What's shaping your store’s success?</h2>
                 <p>Your store has a hidden structure that drives conversions, but you haven't seen it yet. Click <em>Analyze Your Store Free</em> to reveal how everything connects – and what’s missing.</p>
                 <p>&#10024; A single click could transform the way you organize and sell.</p>
                 <a href="/wp-admin/admin.php?page=maika-genius-shop-structure">
-                  <button class="maika-genius-notice-content-button">Analyze Your Store Free</button>
+                  <button class="maika-genius-notice-content-button">Free Store Analysis</button>
+                </a> -->
+
+                <h2 class="maika-genius-notice-content-title">Maika Chatbot - Serve your customers 24/7</h2>
+                <p>Don't let potential sales slip away due to unanswered questions. Setup Maika Chatbot to provide instant support and keep your store running even while you sleep.</p>
+                <p>&#10024; Automate your customer service and boost satisfaction in just a few clicks.</p>
+                <a href="https://hub.askmaika.ai/app/site/<?php echo esc_attr( $maika_cid ); ?>?mode=chat" target="_blank">
+                    <button class="maika-genius-notice-content-button">Setup Maika Chatbot</button>
                 </a>
+
               <?php
             }
             else {
@@ -1397,6 +1405,11 @@
 
         <div class="maika-feature-grid-container">
           <div class="maika-feature-card">
+              <h3>Chatbot Setup</h3>
+              <a href="https://hub.askmaika.ai/app/site/<?php echo $maika_cid; ?>?mode=chat">Launch →</a>
+          </div>
+
+          <div class="maika-feature-card">
               <h3>Brand Personality</h3>
               <a href="https://hub.askmaika.ai/app/site/<?php echo $maika_cid; ?>">Launch →</a>
               
@@ -1415,11 +1428,6 @@
           <div class="maika-feature-card">
               <h3>Product Descriptor</h3>
               <a href="https://hub.askmaika.ai/app/site/<?php echo $maika_cid; ?>/woo_prod_descriptor">Launch →</a>
-          </div>
-
-          <div class="maika-feature-card">
-              <h3>Livechat</h3>
-              <a href="https://hub.askmaika.ai/app/site/<?php echo $maika_cid; ?>?mode=chat">Launch →</a>
           </div>
         </div>
       </div>

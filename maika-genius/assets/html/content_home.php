@@ -24,7 +24,10 @@
             if(isset($maika_cid)&& $maika_cid != false){
               echo "
               <a class='mt-4 block rounded border border-purple-600 bg-purple-600 px-12 py-3 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white sm:mt-6' href='https://hub.askmaika.ai/app/site/{$maika_cid}/woo_shop_structure'>
-                Analyze Your Store Free
+                Free Store Analysis
+              </a>
+              <a class='mt-4 block rounded border border-purple-600 bg-purple-600 px-12 py-3 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white sm:mt-6' href='https://hub.askmaika.ai/app/site/{$maika_cid}?mode=chat'>
+                Setup Chatbot
               </a>
               ";
             }
@@ -37,6 +40,42 @@
 
   <section id="home--content">
     <article class="max-w-screen-xl px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8 mx-auto">
+
+      <hr class="mb-6">
+      <div id="247-livechat">
+        <div class="flex">
+          <h2 class="text-4xl font-extrabold">24/7 AI-Powered Livechat Agent</h2>
+
+          <?php
+            if(isset($maika_cid)&& $maika_cid != false){
+              echo "
+                <div class='ml-4 flex flex-wrap gap-4 text-center'>
+                  <a class='block rounded border border-purple-600 bg-purple-600 px-6 py-1 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white'
+                    href='https://hub.askmaika.ai/app/site/{$maika_cid}?mode=chat'>
+                    Launch
+                  </a>
+                </div>
+              ";
+            }
+          ?>
+        </div>
+
+        <p class="mt-2 mb-2 text-base font-semibold text-gray-900">Provide exceptional customer service, 24/7. <span
+            class="font-normal">Maika Genius's Al-powered livechat agent is available 24/7 to answer questions, address
+            concerns, and provide personalized recommendations to your customers.</span></p>
+        <p class="mt-2 mb-2 text-base font-semibold text-gray-900">Key Benefits:</p>
+
+        <ul class="text-base mb-6 space-y-1 text-gray-600 list-disc list-inside">
+          <li><span class="font-semibold">Always Available:</span> Never miss a potential sale or customer question, even
+            when you're busy.</li>
+          <li><span class="font-semibold">Personalized Conversations:</span> Al understands your product catalog and
+            shop's unique selling points to provide tailored customer interactions.</li>
+          <li><span class="font-semibold">Natural and Engaging:</span> Your customers will have smooth and natural
+            conversations with Maika's Al-powered agent.</li>
+          <li><span class="font-semibold">Increase Customer Satisfaction:</span> Boost your customer satisfaction and
+            loyalty with 24/7 responsive support.</li>
+        </ul>
+
       <hr class="mb-6">
       <div id="product-catalog-builder">
         <div class="flex">
@@ -72,6 +111,7 @@
             business quickly.</li>
         </ul>
       </div>
+
       <hr class="mb-6">
       <div id="product-descriptor">
         <div class="flex">
@@ -111,6 +151,7 @@
             inconsistent wording.</li>
         </ul>
       </div>
+
       <hr class="mb-6">
       <div id="seo-optimizer">
         <div class="flex">
@@ -135,40 +176,6 @@
 
         <p class="mb-6 text-base font-semibold text-gray-900">&#11106; What's the secret behind your store? It will be revealed after you leave an <a class="text-purple-600 hover:text-purple-600" href="/wp-admin/admin.php?page=maika-genius-shop-structure"> <b>assessment</b></a>!</p>
       </div>
-      <hr class="mb-6">
-      <div id="247-livechat">
-        <div class="flex">
-          <h2 class="text-4xl font-extrabold">24/7 AI-Powered Livechat Agent</h2>
-          
-          <?php
-            if(isset($maika_cid)&& $maika_cid != false){
-              echo "
-                <div class='ml-4 flex flex-wrap gap-4 text-center'>
-                  <a class='block rounded border border-purple-600 bg-purple-600 px-6 py-1 text-center text-lg font-medium text-white hover:bg-purple-700 hover:text-white focus:outline-none focus:ring active:text-white'
-                    href='https://hub.askmaika.ai/app/site/{$maika_cid}?mode=chat'>
-                    Launch
-                  </a>
-                </div>
-              ";
-            }
-          ?>
-        </div>
-
-        <p class="mt-2 mb-2 text-base font-semibold text-gray-900">Provide exceptional customer service, 24/7. <span
-            class="font-normal">Maika Genius's Al-powered livechat agent is available 24/7 to answer questions, address
-            concerns, and provide personalized recommendations to your customers.</span></p>
-        <p class="mt-2 mb-2 text-base font-semibold text-gray-900">Key Benefits:</p>
-
-        <ul class="text-base mb-6 space-y-1 text-gray-600 list-disc list-inside">
-          <li><span class="font-semibold">Always Available:</span> Never miss a potential sale or customer question, even
-            when you're busy.</li>
-          <li><span class="font-semibold">Personalized Conversations:</span> Al understands your product catalog and
-            shop's unique selling points to provide tailored customer interactions.</li>
-          <li><span class="font-semibold">Natural and Engaging:</span> Your customers will have smooth and natural
-            conversations with Maika's Al-powered agent.</li>
-          <li><span class="font-semibold">Increase Customer Satisfaction:</span> Boost your customer satisfaction and
-            loyalty with 24/7 responsive support.</li>
-        </ul>
 
       </div>
       <hr class="mb-6">
