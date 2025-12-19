@@ -3,7 +3,7 @@
  * Plugin Name: Maika Genius — AI Content & Chatbot with ChatGPT and Gemini for WooCommerce
  * Plugin URI:  https://www.askmaika.ai/maika-genius/
  * Description: Tired of spending hours writing product descriptions and optimizing your website? Maika Genius is the Al-powered solution that empowers you to create engaging content, boost SEO, and drive sales, all with the power of cutting-edge Generative Al.
- * Version:     1.5.1
+ * Version:     1.5.2
  * Author:      tomaskmaika
  * Author URI:  https://www.askmaika.ai
  * Text Domain: maika-genius
