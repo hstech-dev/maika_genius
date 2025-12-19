@@ -222,6 +222,18 @@
  });
  // End - Notice
 
+ add_action('admin_notices', 'maika_woocommerce_missing_notice');
+ function maika_woocommerce_missing_notice(){
+    if ( class_exists( 'WooCommerce' ) ) {
+        return;
+    }
+    ?>
+    <div class="notice notice-error is-dismissible">
+        <p><?php _e( 'Maika Genius requires WooCommerce to be installed and active. Please install and activate WooCommerce.', 'maika-genius' ); ?></p>
+    </div>
+    <?php
+ }
+
  // Callback function for Home page
  function maika_genius_home_page() {
     if(file_exists(plugin_dir_path(__FILE__).'includes/config/constants.php')){
@@ -246,6 +258,18 @@
  // Callback function for Guide page
  function maika_genius_guide_page() {
     //echo "Maika CID: " .get_option("maika_ai_cid") ."<br>";
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        ?>
+        <div class="wrap">
+            <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+            <div class="notice notice-error inline">
+                <p><?php _e( 'Maika Genius requires WooCommerce to be installed and active. Please install and activate WooCommerce.', 'maika-genius' ); ?></p>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+
     $pass_guide_step = maika_check_pass_guide_step();
 
     wp_enqueue_style('admin-maika-tailwind-css');
@@ -952,6 +976,10 @@
     if ( ! is_user_logged_in() ) {
         return new WP_Error( 'not_logged_in', 'Bạn chưa đăng nhập' );
     }
+
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        return new WP_Error( 'woocommerce_missing', 'WooCommerce is not installed or active.' );
+    }
     
     if(maika_check_woocommerce_api_keys() != false){
       maika_delete_woocommerce_api_keys(); // Delete Old Woo Rest API Key
@@ -1076,6 +1104,9 @@
  }
  
  function maika_check_pass_guide_step(){
+    if ( ! class_exists( 'WooCommerce' ) ) {
+        return 0;
+    }
     //check application password exists and get value
     $maikaApplicationPassword = maika_check_application_password_exists("maika") ? maika_get_application_password_value("maika") : null;
     //Check rest api woocomerce
@@ -1231,6 +1262,14 @@
       wp_enqueue_script('admin-maika-disconnect');
     }
 
+    if (!function_exists('wc_rand_hash')) {
+      echo "<h2 style='margin-top: 20px; color: red; font-size: 1.25rem;'>Maika Genius is required WooCommerce installed for working properly.</h2>";
+      $maika_cid = get_option("maika_ai_cid");
+      $pass_guide_step = maika_check_pass_guide_step();
+
+      return;
+    }
+
     // Handle generate key & finish interation
     if (isset($_POST['submit_generate_and_send_key']) && check_admin_referer('maika_ai_generate_and_send_key_action', 'maika_ai_generate_and_send_key_nonce')) {
       $maika_wp_ap = maika_create_application_password_for_current_user();
@@ -1259,7 +1298,7 @@
         delete_option("mkg_wcm_ck");
         delete_option("mkg_wcm_cs");
       }
-      else{
+      else {
         echo "<h2 style='margin-top: 20px; color: red; font-size: 1.25rem;'>An error occurred please try again or contact <a style='color: blue;' target='_blank' href='https://www.facebook.com/hybrid.maika'>https://www.facebook.com/hybrid.maika</a> for support!</h2>";
       }
       // echo "---<br>";
