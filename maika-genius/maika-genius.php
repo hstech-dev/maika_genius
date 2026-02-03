@@ -270,6 +270,59 @@
         return;
     }
 
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    if (isset($_GET['auto_key_failed'])) {
+        ?>
+        <div class="notice notice-error">
+            <p><?php _e( 'Automatic key generation failed. Please try the manual process or contact support.', 'maika-genius' ); ?></p>
+        </div>
+        <?php
+    }
+
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+    if (isset($_GET['auto_key']) && sanitize_text_field(wp_unslash($_GET['auto_key'])) === 'true') {
+        $success = false;
+        $maika_ai_cid_temp = get_option("maika_ai_cid_temp");
+
+        if($maika_ai_cid_temp) {
+            $maika_wp_ap = maika_create_application_password_for_current_user();
+            $maika_wcm_ak = maika_create_wc_rest_api_key_for_current_user();
+
+            if ( !is_wp_error( $maika_wp_ap ) && !is_wp_error( $maika_wcm_ak ) ) {
+                $maika_wcm_ck = $maika_wcm_ak['consumer_key'];
+                $maika_wcm_cs = $maika_wcm_ak['consumer_secret'];
+                $maika_ssid = get_option("maika_ssid");
+                $current_user = wp_get_current_user();
+                $current_username = $current_user->user_login;
+                $maika_credential_body_data = [
+                    "cid" => $maika_ai_cid_temp,
+                    "secretKey" => "$maika_ssid",
+                    "wp_name" => "$current_username",
+                    "wp_password" => "$maika_wp_ap",
+                    "woo_name" => "$maika_wcm_ck",
+                    "woo_password" => "$maika_wcm_cs"
+                ];
+                $resultCallAPI = maika_call_post_api(esc_url('https://hub.askmaika.ai/app/api/woo/site_credential'), $maika_credential_body_data);
+                if(is_array($resultCallAPI) && isset($resultCallAPI['status']) && $resultCallAPI['status'] == "SUCCESS"){
+                    update_option("maika_ai_cid", $maika_ai_cid_temp);
+            
+                    // Delete WP_AP and WCM_AK temporarily stored in DB
+                    delete_option("mkg_wp_ap");
+                    delete_option("mkg_wcm_ck");
+                    delete_option("mkg_wcm_cs");
+                    $success = true;
+                }
+            }
+        }
+
+        if ($success) {
+            wp_safe_redirect(admin_url('admin.php?page=maika-genius-guide'));
+        } else {
+            wp_safe_redirect(admin_url('admin.php?page=maika-genius-guide&auto_key_failed=true'));
+        }
+        exit;
+    }
+
     $pass_guide_step = maika_check_pass_guide_step();
 
     wp_enqueue_style('admin-maika-tailwind-css');
