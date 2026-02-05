@@ -2,7 +2,7 @@
 Contributors: tomaskmaika
 Requires at least: 5.6
 Tested up to: 6.9
-Stable tag: 1.5.2
+Stable tag: 1.5.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -187,6 +187,9 @@ This information should be included in your plugin's readme.txt file for clear d
 4. AI powers powerful, highly customizable product descriptions.
 
 == Changelog ==
+
+= [v1.5.3] =
+- Add auto_key to skip manual step 2 of installing process
 
 = [v1.5.2] =
 - Minor UI for Chatbot Setup UX
